@@ -7,8 +7,6 @@ import (
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/api"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/middleware"
 	"github.com/gorilla/mux"
-
-	//"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/middleware"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/websocket"
 )
 
