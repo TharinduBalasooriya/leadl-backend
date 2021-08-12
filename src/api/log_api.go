@@ -6,10 +6,13 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/controller"
-	"github.com/gorilla/mux"
 	"io/ioutil"
+	"log"
 	"net/http"
+
+	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/controller"
+	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/datamodels"
+	"github.com/gorilla/mux"
 )
 
 /*
@@ -100,9 +103,9 @@ func HandleLogFileUpload(w http.ResponseWriter, r *http.Request) {
 	//aws upload path
 	fullFilePath := "logs/" + userName + "/" + projectName + "/" + fileName
 
-	//controller.LogUploadFiles(fullFilePath, file)
-	controller.LogUploadFiles(fullFilePath, file)
 	controller.LogSaveDetails(userName, projectName, fileName, fileId)
+	controller.LogUploadFiles(fullFilePath, file)
+	
 	//controller.Config_LDEL_DEF(fileName, fileId)
 
 }
@@ -164,5 +167,18 @@ func HandleInvokeELInterpreter(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(result)
 
+
+}
+
+func HandleLogFileUpdate(w http.ResponseWriter, r *http.Request){
+	var logfileDetails datamodels.Log_Update
+	err := json.NewDecoder(r.Body).Decode(&logfileDetails)
+	if err != nil{
+		log.SetFlags(log.LstdFlags | log.Lshortfile)
+		log.Println(err)
+	}
+	 result := controller.LogUpdateFile(logfileDetails)
+
+	 fmt.Fprintln(w,result)
 
 }

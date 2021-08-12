@@ -20,7 +20,7 @@ func HandleProject(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("Error Retrieving the File")
 		fmt.Println(err)
-		return
+		
 	}
 	controller.ProjectSaveDetails(project)
 

@@ -1,7 +1,6 @@
 package controller
 
 import (
-
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -57,21 +56,53 @@ func GetLogListByProjectID(projectId string) interface{} {
 
 }
 
+// func LogGetFileContent(user string, project string, log string) LogContent {
 
+// 	//fmt.Println(user)
+// 	bucket := "leadl/logs/" + user + "/" + project + "/"
+
+// 	/*
+// 		TODO:change extension to config
+// 	*/
+// 	item := log + os.Getenv("BUCKET_ITEM_EXT")
+// 	//item := log + ".txt.zip"
+
+// 	//fmt.Print(bucket+item)
+
+// 	object := filestorageHandler.AWS_S3_Object{
+// 		Bucket: bucket,
+// 		Item:   item,
+// 	}
+
+// 	data := service.Log_GetContent(object, log,)
+
+// 	var dataT = string(data)
+
+// 	logcontent := LogContent{
+// 		FileName: log,
+// 		Content:  dataT,
+// 	}
+
+// 	/*
+// 		TODO:Handle download time
+// 	*/
+// 	return logcontent
+
+// }
 
 const (
 	S3_REGION = "ap-south-1"
 	S3_BUCKET = "leadl"
 )
 
-func ExecuteLDEL(fileId string) (interface{}){
+func ExecuteLDEL(fileId string) interface{} {
 
 	logFileDetails := logrepo.GetLogFileDetails(fileId)
 	service.Log_Download_LogFile(fileId)
 	service.Log_download_Script(fileId)
 	Config_LDEL_DEF(logFileDetails.LogFileName, logFileDetails.FileId)
 	service.Log_Execute_LDEL(fileId)
-	result := service.Log_Read_Result(fileId);
+	result := service.Log_Read_Result(fileId)
 
 	os.RemoveAll("localstorage/" + fileId)
 	return result
@@ -88,7 +119,7 @@ func Config_LDEL_DEF(logFileName string, fileID string) {
 
 }
 
-func GetToActiveDir(fileId string) string{
+func GetToActiveDir(fileId string) string {
 
 	logFileDetails := logrepo.GetLogFileDetails(fileId)
 	user := logFileDetails.Username
@@ -112,7 +143,7 @@ func GetToActiveDir(fileId string) string{
 		Item:   item,
 	}
 
-	data := service.Log_GetContent(object, logf,fileId)
+	data := service.Log_GetContent(object, logf, fileId)
 
 	Config_LDEL_DEF(filename, logFileDetails.FileId)
 
@@ -134,8 +165,49 @@ func GetToActiveDir(fileId string) string{
 	}
 	//log.Printf("Wrote %d bytes.\n in localstorage", bytesWritten)
 
+	return fileId + " : Activated"
 
-	return fileId +  " : Activated"; 
+}
+
+func LogUpdateFile(logfile datamodels.Log_Update) string {
+	logFileDetails := logrepo.GetLogFileDetails(logfile.FileId)
+	user := logFileDetails.Username
+	project := logFileDetails.ProjectId
+	var filename = logFileDetails.LogFileName
+
+	bucket := "leadl/logs/" + user + "/" + project + "/"
+	uploadPath := "logs/" + user + "/" + project + "/" + filename
+
+	item := filename + os.Getenv("ARCHIVED_EXT")
+
+	object := filestorageHandler.AWS_S3_Object{
+		Bucket: bucket,
+		Item:   item,
+	}
+
+	data := service.Log_GetContent(object, filename, logfile.FileId)
+	data_string := string(data) + logfile.Content
+	newFile := service.ArchiveFile(filename, data_string)
+
+	// Create a single AWS session (we can re use this if we're uploading many files)
+	s, err := session.NewSession(&aws.Config{Region: aws.String(S3_REGION)})
+	if err != nil {
+		log.Println(err)
+	}
+
+	/*
+	 Create a file storage type object
+	*/
+
+	//S3 type object
+	s3 := filestorageHandler.AWS_S3{
+		Session:   s,
+		Filepath:  uploadPath,
+		FileBytes: newFile,
+	}
+
+	service.Log_uploadFiles(s3)
+	return data_string
 
 }
 
@@ -145,19 +217,17 @@ func LogGetFileContentv2(fileId string) interface{} {
 	user := logFileDetails.Username
 	project := logFileDetails.ProjectId
 	var filename = logFileDetails.LogFileName
-	
+
 	bucket := "leadl/logs/" + user + "/" + project + "/"
 
-
-	item := filename+ os.Getenv("ARCHIVED_EXT")
-	
+	item := filename + os.Getenv("ARCHIVED_EXT")
 
 	object := filestorageHandler.AWS_S3_Object{
 		Bucket: bucket,
 		Item:   item,
 	}
 
-	data := service.Log_GetContent(object, filename,fileId)
+	data := service.Log_GetContent(object, filename, fileId)
 
 	var dataT = string(data)
 
@@ -174,16 +244,16 @@ func LogSaveDetails(userName string, ProjectId string, logFileName string, fileI
 		Username:    userName,
 		FileId:      fileID,
 		LogFileName: logFileName,
-		ProjectId:  ProjectId,
-		LastUpdate:  time.Now().String(),
+		ProjectId:   ProjectId,
+		LastUpdate:  time.Now().Format("2006-01-02 3:4:5 PM"),
 	}
 
-	exist, res := logrepo.CheckLogExist(logfile)
+	exist := logrepo.CheckLogExist(logfile)
 
+	fmt.Println(exist)
 	if exist {
 
-		fmt.Println("Log Already Exist")
-		logrepo.UpdateTimeStamp(res)
+		log.Println("Logfile Already Exist" + logfile.FileId)
 
 	} else {
 

@@ -4,6 +4,7 @@ import (
 
 	//Importing file storage utility
 	"archive/zip"
+	"bytes"
 	"encoding/base64"
 	"fmt"
 	"io"
@@ -216,22 +217,39 @@ func Log_CreateDirectory(fileId string) {
 
 func Log_GetDefFileTempalte(fileId string) {
 
-	defContext := os.Getenv("DEFS")
-	decoded, err := base64.StdEncoding.DecodeString(defContext)
+	//Open DefFile template
 
-	fmt.Println(string(decoded))
+	defFileTemplate, err := os.Open("util/templates/Defs.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer defFileTemplate.Close()
+
+	//Create New File
+
 	newFilePath := "localstorage/" + fileId + "/Defs.txt"
 	newFile, err := os.Create(newFilePath)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer newFile.Close()
-	newFile.Write(decoded)
+
+	//Copy bytes create a new Template
+
+	// Copy the bytes to destination from source
+	bytesWritten, err := io.Copy(newFile, defFileTemplate)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("Copied %d bytes.", bytesWritten)
+
+	// Commit the file contents
+	// Flushes memory to disk
 	err = newFile.Sync()
 	if err != nil {
 		log.Fatal(err)
 	}
-
 
 }
 
@@ -258,7 +276,7 @@ func Log_Download_LogFile(fileId string) {
 	}
 
 	data := Log_GetContent(object, filename, fileId)
-	os.MkdirAll("localstorage/"+fileId,0755)
+	os.MkdirAll("localstorage/"+fileId, 0755)
 	file, err := os.OpenFile(
 		"localstorage/"+fileId+"/"+filename,
 		os.O_WRONLY|os.O_TRUNC|os.O_CREATE,
@@ -285,7 +303,7 @@ func Log_download_Script(fileId string) {
 		return
 	}
 
-	os.MkdirAll("localstorage/"+fileId,0755)
+	os.MkdirAll("localstorage/"+fileId, 0755)
 	file, err := os.OpenFile(
 		"localstorage/"+fileId+"/script.txt",
 		os.O_WRONLY|os.O_TRUNC|os.O_CREATE,
@@ -389,5 +407,29 @@ func Log_Append_LDEL_ResultLocation(fileId string) {
 	if _, err := defFile.WriteString(newDef); err != nil {
 		log.Println(err)
 	}
+
+}
+
+func ArchiveFile(fileName string, content string) []byte {
+	buf := new(bytes.Buffer)
+	w := zip.NewWriter(buf)
+
+	f, err := w.Create(fileName)
+
+	if err != nil {
+		log.Println(err)
+	}
+	_, err = f.Write([]byte(content))
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = w.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	val := buf.Bytes()
+
+	return val
 
 }

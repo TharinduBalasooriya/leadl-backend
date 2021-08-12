@@ -53,11 +53,13 @@ func (l *LogRepository) SaveLog(log datamodels.Log) (interface{}, error) {
 
 }
 
-func (l *LogRepository) CheckLogExist(logfile datamodels.Log) (bool, string) {
+func (l *LogRepository) CheckLogExist(logfile datamodels.Log) (bool) {
 
+	fmt.Println("check Exist Called")
+	fmt.Println(logfile.FileId)
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 
-	result := log_collection.FindOne(ctx, bson.M{"username": logfile.Username, "projectId": logfile.ProjectId, "logfilename": logfile.LogFileName})
+	result := log_collection.FindOne(ctx, bson.M{"fileid":logfile.FileId})
 
 	var resultLog bson.M
 
@@ -68,11 +70,11 @@ func (l *LogRepository) CheckLogExist(logfile datamodels.Log) (bool, string) {
 	*/
 	if len(resultLog) == 0 {
 
-		return false, ""
+		return false
 
 	} else {
-		stringObjectId := resultLog["_id"].(primitive.ObjectID).Hex()
-		return true, stringObjectId
+		//stringObjectId := resultLog["_id"].(primitive.ObjectID).Hex()
+		return true
 	}
 
 }
