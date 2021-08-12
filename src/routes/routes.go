@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/api"
+	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/middleware"
 	"github.com/gorilla/mux"
 
 	//"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/middleware"
@@ -16,7 +17,7 @@ func LogRoutes() *mux.Router {
 	router = mux.NewRouter().StrictSlash(true)
 
 
-	//router.Use(middleware.LoggingMiddleware)
+	router.Use(middleware.LoggingMiddleware)
 	//Get All Log files
 
 	router.HandleFunc("/",func(rw http.ResponseWriter, r *http.Request) {
