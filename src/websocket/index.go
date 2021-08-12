@@ -1,12 +1,11 @@
 package websocket
 
 import (
-	"encoding/json"
-	"fmt"
-	"log"
-	"net/http"
+    "encoding/json"
+    "fmt"
+    "net/http"
 
-	"github.com/gorilla/websocket"
+    "github.com/gorilla/websocket"
 )
 
 func init(){
@@ -67,7 +66,6 @@ func (manager *ClientManager) start() {
                 }
             }
         case uniMessage := <-manager.unicast:
-            log.Println("UniCast")
             id := uniMessage.Recipient
             for conn := range manager.clients{
                 if conn.id == id {
@@ -76,7 +74,7 @@ func (manager *ClientManager) start() {
 
                     select{
                     case conn.send <- jsonMessage:
-                        log.Println(string(jsonMessage))
+                        fmt.Println(string(jsonMessage))
                     default:
                         close(conn.send)
                         delete(manager.clients,conn)
