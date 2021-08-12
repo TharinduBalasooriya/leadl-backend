@@ -1,11 +1,12 @@
 package websocket
 
 import (
-    "encoding/json"
-    "fmt"
-    "net/http"
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
 
-    "github.com/gorilla/websocket"
+	"github.com/gorilla/websocket"
 )
 
 func init(){
