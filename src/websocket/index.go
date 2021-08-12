@@ -66,6 +66,7 @@ func (manager *ClientManager) start() {
                 }
             }
         case uniMessage := <-manager.unicast:
+            log.Println("UniCast")
             id := uniMessage.Recipient
             for conn := range manager.clients{
                 if conn.id == id {
@@ -74,7 +75,7 @@ func (manager *ClientManager) start() {
 
                     select{
                     case conn.send <- jsonMessage:
-                        fmt.Println(string(jsonMessage))
+                        log.Println(string(jsonMessage))
                     default:
                         close(conn.send)
                         delete(manager.clients,conn)
