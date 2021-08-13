@@ -15,7 +15,10 @@ func LogRoutes() *mux.Router {
 	router = mux.NewRouter().StrictSlash(true)
 
 
-	router.Use(middleware.LoggingMiddleware)
+	/*
+		TODO:Implement a sub router
+	*/
+	//router.Use(middleware.LoggingMiddleware)
 	//Get All Log files
 
 	router.HandleFunc("/",func(rw http.ResponseWriter, r *http.Request) {
