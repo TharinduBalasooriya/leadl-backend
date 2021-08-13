@@ -21,7 +21,7 @@ func LoggingMiddleware(next http.Handler) http.Handler {
 				jwt.WithKeySet(keyset),
 				jwt.WithValidate(true),
 				jwt.WithIssuer("https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_l2HIVx6A2"),
-				jwt.WithClaimValue("email_verified", true),
+				
 			)
 
 			if err != nil {
