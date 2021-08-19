@@ -95,7 +95,7 @@ const (
 	S3_BUCKET = "leadl"
 )
 
-func ExecuteLDEL(fileId string) interface{} {
+func ExecuteLDEL(fileId string) (interface{}, interface{}) {
 
 	logFileDetails := logrepo.GetLogFileDetails(fileId)
 	service.Log_Download_LogFile(fileId)
@@ -103,9 +103,10 @@ func ExecuteLDEL(fileId string) interface{} {
 	Config_LDEL_DEF(logFileDetails.LogFileName, logFileDetails.FileId)
 	service.Log_Execute_LDEL(fileId)
 	result := service.Log_Read_Result(fileId)
+	JSONresult := service.Log_Read_JSONResult(fileId)
 
-	os.RemoveAll("localstorage/" + fileId)
-	return result
+	//os.RemoveAll("localstorage/" + fileId)
+	return result, JSONresult
 
 }
 
@@ -116,6 +117,7 @@ func Config_LDEL_DEF(logFileName string, fileID string) {
 	service.Log_Append_LDEL_ScriptLocation(fileID)
 	service.Log_Append_LDEL_LogFileLocation(fileID, logFileName)
 	service.Log_Append_LDEL_ResultLocation(fileID)
+	service.Log_Append_LDEL_JSONResultLocation(fileID)
 
 }
 
@@ -155,13 +157,13 @@ func GetToActiveDir(fileId string) string {
 		0666,
 	)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer file.Close()
 
 	_, err = file.Write(data)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	//log.Printf("Wrote %d bytes.\n in localstorage", bytesWritten)
 
@@ -240,27 +242,29 @@ func LogGetFileContentv2(fileId string) interface{} {
 
 func LogSaveDetails(userName string, ProjectId string, logFileName string, fileID string) {
 
+
 	logfile := datamodels.Log{
 		Username:    userName,
 		FileId:      fileID,
 		LogFileName: logFileName,
 		ProjectId:   ProjectId,
-		LastUpdate:  time.Now().Format("2006-01-02 3:4:5 PM"),
+		LastUpdate:  time.Now().String(),
 	}
 
-	exist := logrepo.CheckLogExist(logfile)
+	exist, res := logrepo.CheckLogExist(logfile)
 
 	fmt.Println(exist)
 	if exist {
 
-		log.Println("Logfile Already Exist" + logfile.FileId)
+		fmt.Println("Log Already Exist")
+		logrepo.UpdateTimeStamp(res)
 
 	} else {
 
 		results, err := service.Log_Save_Details(logfile)
 
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 
 		}
 
@@ -283,7 +287,7 @@ func LogUploadFiles(path string, inputfile multipart.File) {
 	// Create a single AWS session (we can re use this if we're uploading many files)
 	s, err := session.NewSession(&aws.Config{Region: aws.String(S3_REGION)})
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	/*

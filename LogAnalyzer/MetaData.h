@@ -58,6 +58,7 @@ public:
     MSTRING s_ELSequenceVarStartIndicator;
     MSTRING s_ELSequenceVarSuffix;
     MSTRING s_ResultFile;
+	MSTRING s_ResultJSONFile;
 };
 
 #endif

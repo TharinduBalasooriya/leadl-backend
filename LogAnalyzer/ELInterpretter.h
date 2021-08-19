@@ -20,6 +20,7 @@ public:
     int millisecondsForParsing;
     int millisecondsForInterpreting;
     ELInterpretterResult();
+    
 };
 
 class ELLineAnnotationElement {
@@ -44,6 +45,7 @@ private:
     WIDESTRING ProcessBlocks(WIDESTRING str, VEC_ELBLOCKTEMPLATE& blockTemplates, VEC_ELLINETEMPLATE& lineTemplates, ELInterpretterResult *res);
     void UnifyBlock(WIDESTRING& str, ELBlockTemplate *block, ELInterpretterResult *res);
     void PrintInterpretterResult(ELInterpretterResult *ir);
+    void PrintInterpretterResultInJSON(ELInterpretterResult *ir);
     VEC_ELBLOCKTEMPLATE GetBlockTemplatesPreparedToHandleRecursiveDefs(VEC_ELBLOCKTEMPLATE& blockTemplates);
     void FillAnnotationElements(PNODE node, ELLineAnnotation *an, MSTRING::size_type& startPos);
 };

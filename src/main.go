@@ -1,6 +1,10 @@
 package main
 
 import (
+
+
+	
+
 	"log"
 	"net/http"
 	"os"
@@ -16,7 +20,7 @@ func LoadEnv() {
 	err := godotenv.Load()
 
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Error loading .env file")
 	}
 
 }
@@ -29,17 +33,19 @@ func main() {
 	//Starting the API server
 	router := routes.LogRoutes()
 
-	os.MkdirAll("temp", 0755)
-	os.MkdirAll("localstorage", 0755)
-	os.MkdirAll("debug_env", 0755)
+
+
+	os.MkdirAll("temp",0755)
+	os.MkdirAll("localstorage",0755)
+	os.MkdirAll("debug_env",0755)
+
 
 	//Load the env file
 	LoadEnv()
-	// http.HandleFunc("/home/",func(rw http.ResponseWriter, r *http.Request) {
-	// 	fmt.Fprintf(rw,"Home Route")
-	// })
+
+	router.Path("/")
 	http.Handle("/", router)
 	//log.Println("Server Started localhost :3000")
-	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization","Token"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"https://leadl-web.herokuapp.com","*"}))(router)))
+	log.Fatal(http.ListenAndServe(":" + os.Getenv("PORT"), handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization","Token"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*","https://leadl-web.herokuapp.com"}))(router)))
 
 }

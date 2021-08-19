@@ -32,7 +32,7 @@ func unzipLogfile(logFIleName string, fileId string) {
 
 	zipReader, err := zip.OpenReader("temp/" + fileId + "/" + logFIleName + os.Getenv("ARCHIVED_EXT"))
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer zipReader.Close()
 
@@ -40,7 +40,7 @@ func unzipLogfile(logFIleName string, fileId string) {
 
 		zippedFile, err := file.Open()
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 		defer zippedFile.Close()
 
@@ -68,7 +68,7 @@ func unzipLogfile(logFIleName string, fileId string) {
 				file.Mode(),
 			)
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 			}
 			defer outputFile.Close()
 
@@ -76,7 +76,7 @@ func unzipLogfile(logFIleName string, fileId string) {
 			// contents to the output file
 			_, err = io.Copy(outputFile, zippedFile)
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 			}
 		}
 	}
@@ -88,7 +88,7 @@ func unzipLogfilev2(logfilename string) {
 
 	zipReader, err := zip.OpenReader("temp/" + logfilename + os.Getenv("BUCKET_ITEM_EXT"))
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer zipReader.Close()
 
@@ -98,7 +98,7 @@ func unzipLogfilev2(logfilename string) {
 		// like a normal file
 		zippedFile, err := file.Open()
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 		defer zippedFile.Close()
 
@@ -131,7 +131,7 @@ func unzipLogfilev2(logfilename string) {
 				file.Mode(),
 			)
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 			}
 			defer outputFile.Close()
 
@@ -139,7 +139,7 @@ func unzipLogfilev2(logfilename string) {
 			// contents to the output file
 			_, err = io.Copy(outputFile, zippedFile)
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 			}
 		}
 	}
@@ -152,7 +152,7 @@ func Log_uploadFiles(fs filestorageHandler.FileStorage) {
 
 	err := fs.AddFiles() // calling add files function of the file storage
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 }
@@ -172,7 +172,7 @@ func Log_GetContent(file_object filestorageHandler.File, logfileName string, fil
 
 	err := file_object.GetContent(fileId)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	unzipLogfile(logfileName, fileId)
 
@@ -190,7 +190,7 @@ func Log_GetContentV2(file_object filestorageHandler.File, logfileName string, f
 
 	err := file_object.GetContent(fileId)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	unzipLogfilev2(logfileName)
 
@@ -211,7 +211,7 @@ func Log_CreateDirectory(fileId string) {
 	err := os.MkdirAll(path, 0755)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 
@@ -221,7 +221,7 @@ func Log_GetDefFileTempalte(fileId string) {
 
 	defFileTemplate, err := os.Open("util/templates/Defs.txt")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	defer defFileTemplate.Close()
@@ -231,7 +231,7 @@ func Log_GetDefFileTempalte(fileId string) {
 	newFilePath := "localstorage/" + fileId + "/Defs.txt"
 	newFile, err := os.Create(newFilePath)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer newFile.Close()
 
@@ -240,7 +240,7 @@ func Log_GetDefFileTempalte(fileId string) {
 	// Copy the bytes to destination from source
 	bytesWritten, err := io.Copy(newFile, defFileTemplate)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	log.Printf("Copied %d bytes.", bytesWritten)
 
@@ -248,7 +248,7 @@ func Log_GetDefFileTempalte(fileId string) {
 	// Flushes memory to disk
 	err = newFile.Sync()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 }
@@ -283,12 +283,12 @@ func Log_Download_LogFile(fileId string) {
 		0666,
 	)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer file.Close()
 	bytesWritten, err := file.Write(data)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	log.Printf("Wrote %d bytes.\n", bytesWritten)
 
@@ -310,12 +310,12 @@ func Log_download_Script(fileId string) {
 		0666,
 	)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer file.Close()
 	bytesWritten, err := file.Write(script)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	log.Printf("Wrote %d bytes.\n", bytesWritten)
 
@@ -327,13 +327,42 @@ func Log_Read_Result(fileId string) interface{} {
 	// Open file for reading
 	file, err := os.Open(resultFilePath)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer file.Close()
 
 	data, err := ioutil.ReadAll(file)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+	}
+
+	type Response struct {
+		FileId string `json:"fileId"`
+		Result string `json:"result"`
+	}
+
+	response := Response{}
+
+	response.FileId = fileId
+	response.Result = string(data)
+
+	return response
+
+}
+
+func Log_Read_JSONResult(fileId string) interface{} {
+	resultFilePath := "localstorage/" + fileId + "/JSONresult.json"
+
+	// Open file for reading
+	file, err := os.Open(resultFilePath)
+	if err != nil {
+		log.Println(err)
+	}
+	defer file.Close()
+
+	data, err := ioutil.ReadAll(file)
+	if err != nil {
+		log.Println(err)
 	}
 
 	type Response struct {
@@ -410,6 +439,26 @@ func Log_Append_LDEL_ResultLocation(fileId string) {
 
 }
 
+func Log_Append_LDEL_JSONResultLocation(fileId string) {
+
+	defFileLocation := "localstorage/" + fileId + "/Defs.txt"
+	newDef := "DEF	LDEL_RESULT_JSONFILE			../src/localstorage/" + fileId + "/JSONresult.json\n"
+
+	defFile, err := os.OpenFile(defFileLocation,
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer defFile.Close()
+
+	if _, err := defFile.WriteString(newDef); err != nil {
+		log.Println(err)
+	}
+
+}
+
 func ArchiveFile(fileName string, content string) []byte {
 	buf := new(bytes.Buffer)
 	w := zip.NewWriter(buf)
@@ -421,11 +470,11 @@ func ArchiveFile(fileName string, content string) []byte {
 	}
 	_, err = f.Write([]byte(content))
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	err = w.Close()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	val := buf.Bytes()

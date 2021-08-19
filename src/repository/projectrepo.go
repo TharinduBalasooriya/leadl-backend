@@ -29,7 +29,7 @@ func init() {
 	clientOptions := options.Client().ApplyURI("mongodb+srv://tharindu:tharindu@cluster0.vnll5.mongodb.net/myFirstDB?retryWrites=true&w=majority")
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	project_collection = client.Database("leadldb").Collection(ProjectCollection)
 
@@ -115,7 +115,7 @@ func (l *ProjectRepository) UpadteProject(project datamodels.Project) interface{
 	result, err := project_collection.UpdateOne(ctx, filter, update, opts)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	fmt.Printf("Updated %v Documents!\n", result.ModifiedCount)
 
@@ -130,7 +130,7 @@ func (l *ProjectRepository) DeleteProject(projectId string) interface{} {
 	id, _ := primitive.ObjectIDFromHex(projectId)
 	result, err := project_collection.DeleteOne(ctx, bson.M{"_id": id})
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	fmt.Printf("DeleteOne removed %v document(s)\n", result.DeletedCount)
 

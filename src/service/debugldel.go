@@ -25,14 +25,14 @@ func WriteDebugLogFile(request datamodels.DebugRequest) {
 		0666,
 	)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer file.Close()
 
 	data ,err := base64.StdEncoding.DecodeString(request.LogFile)
 	_, err = file.Write(data)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 }
@@ -50,14 +50,14 @@ func WriteDebugScriptFile(request datamodels.DebugRequest) {
 		0666,
 	)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer file.Close()
 
 	data ,err := base64.StdEncoding.DecodeString(request.LDELScript)
 	_, err = file.Write(data)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 }
@@ -65,7 +65,7 @@ func WriteDebugScriptFile(request datamodels.DebugRequest) {
 func CreateDebugDefFile(projectId string) {
 	defFileTemplate, err := os.Open("util/templates/Defs.txt")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	defer defFileTemplate.Close()
@@ -73,14 +73,14 @@ func CreateDebugDefFile(projectId string) {
 	newFilePath := "debug_env/" +projectId+"/Defs.txt"
 	newFile, err := os.Create(newFilePath)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer newFile.Close()
 
 	// Copy the bytes to destination from source
 	bytesWritten, err := io.Copy(newFile, defFileTemplate)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	log.Printf("Copied %d bytes.", bytesWritten)
 
@@ -88,7 +88,7 @@ func CreateDebugDefFile(projectId string) {
 	// Flushes memory to disk
 	err = newFile.Sync()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 }
@@ -128,13 +128,13 @@ func GetDebugResult(projectId string) (response datamodels.DebugResponse){
 	// Open file for reading
 	file, err := os.Open("debug_env/"+projectId+"/result.txt")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer file.Close()
 
 	data, err := ioutil.ReadAll(file)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	  response.Result = string(data)
 	  defer cleanProjectFolder(projectId,file)
@@ -146,6 +146,6 @@ func cleanProjectFolder(projectID string,file *os.File){
 	file.Close()
 	err := os.RemoveAll("debug_env/"+projectID)
     if err != nil {
-        log.Fatal(err)
+        log.Println(err)
     }
 }

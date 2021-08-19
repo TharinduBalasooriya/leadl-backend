@@ -7,7 +7,7 @@ type Project struct {
 	ProjectName  string             `json:"projectname"`
 	UserId       string             `json:"userid"`
 	ExpireDate   string             `json:"expiredate"`
-	ScriptStatus bool               `json:"scriptStatus"`
+	ScriptStatus bool             `json:"scriptStatus"`
 	Script       string             `json:"script"`
 	Createdate   string             `json:"createdate"`
 }

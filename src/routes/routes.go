@@ -2,75 +2,78 @@ package routes
 
 import (
 	"fmt"
+	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/websocket"
 	"net/http"
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/api"
 	"github.com/gorilla/mux"
-	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/websocket"
 )
 
-func LogRoutes() *mux.Router {
-	var router = mux.NewRouter()
-	router = mux.NewRouter().StrictSlash(true)
+func LogRoutes() (*mux.Router ){
+
+	router := mux.NewRouter().StrictSlash(true)
+	apiRoutes := router.PathPrefix("/api").Subrouter().StrictSlash(true)
 
 
-	/*
-		TODO:Implement a sub router
-	*/
-	//router.Use(middleware.LoggingMiddleware)
+
 	//Get All Log files
-
+	router.HandleFunc("/ws", websocket.WSPage).Methods("GET")
 	router.HandleFunc("/",func(rw http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(rw,"HomeRoute")
 	})
-	router.HandleFunc("/api/logs/{user}/", api.GetAllLog).Methods("GET")
+
+	//apiRoutes.Use(middleware.LoggingMiddleware)
+	apiRoutes.HandleFunc("/logs/{user}/", api.GetAllLog).Methods("GET")
 
 	//getAllProjetcs
-	router.HandleFunc("/api/projects/{user}/", api.GetAllProjects).Methods("GET")
+	apiRoutes.HandleFunc("/projects/{user}/", api.GetAllProjects).Methods("GET")
 
 	//upload file
-	router.HandleFunc("/api/uploads/", api.HandleLogFileUpload).Methods("POST")
+	apiRoutes.HandleFunc("/uploads/", api.HandleLogFileUpload).Methods("POST")
 
-	router.HandleFunc("/api/uploadSripts/", api.HandleSrciptUpload).Methods("POST")
+	apiRoutes.HandleFunc("/uploadSripts/", api.HandleSrciptUpload).Methods("POST")
 
 	//get log file content v2
 
-	router.HandleFunc("/api/v2/content/{fileId}", api.GetLogFileContentv2).Methods("GET")
+	apiRoutes.HandleFunc("/v2/content/{fileId}", api.GetLogFileContentv2).Methods("GET")
 
 	//catch the log file updates
 
-	router.HandleFunc("/api/updates", api.HandleFileUpdates).Methods("POST")
+	apiRoutes.HandleFunc("/updates", api.HandleFileUpdates).Methods("POST")
 
 	//GetLogsByUserandProject
-	router.HandleFunc("/api/logs/getByProject/{id}/", api.GetLogListByProjectID).Methods("GET")
-	router.HandleFunc("/ws", websocket.WSPage).Methods("GET")
+	apiRoutes.HandleFunc("/logs/getByProject/{id}/", api.GetLogListByProjectID).Methods("GET")
+
 
 	//Invoke Interpreter
-	router.HandleFunc("/api/executeLDEL/{fileId}", api.HandleInvokeELInterpreter).Methods("GET")
+	apiRoutes.HandleFunc("/executeLDEL/{fileId}", api.HandleInvokeELInterpreter).Methods("GET")
 
-	
+	//Get JOSN script result
+	apiRoutes.HandleFunc("/executeGetJSON/{fileId}", api.HandleInvokeELInterpreterGetJSON).Methods("GET")
+
+
 
 	//Craete a project
-	router.HandleFunc("/api/project", api.HandleProject).Methods("POST")
-	router.HandleFunc("/api/project/{id}", api.GetProjectDetails).Methods("GET")
+	apiRoutes.HandleFunc("/project", api.HandleProject).Methods("POST")
+	apiRoutes.HandleFunc("/project/{id}", api.GetProjectDetails).Methods("GET")
 	//fetch a project by userId
-	router.HandleFunc("/api/projectV2/{user}", api.GetAllProjectsV2).Methods("Get")
+	apiRoutes.HandleFunc("/projectV2/{user}", api.GetAllProjectsV2).Methods("Get")
 
 	//update project
-	router.HandleFunc("/api/project/update", api.HandleUpdateProjects).Methods("PUT")
+	apiRoutes.HandleFunc("/project/update", api.HandleUpdateProjects).Methods("PUT")
 
 	//delete project
-	router.HandleFunc("/api/project/delete/{projectID}", api.HandleDeleteProjects).Methods("DELETE")
+	apiRoutes.HandleFunc("/project/delete/{projectID}", api.HandleDeleteProjects).Methods("DELETE")
 
 	//check project existance 
-	router.HandleFunc("/api/project/check/{userId}/{projectName}", api.HandleExistProjects).Methods("GET")
+	apiRoutes.HandleFunc("/project/check/{userId}/{projectName}", api.HandleExistProjects).Methods("GET")
 
-	router.HandleFunc("/api/logs/activateLog/{fileId}", api.HandleActiavetLogFile).Methods("GET")
+	apiRoutes.HandleFunc("/logs/activateLog/{fileId}", api.HandleActiavetLogFile).Methods("GET")
 
-	router.HandleFunc("/api/debug/{projectId}", api.HandelDebugLDEL).Methods("GET")
+	apiRoutes.HandleFunc("/debug/{projectId}", api.HandelDebugLDEL).Methods("GET")
 
-	router.HandleFunc("/api/debug_save", api.HandleDebugProject).Methods("POST")
-	router.HandleFunc("/api/logs/update",api.HandleLogFileUpdate).Methods("PUT")
+	apiRoutes.HandleFunc("/debug_save", api.HandleDebugProject).Methods("POST")
+	apiRoutes.HandleFunc("/logs/update",api.HandleLogFileUpdate).Methods("PUT")
 	
 
 	return router

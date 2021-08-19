@@ -172,6 +172,11 @@ void DefFileReader::AddKeyAndValue(MetaData* pMD, MSTRING sKey, MSTRING sVal)
         pMD->s_ResultFile = sVal;
     }
 
+	 //read result file
+    else if(_MSTR(LDEL_RESULT_JSONFILE) == sKey) {
+        pMD->s_ResultJSONFile = sVal;
+    }
+
 
     else if(_MSTR(LDEL_ASSIGNMENT) == sKey)
 	{

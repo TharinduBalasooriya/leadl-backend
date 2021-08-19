@@ -28,7 +28,7 @@ func ProjectSaveDetails(project datamodels.Project) {
 		results, err := service.Project_Save_Details(project)
 
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 
 		}
 

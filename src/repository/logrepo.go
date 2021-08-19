@@ -36,7 +36,7 @@ func init() {
 	clientOptions := options.Client().ApplyURI("mongodb+srv://tharindu:tharindu@cluster0.vnll5.mongodb.net/myFirstDB?retryWrites=true&w=majority")
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	log_collection = client.Database("leadldb").Collection(LogsCollection)
 
@@ -53,13 +53,11 @@ func (l *LogRepository) SaveLog(log datamodels.Log) (interface{}, error) {
 
 }
 
-func (l *LogRepository) CheckLogExist(logfile datamodels.Log) (bool) {
+func (l *LogRepository) CheckLogExist(logfile datamodels.Log) (bool, string) {
 
-	fmt.Println("check Exist Called")
-	fmt.Println(logfile.FileId)
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 
-	result := log_collection.FindOne(ctx, bson.M{"fileid":logfile.FileId})
+	result := log_collection.FindOne(ctx, bson.M{"username": logfile.Username, "projectId": logfile.ProjectId, "logfilename": logfile.LogFileName})
 
 	var resultLog bson.M
 
@@ -70,11 +68,11 @@ func (l *LogRepository) CheckLogExist(logfile datamodels.Log) (bool) {
 	*/
 	if len(resultLog) == 0 {
 
-		return false
+		return false, ""
 
 	} else {
-		//stringObjectId := resultLog["_id"].(primitive.ObjectID).Hex()
-		return true
+		stringObjectId := resultLog["_id"].(primitive.ObjectID).Hex()
+		return true, stringObjectId
 	}
 
 }
@@ -95,7 +93,7 @@ func (l *LogRepository) UpdateTimeStamp(objectId string) {
 	)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	fmt.Printf("Time stamp updated %v", result.MatchedCount)

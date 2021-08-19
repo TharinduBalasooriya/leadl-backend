@@ -162,23 +162,30 @@ func HandleInvokeELInterpreter(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 
-
-	result := controller.ExecuteLDEL(params["fileId"])
+	result, _ := controller.ExecuteLDEL(params["fileId"])
 
 	json.NewEncoder(w).Encode(result)
-
-
 }
 
-func HandleLogFileUpdate(w http.ResponseWriter, r *http.Request){
+func HandleInvokeELInterpreterGetJSON(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+
+	_, result := controller.ExecuteLDEL(params["fileId"])
+
+	json.NewEncoder(w).Encode(result)
+}
+
+func HandleLogFileUpdate(w http.ResponseWriter, r *http.Request) {
 	var logfileDetails datamodels.Log_Update
 	err := json.NewDecoder(r.Body).Decode(&logfileDetails)
-	if err != nil{
+	if err != nil {
 		log.SetFlags(log.LstdFlags | log.Lshortfile)
 		log.Println(err)
 	}
-	 result := controller.LogUpdateFile(logfileDetails)
+	result := controller.LogUpdateFile(logfileDetails)
 
-	 fmt.Fprintln(w,result)
+	fmt.Fprintln(w, result)
 
 }

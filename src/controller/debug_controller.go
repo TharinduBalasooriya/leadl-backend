@@ -7,12 +7,8 @@ import (
 
 func GetLDELDebugResult(projectId string) datamodels.DebugResponse {
 
-
-
-
-
-	 service.CreateDebugDefFile(projectId)
-	 service.ConfigDebugDefsFile(projectId)
+	service.CreateDebugDefFile(projectId)
+	service.ConfigDebugDefsFile(projectId)
 
 	var response datamodels.DebugResponse
 	response = service.GetDebugResult(projectId)
@@ -20,8 +16,7 @@ func GetLDELDebugResult(projectId string) datamodels.DebugResponse {
 
 }
 
-
-func SaveDebugProject(request datamodels.DebugRequest){
+func SaveDebugProject(request datamodels.DebugRequest) {
 
 	service.WriteDebugLogFile(request)
 	service.WriteDebugScriptFile(request)

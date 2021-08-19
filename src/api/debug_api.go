@@ -2,10 +2,11 @@ package api
 
 import (
 	"encoding/json"
+	"net/http"
+
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/controller"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/datamodels"
 	"github.com/gorilla/mux"
-	"net/http"
 )
 
 func HandelDebugLDEL(w http.ResponseWriter , r *http.Request ){
@@ -15,7 +16,7 @@ func HandelDebugLDEL(w http.ResponseWriter , r *http.Request ){
 	result := controller.GetLDELDebugResult(params["projectId"])
 	err := json.NewEncoder(w).Encode(result)
 	if err != nil {
-		println(err.Error())
+	 
 	}
 
 

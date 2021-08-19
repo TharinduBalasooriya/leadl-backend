@@ -1,0 +1,297 @@
+{ 
+"Time spent parsing": "13 ms",
+"Time spent interpreting": "1 ms",
+"Results":[
+
+{
+	"LINE"	 :	"TEST_SUITE_START",
+	"Value"	: "Test Suite 'ApiNotificationManagerTests' started at 2013-07-07 22:01:41 +0000",
+
+	"child":[
+	{
+		"VARIABLE SEQUENCE"	 :	"TEST_SUITE_START",
+		"Value"	: "Test Suite 'ApiNotificationManagerTests' started at 2013-07-07 22:01:41 +0000",
+	
+		"child":[
+		{
+			"VARIABLE"	 :	"CONSTANT STRING",
+			"Value"	: "Test Suite '",
+		
+			"child":[]},
+		{
+			"VARIABLE"	 :	"TEST_SUITE",
+			"Value"	: "ApiNotificationManagerTests",
+		
+			"child":[]},
+		{
+			"VARIABLE"	 :	"CONSTANT STRING",
+			"Value"	: "' started at ",
+		
+			"child":[]},
+		{
+			"VARIABLE SEQUENCE"	 :	"TIMESTAMP",
+			"Value"	: "2013-07-07 22:01:41 +0000",
+		
+			"child":[
+			{
+				"VARIABLE"	 :	"YEAR",
+				"Value"	: "2013",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: "-",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"MONTH",
+				"Value"	: "07",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: "-",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"DATE",
+				"Value"	: "07",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: " ",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"HOUR",
+				"Value"	: "22",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: ":",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"MINUTE",
+				"Value"	: "01",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: ":",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"SECONDS",
+				"Value"	: "41",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: " +",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"Anonymous",
+				"Value"	: "0000",
+			
+				"child":[]}]
+		}]
+	}]
+},
+{
+	"BLOCK"	 :	"TEST_EXECUTION",
+	"Value"	: "",
+
+	"child":[
+	{
+		"BLOCK"	 :	"TEST_EXECUTION_SUCCESS",
+		"Value"	: "",
+	
+		"child":[
+		{
+			"LINE"	 :	"TEST_START",
+			"Value"	: "Test Case '-[ApiNotificationManagerTests testThatClassExists]' started.",
+		
+			"child":[
+			{
+				"VARIABLE SEQUENCE"	 :	"TEST_START",
+				"Value"	: "Test Case '-[ApiNotificationManagerTests testThatClassExists]' started.",
+			
+				"child":[
+				{
+					"VARIABLE"	 :	"CONSTANT STRING",
+					"Value"	: "Test Case '-[",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"TEST_SUITE",
+					"Value"	: "ApiNotificationManagerTests",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"CONSTANT STRING",
+					"Value"	: " ",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"TEST",
+					"Value"	: "testThatClassExists",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"CONSTANT STRING",
+					"Value"	: "]' started.",
+				
+					"child":[]}]
+			}]
+		},
+		{
+			"LINE"	 :	"TEST_PASSED",
+			"Value"	: "Test Case '-[ApiNotificationManagerTests testThatClassExists]' passed (0.000 seconds).",
+		
+			"child":[
+			{
+				"VARIABLE SEQUENCE"	 :	"TEST_PASSED",
+				"Value"	: "Test Case '-[ApiNotificationManagerTests testThatClassExists]' passed (0.000 seconds).",
+			
+				"child":[
+				{
+					"VARIABLE"	 :	"CONSTANT STRING",
+					"Value"	: "Test Case '-[",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"TEST_SUITE",
+					"Value"	: "ApiNotificationManagerTests",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"CONSTANT STRING",
+					"Value"	: " ",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"TEST",
+					"Value"	: "testThatClassExists",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"CONSTANT STRING",
+					"Value"	: "]' passed (",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"TIME_INTERVAL",
+					"Value"	: "",
+				
+					"child":[]},
+				{
+					"VARIABLE"	 :	"CONSTANT STRING",
+					"Value"	: " seconds).",
+				
+					"child":[]}]
+			}]
+		}]
+	}]
+},
+{
+	"LINE"	 :	"TEST_SUITE_END",
+	"Value"	: "Test Suite 'ApiNotificationManagerTests' finished at 2013-07-07 22:01:41 +0000.",
+
+	"child":[
+	{
+		"VARIABLE SEQUENCE"	 :	"TEST_SUITE_END",
+		"Value"	: "Test Suite 'ApiNotificationManagerTests' finished at 2013-07-07 22:01:41 +0000",
+	
+		"child":[
+		{
+			"VARIABLE"	 :	"CONSTANT STRING",
+			"Value"	: "Test Suite '",
+		
+			"child":[]},
+		{
+			"VARIABLE"	 :	"TEST_SUITE",
+			"Value"	: "ApiNotificationManagerTests",
+		
+			"child":[]},
+		{
+			"VARIABLE"	 :	"CONSTANT STRING",
+			"Value"	: "' finished at ",
+		
+			"child":[]},
+		{
+			"VARIABLE SEQUENCE"	 :	"TIMESTAMP",
+			"Value"	: "2013-07-07 22:01:41 +0000",
+		
+			"child":[
+			{
+				"VARIABLE"	 :	"YEAR",
+				"Value"	: "2013",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: "-",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"MONTH",
+				"Value"	: "07",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: "-",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"DATE",
+				"Value"	: "07",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: " ",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"HOUR",
+				"Value"	: "22",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: ":",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"MINUTE",
+				"Value"	: "01",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: ":",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"SECONDS",
+				"Value"	: "41",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"CONSTANT STRING",
+				"Value"	: " +",
+			
+				"child":[]},
+			{
+				"VARIABLE"	 :	"Anonymous",
+				"Value"	: "0000",
+			
+				"child":[]}]
+		}]
+	}]
+}]}

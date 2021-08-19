@@ -39,12 +39,14 @@ public:
     ELNodeWrapper* AddChild(ELNodeWrapperInfo& info);
     MSTRING PrintNode();
     void PrintNodeToFile(MOFSTREAM& file);
+    void PrintNodeToJSONFile(MOFSTREAM& file);
     
 private:
     static MULONG nodeId;
     
     ELNodeWrapper();
     void PrintNodeToFile(MOFSTREAM& file, PNODE theNode, int tabCount);
+    void PrintNodeToJSONFile(MOFSTREAM& file, PNODE theNode, int tabCount);
     void StartNewLine(MOFSTREAM& file, int tabCount);
     
 protected:
