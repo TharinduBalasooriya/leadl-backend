@@ -1,4 +1,4 @@
-DEF	RULE_FILE_NAME					/home/codebind/go/src/github.com/isini/Code/tests/test3/AppVerifierLog.txt
+
 DEF	LINE_CONTINUATION_STRING			__
 DEF	FUNCTION_SEPERATOR				.
 DEF	EQUAL_SIGN					:=

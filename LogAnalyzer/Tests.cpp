@@ -7,6 +7,7 @@
 #include "Node.h"
 #include "MemMan.h"
 #include "ELInterpretter.h"
+#include "LDAL_Wrapper.h"
 
 void Tests::RunTest1()
 {
@@ -92,4 +93,10 @@ void Tests::RunLDELtest2() {
     ELInterpretter intp;
     intp.EvaluateCase("/Users/dileepaj/Dileepa/WorkDir/LogAnalyzer/tests/LDEL_test2/Defs.txt");
 }
+void RunLDALWrapper(){
+    LDAL_Wrapper lw;
+    lw.GetLDALResult("/home/codebind/Tracified/LDAL_TESTS/Defs.txt");
+
+}
+
 

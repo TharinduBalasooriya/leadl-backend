@@ -189,3 +189,18 @@ func HandleLogFileUpdate(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, result)
 
 }
+
+func HandleExecuteLDAL(w http.ResponseWriter, r *http.Request){
+	//var ldalRequest datamodels.LDALRequest
+	params := mux.Vars(r)
+
+	
+	result := controller.ExecuteLDAL(params["scriptId"])
+
+	var LDALResult datamodels.LDALscriptResult
+	LDALResult.SciptId = params["scriptId"]
+	LDALResult.Result = result
+	json.NewEncoder(w).Encode(LDALResult)
+
+
+}

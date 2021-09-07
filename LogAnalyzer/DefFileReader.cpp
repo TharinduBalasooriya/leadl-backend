@@ -166,6 +166,11 @@ void DefFileReader::AddKeyAndValue(MetaData* pMD, MSTRING sKey, MSTRING sVal)
     else if(_MSTR(LDEL_LOG_FILE) == sKey) {
         pMD->s_LogFile = sVal;
     }
+    //LDAL TREE LOCATION
+    else if(_MSTR(TREE_LOCATION)== sKey)
+    {
+        pMD->s_TREELocation = sVal;
+    }
 
     //read result file
     else if(_MSTR(LDEL_RESULT_FILE) == sKey) {

@@ -11,16 +11,11 @@ import (
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/datamodels"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	
+	db "github.com/TharinduBalasooriya/LogAnalyzerBackend/src/util/db"
 )
 
-// type LogRepository interface {
-// 	SaveLog(log datamodels.Log)
-// 	GetAll()
-// 	GetByUserName(user string)
-// 	GetByProjectname(projectname string)
-// }
-//
+
 var log_collection = new(mongo.Collection)
 
 const LogsCollection = "Logs"
@@ -29,18 +24,25 @@ const LogsCollection = "Logs"
 	Initalizing database configeration
 */
 
-func init() {
+func init(){
 
-	fmt.Println("Database Connection Established")
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	clientOptions := options.Client().ApplyURI("mongodb+srv://tharindu:tharindu@cluster0.vnll5.mongodb.net/myFirstDB?retryWrites=true&w=majority")
-	client, err := mongo.Connect(ctx, clientOptions)
-	if err != nil {
-		log.Println(err)
-	}
-	log_collection = client.Database("leadldb").Collection(LogsCollection)
+	log_collection = db.Client.Database(Database).Collection(LogsCollection)
 
 }
+
+
+// func init() {
+
+// 	fmt.Println("Database Connection Established")
+// 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+// 	clientOptions := options.Client().ApplyURI("mongodb+srv://tharindu:tharindu@cluster0.vnll5.mongodb.net/myFirstDB?retryWrites=true&w=majority")
+// 	client, err := mongo.Connect(ctx, clientOptions)
+// 	if err != nil {
+// 		log.Println(err)
+// 	}
+// 	log_collection = client.Database("leadldb").Collection(LogsCollection)
+
+// }
 
 type LogRepository struct{}
 

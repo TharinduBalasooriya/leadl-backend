@@ -12,6 +12,8 @@ public:
     
     void RunLDELtest1();
     void RunLDELtest2();
+
+    void RunLDALWrapper();
 };
 
 

@@ -257,7 +257,7 @@ func Log_Execute_LDEL(fileId string) {
 
 	defFilePath := "localstorage/" + fileId + "/Defs.txt"
 
-	fclLib.NewELInterpretterWrapper().RunELInterpretter(defFilePath)
+	fclLib.NewFCLWrapper().RunELInterpretter(defFilePath)
 }
 
 func Log_Download_LogFile(fileId string) {
@@ -443,6 +443,49 @@ func Log_Append_LDEL_JSONResultLocation(fileId string) {
 
 	defFileLocation := "localstorage/" + fileId + "/Defs.txt"
 	newDef := "DEF	LDEL_RESULT_JSONFILE			../src/localstorage/" + fileId + "/JSONresult.json\n"
+
+	defFile, err := os.OpenFile(defFileLocation,
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer defFile.Close()
+
+	if _, err := defFile.WriteString(newDef); err != nil {
+		log.Println(err)
+	}
+
+}
+
+func Log_Append_LDAL_Tree_Location(fileId string){
+
+
+	defFileLocation := "localstorage/" + fileId + "/Defs.txt"
+	newDef := "DEF	 TREE_LOCATION 			../src/localstorage/" + fileId + "/result.txt\n"
+
+	defFile, err := os.OpenFile(defFileLocation,
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer defFile.Close()
+
+	if _, err := defFile.WriteString(newDef); err != nil {
+		log.Println(err)
+	}
+
+}
+
+func Log_Append_RuleFileLocation(fileId string){
+
+
+	defFileLocation := "localstorage/" + fileId + "/Defs.txt"
+	newDef := "DEF	 RULE_FILE_NAME			../src/localstorage/" + fileId + "/LDAL_Script.txt\n"
+	
 
 	defFile, err := os.OpenFile(defFileLocation,
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)

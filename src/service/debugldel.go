@@ -123,7 +123,7 @@ func ConfigDebugDefsFile(projectID string){
 
 func GetDebugResult(projectId string) (response datamodels.DebugResponse){
 	defFilePath := "debug_env/"+projectId+"/Defs.txt"
-	fclLib.NewELInterpretterWrapper().RunELInterpretter(defFilePath)
+	fclLib.NewFCLWrapper().RunELInterpretter(defFilePath)
 
 	// Open file for reading
 	file, err := os.Open("debug_env/"+projectId+"/result.txt")

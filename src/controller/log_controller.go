@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -16,12 +17,16 @@ import (
 
 	//"io/ioutil"
 
+	fcllib "github.com/TharinduBalasooriya/LogAnalyzerBackend/LogAnalyzer"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/service"
 	filestorageHandler "github.com/TharinduBalasooriya/LogAnalyzerBackend/src/util/filestorage"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+var logrepo repository.LogRepository
+var ldalRepo repository.ScriptRepository
 
 type Loglist struct {
 	UserName string   `json:"userName"`
@@ -48,47 +53,11 @@ func GetProjects(user string) interface{} {
 	return projectList
 }
 
-var logrepo repository.LogRepository
-
 func GetLogListByProjectID(projectId string) interface{} {
 	logList := logrepo.GetLogsByProject_ID(projectId)
 	return logList
 
 }
-
-// func LogGetFileContent(user string, project string, log string) LogContent {
-
-// 	//fmt.Println(user)
-// 	bucket := "leadl/logs/" + user + "/" + project + "/"
-
-// 	/*
-// 		TODO:change extension to config
-// 	*/
-// 	item := log + os.Getenv("BUCKET_ITEM_EXT")
-// 	//item := log + ".txt.zip"
-
-// 	//fmt.Print(bucket+item)
-
-// 	object := filestorageHandler.AWS_S3_Object{
-// 		Bucket: bucket,
-// 		Item:   item,
-// 	}
-
-// 	data := service.Log_GetContent(object, log,)
-
-// 	var dataT = string(data)
-
-// 	logcontent := LogContent{
-// 		FileName: log,
-// 		Content:  dataT,
-// 	}
-
-// 	/*
-// 		TODO:Handle download time
-// 	*/
-// 	return logcontent
-
-// }
 
 const (
 	S3_REGION = "ap-south-1"
@@ -105,7 +74,7 @@ func ExecuteLDEL(fileId string) (interface{}, interface{}) {
 	result := service.Log_Read_Result(fileId)
 	JSONresult := service.Log_Read_JSONResult(fileId)
 
-	//os.RemoveAll("localstorage/" + fileId)
+	os.RemoveAll("localstorage/" + fileId)
 	return result, JSONresult
 
 }
@@ -118,6 +87,8 @@ func Config_LDEL_DEF(logFileName string, fileID string) {
 	service.Log_Append_LDEL_LogFileLocation(fileID, logFileName)
 	service.Log_Append_LDEL_ResultLocation(fileID)
 	service.Log_Append_LDEL_JSONResultLocation(fileID)
+	service.Log_Append_LDAL_Tree_Location(fileID)
+	service.Log_Append_RuleFileLocation(fileID)
 
 }
 
@@ -242,7 +213,6 @@ func LogGetFileContentv2(fileId string) interface{} {
 
 func LogSaveDetails(userName string, ProjectId string, logFileName string, fileID string) {
 
-
 	logfile := datamodels.Log{
 		Username:    userName,
 		FileId:      fileID,
@@ -316,5 +286,30 @@ func HandleUpdateData(update Update) {
 	fmt.Println(update.UserName)
 	fmt.Println(update.ProjectName)
 	fmt.Println(update.Data)
+
+}
+
+func ExecuteLDAL(scriptId string) string {
+	
+
+	var ldalDetails datamodels.LDALscript
+	ldalDetails = ldalRepo.GetLDALScripts(scriptId)
+
+	logFileDetails := logrepo.GetLogFileDetails(ldalDetails.BoundedId)
+	service.Log_Download_LogFile(ldalDetails.BoundedId)
+	service.Log_download_Script(ldalDetails.BoundedId)
+	Config_LDEL_DEF(logFileDetails.LogFileName, logFileDetails.FileId)
+	service.Log_Execute_LDEL(ldalDetails.BoundedId)
+	decodedContent, err := base64.StdEncoding.DecodeString(ldalDetails.Content)
+	if err != nil {
+		log.Println("decode error:", err)
+
+	}
+	service.WriteToFile("localstorage/"+logFileDetails.FileId, "LDAL_Script.txt", string(decodedContent))
+	result := fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + ldalDetails.BoundedId + "/" + "Defs.txt")
+	
+	os.RemoveAll("localstorage/" + logFileDetails.FileId)
+
+	return result
 
 }
