@@ -182,6 +182,11 @@ void DefFileReader::AddKeyAndValue(MetaData* pMD, MSTRING sKey, MSTRING sVal)
         pMD->s_ResultJSONFile = sVal;
     }
 
+    //Debug JSON location
+    else if(_MSTR(DEBUG_JSON)==sKey){
+        pMD->s_DebugJSON_File = sVal;
+    }
+
 
     else if(_MSTR(LDEL_ASSIGNMENT) == sKey)
 	{

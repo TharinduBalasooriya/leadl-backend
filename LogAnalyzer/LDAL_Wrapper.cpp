@@ -13,10 +13,11 @@
 #include "MemMan.h"
 #include "ELInterpretter.h"
 #include "CommonIncludes.h"
+#include "Debugger.h"
 
 
 std::string LDAL_Wrapper::GetLDALResult(std::string defFilePath) {
-    //std::cout << "helllo";
+
     DefFileReader dfr;
     MetaData *pMD = dfr.Read(defFilePath);
 
@@ -46,6 +47,8 @@ std::string LDAL_Wrapper::GetLDALResult(std::string defFilePath) {
 
 
     MSTRING result = pOut->GetAggregatedValue();
+    Debugger b;
+    b.DebugResult(&ec.map_Var,pMD);
 
 
     pLog->DestroyWithSubTree();

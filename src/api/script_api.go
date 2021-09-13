@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/controller"
@@ -60,5 +61,21 @@ func HandleUpdateScripts(w http.ResponseWriter, r *http.Request) {
 	result := controller.UpdateScript(script)
 	fmt.Print(result)
 	json.NewEncoder(w).Encode(result)
+
+}
+
+func HandelDebugLDAL(w http.ResponseWriter, r *http.Request){
+
+	decoder := json.NewDecoder(r.Body)
+	var debugRequest datamodels.LDALDebugRequest
+	err := decoder.Decode(&debugRequest)
+	if(err != nil){
+		log.Println(err)
+	}
+	result := controller.DebugLDAL(debugRequest)
+
+	json.NewEncoder(w).Encode(result)
+
+	
 
 }

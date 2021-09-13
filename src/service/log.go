@@ -260,7 +260,7 @@ func Log_Execute_LDEL(fileId string) {
 	fclLib.NewFCLWrapper().RunELInterpretter(defFilePath)
 }
 
-func Log_Download_LogFile(fileId string) {
+func Log_Download_LogFile(fileId string,requestId string) {
 	logFileDetails := logrepo.GetLogFileDetails(fileId)
 	user := logFileDetails.Username
 	project := logFileDetails.ProjectId
@@ -276,9 +276,9 @@ func Log_Download_LogFile(fileId string) {
 	}
 
 	data := Log_GetContent(object, filename, fileId)
-	os.MkdirAll("localstorage/"+fileId, 0755)
+	os.MkdirAll("localstorage/"+requestId, 0755)
 	file, err := os.OpenFile(
-		"localstorage/"+fileId+"/"+filename,
+		"localstorage/"+requestId+"/"+filename,
 		os.O_WRONLY|os.O_TRUNC|os.O_CREATE,
 		0666,
 	)
@@ -294,7 +294,7 @@ func Log_Download_LogFile(fileId string) {
 
 }
 
-func Log_download_Script(fileId string) {
+func Log_download_Script(fileId string,requestId string) {
 	logFileDetails := logrepo.GetLogFileDetails(fileId)
 	projectDetails := projectrepo.GetProjectDetails(logFileDetails.ProjectId)
 	script, err := base64.StdEncoding.DecodeString(projectDetails.Script)
@@ -303,9 +303,9 @@ func Log_download_Script(fileId string) {
 		return
 	}
 
-	os.MkdirAll("localstorage/"+fileId, 0755)
+	os.MkdirAll("localstorage/"+requestId, 0755)
 	file, err := os.OpenFile(
-		"localstorage/"+fileId+"/script.txt",
+		"localstorage/"+requestId+"/script.txt",
 		os.O_WRONLY|os.O_TRUNC|os.O_CREATE,
 		0666,
 	)
@@ -479,7 +479,26 @@ func Log_Append_LDAL_Tree_Location(fileId string){
 	}
 
 }
+func Log_Append_DebugJSONLocation(requestID string){
 
+	defFileLocation := "localstorage/" + requestID + "/Defs.txt"
+	newDef := "DEF	 DEBUG_JSON 			../src/localstorage/" + requestID + "/Debug_Result.json\n"
+	
+
+	defFile, err := os.OpenFile(defFileLocation,
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer defFile.Close()
+
+	if _, err := defFile.WriteString(newDef); err != nil {
+		log.Println(err)
+	}
+	
+}
 func Log_Append_RuleFileLocation(fileId string){
 
 

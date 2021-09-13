@@ -1,9 +1,13 @@
 package routes
 
 import (
+	
 	"fmt"
-	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/websocket"
+	
 	"net/http"
+	
+
+	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/websocket"
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/api"
 	"github.com/gorilla/mux"
@@ -18,6 +22,7 @@ func LogRoutes() *mux.Router {
 	router.HandleFunc("/ws", websocket.WSPage).Methods("GET")
 	router.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(rw, "HomeRoute")
+		
 	})
 
 	//apiRoutes.Use(middleware.LoggingMiddleware)
@@ -49,6 +54,7 @@ func LogRoutes() *mux.Router {
 	apiRoutes.HandleFunc("/executeGetJSON/{fileId}", api.HandleInvokeELInterpreterGetJSON).Methods("GET")
 	//Execute LDAL Script
 	apiRoutes.HandleFunc("/executeLDAL/{scriptId}", api.HandleExecuteLDAL).Methods("GET")
+	apiRoutes.HandleFunc("/debugLDAL/",api.HandelDebugLDAL).Methods("POST")
 
 	//Craete a project
 	apiRoutes.HandleFunc("/project", api.HandleProject).Methods("POST")
@@ -79,5 +85,6 @@ apiRoutes.HandleFunc("/script/{projectId}", api.HandleGetScriptsByProjectId).Met
 apiRoutes.HandleFunc("/getscript/{id}", api.HandleGetScriptDetails).Methods("GET")
 //update scripts
 apiRoutes.HandleFunc("/script/update", api.HandleUpdateScripts).Methods("PUT")
+
 	return router
 }

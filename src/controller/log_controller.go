@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"encoding/base64"
+	
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -11,13 +11,14 @@ import (
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/datamodels"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/repository"
+	"github.com/google/uuid"
 
 	//"os"
 	"time"
 
 	//"io/ioutil"
 
-	fcllib "github.com/TharinduBalasooriya/LogAnalyzerBackend/LogAnalyzer"
+
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/service"
 	filestorageHandler "github.com/TharinduBalasooriya/LogAnalyzerBackend/src/util/filestorage"
 	"github.com/aws/aws-sdk-go/aws"
@@ -66,15 +67,16 @@ const (
 
 func ExecuteLDEL(fileId string) (interface{}, interface{}) {
 
+	requestId := uuid.New().String();
 	logFileDetails := logrepo.GetLogFileDetails(fileId)
-	service.Log_Download_LogFile(fileId)
-	service.Log_download_Script(fileId)
-	Config_LDEL_DEF(logFileDetails.LogFileName, logFileDetails.FileId)
-	service.Log_Execute_LDEL(fileId)
-	result := service.Log_Read_Result(fileId)
-	JSONresult := service.Log_Read_JSONResult(fileId)
+	service.Log_Download_LogFile(fileId,requestId)
+	service.Log_download_Script(fileId,requestId)
+	Config_LDEL_DEF(logFileDetails.LogFileName, requestId)
+	service.Log_Execute_LDEL(requestId)
+	result := service.Log_Read_Result(requestId)
+	JSONresult := service.Log_Read_JSONResult(requestId)
 
-	os.RemoveAll("localstorage/" + fileId)
+	os.RemoveAll("localstorage/" + requestId)
 	return result, JSONresult
 
 }
@@ -89,6 +91,7 @@ func Config_LDEL_DEF(logFileName string, fileID string) {
 	service.Log_Append_LDEL_JSONResultLocation(fileID)
 	service.Log_Append_LDAL_Tree_Location(fileID)
 	service.Log_Append_RuleFileLocation(fileID)
+	service.Log_Append_DebugJSONLocation(fileID)
 
 }
 
@@ -289,27 +292,4 @@ func HandleUpdateData(update Update) {
 
 }
 
-func ExecuteLDAL(scriptId string) string {
-	
 
-	var ldalDetails datamodels.LDALscript
-	ldalDetails = ldalRepo.GetLDALScripts(scriptId)
-
-	logFileDetails := logrepo.GetLogFileDetails(ldalDetails.BoundedId)
-	service.Log_Download_LogFile(ldalDetails.BoundedId)
-	service.Log_download_Script(ldalDetails.BoundedId)
-	Config_LDEL_DEF(logFileDetails.LogFileName, logFileDetails.FileId)
-	service.Log_Execute_LDEL(ldalDetails.BoundedId)
-	decodedContent, err := base64.StdEncoding.DecodeString(ldalDetails.Content)
-	if err != nil {
-		log.Println("decode error:", err)
-
-	}
-	service.WriteToFile("localstorage/"+logFileDetails.FileId, "LDAL_Script.txt", string(decodedContent))
-	result := fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + ldalDetails.BoundedId + "/" + "Defs.txt")
-	
-	os.RemoveAll("localstorage/" + logFileDetails.FileId)
-
-	return result
-
-}

@@ -14,3 +14,7 @@ type LDALRequest struct {
 	FileId string `json:"fileId"`
 	Script string `json:"script"`
 }
+type LDALDebugRequest struct{
+	Tree string `json:"tree"`
+	Query string `json:"query"`
+}

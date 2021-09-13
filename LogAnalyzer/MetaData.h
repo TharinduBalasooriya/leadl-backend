@@ -33,6 +33,7 @@ public:
 	MSTRING s_Continue;
 	MAP_MULONG_STR	map_FuncNames;
 	MAP_STR_MULONG	map_FuncNamesReverse;
+	MSTRING s_DebugJSON_File;
     
     // Added for LDEL
     MSTRING s_ScriptFile;
@@ -59,7 +60,6 @@ public:
     MSTRING s_ELSequenceVarSuffix;
     MSTRING s_ResultFile;
 	MSTRING s_ResultJSONFile;
-
     MSTRING s_TREELocation;
 };
 
