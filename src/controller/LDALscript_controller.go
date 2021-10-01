@@ -97,9 +97,9 @@ func ExecuteLDAL(scriptId string) (string, error) {
 		//Check custom data types
 		customJSONRequest := cusjsonrepo.GetCustomJson(ldalDetails.BoundedId)
 		Config_LDEL_DEF("", requestId)
-		if(customJSONRequest.JsonType == "TDP"){
+		if customJSONRequest.JsonType == "TDP" {
 			result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
-		}else if(customJSONRequest.JsonType == "Normal"){
+		}else if customJSONRequest.JsonType == "Normal" {
 			result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
 		}else{
 			result = "Invalid custom json  Type"
