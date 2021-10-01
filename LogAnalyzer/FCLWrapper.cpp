@@ -9,6 +9,8 @@
 #include "CommonIncludes.h"
 #include "LDAL_Wrapper.h"
 #include <string>
+//#include "LogJsonParser.h"
+//#include "OTPParser.h"
 
 
 
@@ -22,5 +24,15 @@ std::string FCLWrapper::GetLDALResult(const char *defFilePath) {
     LDAL_Wrapper ldalWrapper ;
     return ldalWrapper.GetLDALResult(defFilePath);
 
+}
+
+std::string FCLWrapper::GetTDPResult(const char *defFilePath) {
+    LDAL_Wrapper ldalWrapper;
+    return  ldalWrapper.GetTDPResult(defFilePath);
+}
+
+std::string  FCLWrapper::GetLogLDALResult(const char *defFilePath) {
+    LDAL_Wrapper ldalWrapper;
+    return  ldalWrapper.GetLOGLDALResult(defFilePath);
 
 }

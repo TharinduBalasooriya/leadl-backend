@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -14,23 +13,18 @@ import (
 	"encoding/base64"
 	"encoding/json"
 
+	"errors"
 	"github.com/google/uuid"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 var LDALscriptrepo repository.ScriptRepository
+var cusjsonrepo repository.CustomJsontRepository
 
-func ScriptSaveDetails(script datamodels.LDALscript) {
+func ScriptSaveDetails(script datamodels.LDALscript) (interface{}, error) {
 
 	results, err := service.Script_Save_Details(script)
 
-	if err != nil {
-		log.Fatal(err)
-
-	}
-
-	id := results.(primitive.ObjectID)
-	fmt.Println("Successfully inserted" + id.String())
+	return results, err
 
 }
 
@@ -55,60 +49,171 @@ func GetScriptByProject(projectId string) []datamodels.LDALscript {
 
 var result string
 
-func ExecuteLDAL(scriptId string) string {
+func ExecuteLDAL(scriptId string) (string, error) {
 
-	requestId := uuid.New().String()
 	var ldalDetails datamodels.LDALscript
+	var result string
+	requestId := uuid.New().String()
+
 	ldalDetails = ldalRepo.GetLDALScripts(scriptId)
 
-	logFileDetails := logrepo.GetLogFileDetails(ldalDetails.BoundedId)
-	service.Log_Download_LogFile(ldalDetails.BoundedId, requestId)
-	service.Log_download_Script(ldalDetails.BoundedId, requestId)
-	Config_LDEL_DEF(logFileDetails.LogFileName, requestId)
-	service.Log_Execute_LDEL(requestId)
-	decodedContent, err := base64.StdEncoding.DecodeString(ldalDetails.Content)
-	if err != nil {
-		log.Println("decode error:", err)
+	if ldalDetails.LogQuery {
+		logFileDetails := logrepo.GetLogFileDetails(ldalDetails.BoundedId)
+		if len(logFileDetails.FileId) > 0 {
+			service.Log_Download_LogFile(ldalDetails.BoundedId, requestId)
+			//Download LDAL Script
+			service.Log_download_Script(ldalDetails.BoundedId, requestId)
+			Config_LDEL_DEF(logFileDetails.LogFileName, requestId)
+			service.Log_Execute_LDEL(requestId)
+			decodedContent, err := base64.StdEncoding.DecodeString(ldalDetails.Content)
+			if err != nil {
+				log.Println("decode error:", err)
+				return "", err
+
+			}
+			service.WriteToFile("localstorage/"+requestId, "LDAL_Script.txt", string(decodedContent))
+
+		} else {
+
+			return "", errors.New("Query Failed , log Bind Error")
+
+		}
+		result = fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
+
+	} else {
+		log.Println("Custom query execution started ...")
+		if( !ldalDetails.BoundStatus){
+			return "Query is not bounded",nil
+		}
+		decodedContent, err := base64.StdEncoding.DecodeString(ldalDetails.Content)
+		if err != nil {
+			log.Println("decode error:", err)
+			return "", err
+
+		}
+		service.WriteToFile("localstorage/"+requestId, "LDAL_Script.txt", string(decodedContent))
+
+		service.DownloadCustomJSON(ldalDetails.BoundedId, requestId)
+		//Check custom data types
+		customJSONRequest := cusjsonrepo.GetCustomJson(ldalDetails.BoundedId)
+		Config_LDEL_DEF("", requestId)
+		if(customJSONRequest.JsonType == "TDP"){
+			result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
+		}else if(customJSONRequest.JsonType == "Normal"){
+			result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
+		}else{
+			result = "Invalid custom json  Type"
+		}
+		
+		
+		
 
 	}
-	service.WriteToFile("localstorage/"+requestId, "LDAL_Script.txt", string(decodedContent))
-
-	result := fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
 
 	os.RemoveAll("localstorage/" + requestId)
 
-	return result
+	return result, nil
 
 }
 
 func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
+	
 	requestID := uuid.New().String()
-	decodedTree, err := base64.StdEncoding.DecodeString(request.Tree)
-	if err != nil {
-		log.Println("decode error:", err)
+	var jsonMap map[string]interface{}
+	var jsonString string
+	if len(request.Query) > 0 && len(request.Tree) > 0 && len(request.Type) > 0 {
+		// decodedTree, err := base64.StdEncoding.DecodeString(request.Tree)
+		// if err != nil {
+		// 	log.Println("decode error:", err)
 
+		// }
+
+		// decodedQuery, err := base64.StdEncoding.DecodeString(request.Query)
+		// if err != nil {
+		// 	log.Println("decode error:", err)
+
+		// }
+
+		service.WriteToFile("localstorage/"+requestID, "result.txt", string(request.Tree))
+		service.WriteToFile("localstorage/"+requestID, "LDAL_Script.txt", string(request.Query))
+
+		Config_LDEL_DEF("____", requestID)
+
+		if request.Type == "Normal" {
+			_ = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestID + "/" + "Defs.txt")
+			data, err := os.ReadFile("localstorage/" + requestID + "/Debug_Result.json")
+
+			if err != nil {
+				jsonString = `{
+				"variables": [
+				{
+					"dataType": "ERROR",
+					"details": "Debug Failed",
+					"name": "Debug Error"
+					}
+				]
+			}`
+
+			} else {
+				jsonString = string(data)
+			}
+
+		} else if request.Type == "TDP" {
+			//Execute TDP Parser
+			//"localstorage/" + requestID + "/" + "Defs.txt"
+			_ = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestID + "/" + "Defs.txt")
+			data, err := os.ReadFile("localstorage/" + requestID + "/Debug_Result.json")
+
+			if err != nil {
+				jsonString = `{
+				"variables": [
+				{
+					"dataType": "ERROR",
+					"details": "Debug Failed",
+					"name": "Debug Error"
+					}
+				]
+			}`
+
+			} else {
+				jsonString = string(data)
+			}
+
+		} else {
+
+			jsonString = `{
+			"variables": [
+			{
+				"dataType": "ERROR",
+				"details": "Invalid json type",
+				"name": "SERVER ERROR"
+				}
+			]
+		}`
+
+		}
+
+	} else {
+		jsonString = `{
+			"variables": [
+			{
+				"dataType": "ERROR",
+				"details": "Request failed",
+				"name": "REQUEST ERROR"
+				}
+			]
+		}`
 	}
 
-	decodedQuery, err := base64.StdEncoding.DecodeString(request.Query)
-	if err != nil {
-		log.Println("decode error:", err)
-
-	}
-
-	service.WriteToFile("localstorage/"+requestID, "result.txt", string(decodedTree))
-	service.WriteToFile("localstorage/"+requestID, "LDAL_Script.txt", string(decodedQuery))
-
-	Config_LDEL_DEF("____", requestID)
-	_ = fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + requestID + "/" + "Defs.txt")
-	dat, err := os.ReadFile("localstorage/" + requestID + "/Debug_Result.json")
+	// _ = fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + requestID + "/" + "Defs.txt")
+	// dat, err := os.ReadFile("localstorage/" + requestID + "/Debug_Result.json")
 
 	// an arbitrary json string
-	jsonString := string(dat)
+	// jsonString := string(dat)
 
-	var jsonMap map[string]interface{}
+
 	json.Unmarshal([]byte(jsonString), &jsonMap)
-
-
+	os.RemoveAll("localstorage/" + requestID)
 	return jsonMap
 
 }

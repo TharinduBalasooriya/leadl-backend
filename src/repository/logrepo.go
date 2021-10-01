@@ -11,10 +11,9 @@ import (
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/datamodels"
 	"go.mongodb.org/mongo-driver/mongo"
-	
+
 	db "github.com/TharinduBalasooriya/LogAnalyzerBackend/src/util/db"
 )
-
 
 var log_collection = new(mongo.Collection)
 
@@ -24,25 +23,13 @@ const LogsCollection = "Logs"
 	Initalizing database configeration
 */
 
-func init(){
+func init() {
 
 	log_collection = db.Client.Database(Database).Collection(LogsCollection)
 
 }
 
 
-// func init() {
-
-// 	fmt.Println("Database Connection Established")
-// 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-// 	clientOptions := options.Client().ApplyURI("mongodb+srv://tharindu:tharindu@cluster0.vnll5.mongodb.net/myFirstDB?retryWrites=true&w=majority")
-// 	client, err := mongo.Connect(ctx, clientOptions)
-// 	if err != nil {
-// 		log.Println(err)
-// 	}
-// 	log_collection = client.Database("leadldb").Collection(LogsCollection)
-
-// }
 
 type LogRepository struct{}
 
@@ -146,8 +133,7 @@ func (l *LogRepository) GetLogsByProject_ID(projectID string) []datamodels.Log {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-
-	filterCursor, err := log_collection.Find(ctx, bson.M{"projectid":projectID,})
+	filterCursor, err := log_collection.Find(ctx, bson.M{"projectid": projectID})
 
 	if err != nil {
 		fmt.Println(err)
@@ -171,17 +157,10 @@ func (l *LogRepository) GetLogsByProject_ID(projectID string) []datamodels.Log {
 
 func (l *LogRepository) GetProjectsByUser(username string) interface{} {
 
-	//var projetcs []string
-	//projetcs[0] = "23"
-
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	//_ ,err:= log_collection.Distinct(ctx,"projectname",bson.M{"username": username})
-
 	projetcs, err := log_collection.Distinct(ctx, "projectname", bson.D{{"username", username}})
-
-	//fmt.Println(result.)
 
 	if err != nil {
 		fmt.Println(err)
@@ -196,7 +175,6 @@ func (l *LogRepository) GetLogFileDetails(fileId string) datamodels.Log {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	fmt.Println("No issue here id : " + fileId)
 	var resultDecode datamodels.Log
 	result := log_collection.FindOne(ctx, bson.M{"fileid": fileId})
 

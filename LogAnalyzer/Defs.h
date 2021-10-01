@@ -237,7 +237,7 @@
 #define		KEY_CODE_STRING_END											303
 
 #define		KEY_CODE_CATEGORY_NAME_START_STRING							350
-#define		KEY_CODE_CATEGORY_NAME_END_STRING							351	
+#define		KEY_CODE_CATEGORY_NAME_END_STRING							351
 #define		KEY_CODE_CATEGORY_VALUE_SEPERATOR_STRING					352
 #define		KEY_CODE_IGNORE_STRING_SEPERATOR_STRING						353
 #define		KEY_CODE_IGNORE_STRINGS										354
@@ -284,7 +284,7 @@
 #define		KEY_CODE_GENERIC_ENTITY24									533
 #define		KEY_CODE_GENERIC_ENTITY25									534
 
-//KeyString Identifiers	: These strings are used in Defs file to identify key strings 
+//KeyString Identifiers	: These strings are used in Defs file to identify key strings
 //Keystrings used in rule files
 #define		KEY_STRING_IGNORE											"IGNORE"		// string to be ignored
 #define		KEY_STRING_COMMENT_START									"COMMENT_START"
@@ -426,7 +426,7 @@
 #define		FR_AUTOMATA_TYPE_READ_RULE									1
 #define		FR_AUTOMATA_TYPE_READ_ACTION								2
 #define		FR_AUTOMATA_TYPE_READ_KEY_STRING							3
-#define		FR_AUTOMATA_TYPE_READ_OUTPUT								4	
+#define		FR_AUTOMATA_TYPE_READ_OUTPUT								4
 
 //File Reader Actions	:	range from -1000 to -1499
 #define		FR_ACTION_DO_NOTHING										-1000
@@ -528,7 +528,7 @@
 #define		RULE_FILE_READER_STATE_READING_ACTIONS						4
 #define		RULE_FILE_READER_STATE_ACTION_READING_OVER					5
 #define		RULE_FILE_READER_STATE_READING_OUTPUT						6
-										
+
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
@@ -566,7 +566,7 @@
 #define		OUTPUT_TREE_WRITE_MODE_NONE									0
 #define		OUTPUT_TREE_WRITE_MODE_FULL_TREE							1
 #define		OUTPUT_TREE_WRITE_MODE_ROOT_STRING_WITH_SPECIAL_STRINGS		2
-#define		OUTPUT_TREE_WRITE_MODE_ROOT_STRING							3 
+#define		OUTPUT_TREE_WRITE_MODE_ROOT_STRING							3
 
 //Rule result write modes
 #define		RULE_RESULT_WRITE_MODE_NONE									0
@@ -611,13 +611,16 @@
 #define		EMPTY_STRING												""
 #define		SPACE														" "
 #define     QUOTE                                                       "\""
+#define     COMMA                                                       ","
 #define		_MATOI														atoi
 #define		STRING_END_CHAR												'\0'
 #else
+#define     ISWIDECHAR
 #define		_MSTR(X)													L#X
 #define		EMPTY_STRING												L""
 #define		SPACE														L" "
 #define     QUOTE                                                       L"\""
+#define     COMMA                                                       L","
 #define		_MATOI														_wtoi
 #define		STRING_END_CHAR												L'\0'
 #endif
@@ -674,6 +677,21 @@
 #define		COMMAND_TYPE_IS_TYPE										51
 #define		COMMAND_TYPE_IS_VALUE										52
 #define		COMMAND_TYPE_GET_CHILD_OF_TYPE								53
+#define		COMMAND_TYPE_LAST_CHILD										54
+#define		COMMAND_TYPE_IS_HAVING_CUSTOM_STRING						55
+#define		COMMAND_TYPE_GET_CHILD_NODE_BY_CUSTOM_STRING				56
+#define		COMMAND_TYPE_SET_ID											57
+#define     COMMAND_TYPE_FILTER_SUBTREE                                 58
+#define     COMMAND_TYPE_GET_ENTITY_OBJECT                              59
+#define     COMMAND_TYPE_SET_ENTITY_OBJECT                              60
+#define     COMMAND_TYPE_CHECK_NOT_NULL                                 61
+#define     COMMAND_TYPE_GET_STRING                                     62
+#define     COMMAND_TYPE_GET_INTEGER                                    63
+#define     COMMAND_TYPE_GET_BOOLEAN                                    64
+#define     COMMAND_TYPE_GET_CUSTOM_OBJ                                 65
+#define     COMMAND_TYPE_SET_ATTRIBUTES                                 66
+#define     COMMAND_TYPE_GET_NODE_OBJ                                   67
+
 
 // String commands
 #define		COMMAND_TYPE_IS_STRING_EQUAL_TO								1000
@@ -687,6 +705,25 @@
 #define		COMMAND_TYPE_TRIM_RIGHT										1103
 #define		COMMAND_TYPE_WRITE_TO_FILE									1104
 #define		COMMAND_TYPE_GET_LENGTH										1200
+#define		COMMAND_TYPE_STRINGTOINTEGER								1201
+#define     COMMAND_TYPE_SECONDS_TO_MONTHS                              8001
+#define     COMMAND_TYPE_SECONDS_TO_DAYS                                8002
+#define     COMMAND_TYPE_SECONDS_TO_YEARS                               8003
+#define     COMMAND_TYPE_GET_DIFFERENCE_BY_STRING                       8004
+#define     COMMAND_TYPE_STRING_TO_READABLE_DATETIME                    8005
+#define     COMMAND_TYPE_DATE_NOW                                       8006
+#define     COMMAND_TYPE_STRING_TO_UNIX_TIME                            8007
+#define     COMMAND_TYPE_STRINGTOBOOLEAN                                8008
+#define     COMMAND_TYPE_STRINGTOBOOL                                   1202
+#define     COMMAND_TYPE_GET_COMMA                                      8009
+#define     COMMAND_TYPE_NEXT_SIBLING                                   8010
+#define     COMMAND_TYPE_CONVERT_TO_SENTENCE_CASE                       8011
+#define     COMMAND_TYPE_GET_DAY_OF_THE_WEEK_SHORT_STRING               8012
+#define     COMMAND_TYPE_GET_DAY_STRING                                 8013
+#define     COMMAND_TYPE_GET_MONTH_SHORT_STRING                         8014
+#define     COMMAND_TYPE_GET_TIME_24_HOUR_FORMAT                        8015
+#define     COMMAND_TYPE_GET_YEAR                                       8016
+#define     COMMAND_TYPE_ADD_PERIOD                                     8017
 
 // Int Commands
 #define		COMMAND_TYPE_IS_INT_EQUAL_TO								2000
@@ -698,10 +735,19 @@
 #define		COMMAND_TYPE_ADD											2100
 #define		COMMAND_TYPE_SUBTRACT										2101
 #define		COMMAND_TYPE_TOSTRING										2200
+#define     COMMAND_TYPE_SET_INTEGER                                    2201
 
 // Bool Commands
 #define		COMMAND_TYPE_BOOL_AND										4000
 #define		COMMAND_TYPE_BOOL_OR										4001
+#define		COMMAND_TYPE_BOOLTOSTRING									4002
+#define		COMMAND_TYPE_SET_BOOL									    4003
+#define		COMMAND_TYPE_TO_FALSE									    4004
+#define		COMMAND_TYPE_TO_TRUE									    4005
+
+// DateTime Commands
+#define     COMMAND_TYPE_DATETOSTRING                                   8000
+
 
 // List commands
 #define		COMMAND_TYPE_GET_ITEM_COUNT									5000
@@ -709,6 +755,17 @@
 #define		COMMAND_TYPE_SEEK_TO_BEGIN									5002
 #define		COMMAND_TYPE_SEEK_TO_END									5003
 #define		COMMAND_TYPE_GET_CURR_ELEM									5004
+#define		COMMAND_TYPE_GET_INNER_ITEM_COUNT							5005
+#define     COMMAND_TYPE_LIST_FILTER                                    5006
+#define     COMMAND_TYPE_LIST_GROUPBY                                   5007
+#define     COMMAND_TYPE_LIST_GROUP_SEQUENCE_BY                         5008
+#define     COMMAND_TYPE_GET_NEXT_ELEM                                  5009
+#define     COMMAND_TYPE_GET_UNIQUE_NODE_LIST_WITH_COUNT                5010
+#define     COMMAND_TYPE_SORT_NODE_LIST                                 5011
+#define     COMMAND_TYPE_EXTRACT_NODE_LIST_TOP                          5012
+#define     COMMAND_TYPE_GET_OLDEST_DATE                                5013
+#define     COMMAND_TYPE_GET_LATEST_DATE                                5014
+#define     COMMAND_TYPE_GET_UNIQUE_NODE_LIST_WITH_NODE_REF                5015
 
 // Special Commands
 #define		COMMAND_TYPE_ADDITIONAL_FUNCTION							10000
@@ -733,7 +790,14 @@
 #define		ENTITY_TYPE_BOOL											4
 #define		ENTITY_TYPE_LIST											5
 #define		ENTITY_TYPE_EXECUTION_TEMPLATE								6
+#define     ENTITY_TYPE                                                 7
+#define     ENTITY_TYPE_DATETIME                                        8
 #define		ENTITY_TYPE_INVALID											100
+
+// Parser priority levels for LDEL variable types
+#define     DEFAULT_PARSER_PRIORITY                                     1000
+#define     PARSER_PRIORITY_LOW                                         500
+#define     PARSER_PRIORITY_HIGH                                        1500
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////

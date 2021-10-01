@@ -12,6 +12,8 @@
 class LDAL_Wrapper {
 public:
   MSTRING GetLDALResult(MSTRING defFilePath);
+  MSTRING GetTDPResult(MSTRING defFilePath);
+  MSTRING GetLOGLDALResult(MSTRING defFilePath);
 };
 
 

@@ -54,6 +54,7 @@ func LogRoutes() *mux.Router {
 	apiRoutes.HandleFunc("/executeGetJSON/{fileId}", api.HandleInvokeELInterpreterGetJSON).Methods("GET")
 	//Execute LDAL Script
 	apiRoutes.HandleFunc("/executeLDAL/{scriptId}", api.HandleExecuteLDAL).Methods("GET")
+	//Debug LDAL Queries
 	apiRoutes.HandleFunc("/debugLDAL/",api.HandelDebugLDAL).Methods("POST")
 
 	//Craete a project
@@ -86,5 +87,11 @@ apiRoutes.HandleFunc("/getscript/{id}", api.HandleGetScriptDetails).Methods("GET
 //update scripts
 apiRoutes.HandleFunc("/script/update", api.HandleUpdateScripts).Methods("PUT")
 
+
+//craete a json
+apiRoutes.HandleFunc("/customJson", api.HandleCustomJson).Methods("POST")
+//get jsonby projectID
+apiRoutes.HandleFunc("/customJson/{projectId}", api.HandleGetCustomjsonByProjectId).Methods("GET")
+apiRoutes.HandleFunc("/getcustomJson/{id}", api.HandleGetCustomjsonDetails).Methods("GET")
 	return router
 }

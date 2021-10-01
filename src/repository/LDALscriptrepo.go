@@ -46,8 +46,8 @@ func (l *ScriptRepository) SaveLDALScript(LDALscript datamodels.LDALscript) (int
 
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 	result, err := script_collection.InsertOne(ctx, LDALscript)
-	fmt.Println("\nInserted a single LDALscript: ", result.InsertedID)
-	return result.InsertedID, err
+	fmt.Println("\nInserted a single LDALscript: ", result)
+	return result, err
 }
 
 func (l *ScriptRepository) CheckScriptExistance(script datamodels.LDALscript) (bool, string) {
@@ -115,6 +115,7 @@ func (l *ScriptRepository) UpadteLDALScript(script datamodels.LDALscript) interf
 		{"$set", bson.D{{"boundstatus", script.BoundStatus}}},
 		{"$set", bson.D{{"boundedid", script.BoundedId}}},
 		{"$set", bson.D{{"content", script.Content}}},
+		{"$set",bson.D{{"logquery",script.LogQuery}}},
 	}
 
 	result, err := script_collection.UpdateOne(ctx, filter, update, opts)

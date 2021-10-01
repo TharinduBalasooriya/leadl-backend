@@ -25,6 +25,7 @@ This package containes all business logic log file
 */
 
 var logrepo repository.LogRepository
+var cusjsonrepo repository.CustomJsontRepository
 
 func unzipLogfile(logFIleName string, fileId string) {
 
@@ -320,6 +321,32 @@ func Log_download_Script(fileId string,requestId string) {
 	log.Printf("Wrote %d bytes.\n", bytesWritten)
 
 }
+
+func DownloadCustomJSON(boundedID string,requestId string){
+	fmt.Println(boundedID)
+	customJSONRequest := cusjsonrepo.GetCustomJson(boundedID)
+	
+	fmt.Println(customJSONRequest.Content)
+
+	os.MkdirAll("localstorage/"+requestId, 0755)
+	file, err := os.OpenFile(
+		"localstorage/"+requestId+"/result.txt",
+		os.O_WRONLY|os.O_TRUNC|os.O_CREATE,
+		0666,
+	)
+	if err != nil {
+		log.Println(err)
+	}
+	defer file.Close()
+	bytesWritten, err := file.Write([]byte(customJSONRequest.Content))
+	if err != nil {
+		log.Println(err)
+	}
+	log.Printf("Wrote %d bytes.\n", bytesWritten)
+
+}
+
+
 
 func Log_Read_Result(fileId string) interface{} {
 	resultFilePath := "localstorage/" + fileId + "/result.txt"

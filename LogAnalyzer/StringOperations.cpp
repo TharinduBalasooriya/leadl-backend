@@ -1,6 +1,5 @@
 #include "StringOperations.h"
 #include "MemMan.h"
-#include <cstring>
 
 bool StringOperations::Copy(PMCHAR pDest, CPMCHAR pSrc, MULONG ulSize)
 {

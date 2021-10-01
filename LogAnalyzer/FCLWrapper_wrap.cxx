@@ -292,7 +292,7 @@ SWIGINTERN void std_vector_Sl_char_Sg__set(std::vector< char > *self,int i,std::
 extern "C" {
 #endif
 
-void _wrap_Swig_free_FCLlib_9e6015bc2690b363(void *_swig_go_0) {
+void _wrap_Swig_free_FCLlib_1ee54ad49562e6e8(void *_swig_go_0) {
   void *arg1 = (void *) 0 ;
   
   arg1 = *(void **)&_swig_go_0; 
@@ -302,7 +302,7 @@ void _wrap_Swig_free_FCLlib_9e6015bc2690b363(void *_swig_go_0) {
 }
 
 
-void *_wrap_Swig_malloc_FCLlib_9e6015bc2690b363(intgo _swig_go_0) {
+void *_wrap_Swig_malloc_FCLlib_1ee54ad49562e6e8(intgo _swig_go_0) {
   int arg1 ;
   void *result = 0 ;
   void *_swig_go_result;
@@ -315,7 +315,7 @@ void *_wrap_Swig_malloc_FCLlib_9e6015bc2690b363(intgo _swig_go_0) {
 }
 
 
-std::vector< std::string > *_wrap_new_StringVector__SWIG_0_FCLlib_9e6015bc2690b363() {
+std::vector< std::string > *_wrap_new_StringVector__SWIG_0_FCLlib_1ee54ad49562e6e8() {
   std::vector< std::string > *result = 0 ;
   std::vector< std::string > *_swig_go_result;
   
@@ -326,7 +326,7 @@ std::vector< std::string > *_wrap_new_StringVector__SWIG_0_FCLlib_9e6015bc2690b3
 }
 
 
-std::vector< std::string > *_wrap_new_StringVector__SWIG_1_FCLlib_9e6015bc2690b363(long long _swig_go_0) {
+std::vector< std::string > *_wrap_new_StringVector__SWIG_1_FCLlib_1ee54ad49562e6e8(long long _swig_go_0) {
   std::vector< std::string >::size_type arg1 ;
   std::vector< std::string > *result = 0 ;
   std::vector< std::string > *_swig_go_result;
@@ -339,7 +339,7 @@ std::vector< std::string > *_wrap_new_StringVector__SWIG_1_FCLlib_9e6015bc2690b3
 }
 
 
-std::vector< std::string > *_wrap_new_StringVector__SWIG_2_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0) {
+std::vector< std::string > *_wrap_new_StringVector__SWIG_2_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0) {
   std::vector< std::string > *arg1 = 0 ;
   std::vector< std::string > *result = 0 ;
   std::vector< std::string > *_swig_go_result;
@@ -352,7 +352,7 @@ std::vector< std::string > *_wrap_new_StringVector__SWIG_2_FCLlib_9e6015bc2690b3
 }
 
 
-long long _wrap_StringVector_size_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0) {
+long long _wrap_StringVector_size_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0) {
   std::vector< std::string > *arg1 = (std::vector< std::string > *) 0 ;
   std::vector< std::string >::size_type result;
   long long _swig_go_result;
@@ -365,7 +365,7 @@ long long _wrap_StringVector_size_FCLlib_9e6015bc2690b363(std::vector< std::stri
 }
 
 
-long long _wrap_StringVector_capacity_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0) {
+long long _wrap_StringVector_capacity_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0) {
   std::vector< std::string > *arg1 = (std::vector< std::string > *) 0 ;
   std::vector< std::string >::size_type result;
   long long _swig_go_result;
@@ -378,7 +378,7 @@ long long _wrap_StringVector_capacity_FCLlib_9e6015bc2690b363(std::vector< std::
 }
 
 
-void _wrap_StringVector_reserve_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0, long long _swig_go_1) {
+void _wrap_StringVector_reserve_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0, long long _swig_go_1) {
   std::vector< std::string > *arg1 = (std::vector< std::string > *) 0 ;
   std::vector< std::string >::size_type arg2 ;
   
@@ -390,7 +390,7 @@ void _wrap_StringVector_reserve_FCLlib_9e6015bc2690b363(std::vector< std::string
 }
 
 
-bool _wrap_StringVector_isEmpty_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0) {
+bool _wrap_StringVector_isEmpty_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0) {
   std::vector< std::string > *arg1 = (std::vector< std::string > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -403,7 +403,7 @@ bool _wrap_StringVector_isEmpty_FCLlib_9e6015bc2690b363(std::vector< std::string
 }
 
 
-void _wrap_StringVector_clear_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0) {
+void _wrap_StringVector_clear_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0) {
   std::vector< std::string > *arg1 = (std::vector< std::string > *) 0 ;
   
   arg1 = *(std::vector< std::string > **)&_swig_go_0; 
@@ -413,7 +413,7 @@ void _wrap_StringVector_clear_FCLlib_9e6015bc2690b363(std::vector< std::string >
 }
 
 
-void _wrap_StringVector_add_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap_StringVector_add_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0, _gostring_ _swig_go_1) {
   std::vector< std::string > *arg1 = (std::vector< std::string > *) 0 ;
   std::vector< std::string >::value_type *arg2 = 0 ;
   
@@ -428,7 +428,7 @@ void _wrap_StringVector_add_FCLlib_9e6015bc2690b363(std::vector< std::string > *
 }
 
 
-_gostring_ _wrap_StringVector_get_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0, intgo _swig_go_1) {
+_gostring_ _wrap_StringVector_get_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0, intgo _swig_go_1) {
   std::vector< std::string > *arg1 = (std::vector< std::string > *) 0 ;
   int arg2 ;
   std::vector< std::string >::value_type *result = 0 ;
@@ -449,7 +449,7 @@ _gostring_ _wrap_StringVector_get_FCLlib_9e6015bc2690b363(std::vector< std::stri
 }
 
 
-void _wrap_StringVector_set_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0, intgo _swig_go_1, _gostring_ _swig_go_2) {
+void _wrap_StringVector_set_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0, intgo _swig_go_1, _gostring_ _swig_go_2) {
   std::vector< std::string > *arg1 = (std::vector< std::string > *) 0 ;
   int arg2 ;
   std::vector< std::string >::value_type *arg3 = 0 ;
@@ -472,7 +472,7 @@ void _wrap_StringVector_set_FCLlib_9e6015bc2690b363(std::vector< std::string > *
 }
 
 
-void _wrap_delete_StringVector_FCLlib_9e6015bc2690b363(std::vector< std::string > *_swig_go_0) {
+void _wrap_delete_StringVector_FCLlib_1ee54ad49562e6e8(std::vector< std::string > *_swig_go_0) {
   std::vector< std::string > *arg1 = (std::vector< std::string > *) 0 ;
   
   arg1 = *(std::vector< std::string > **)&_swig_go_0; 
@@ -482,7 +482,7 @@ void _wrap_delete_StringVector_FCLlib_9e6015bc2690b363(std::vector< std::string 
 }
 
 
-std::vector< char > *_wrap_new_ByteVector__SWIG_0_FCLlib_9e6015bc2690b363() {
+std::vector< char > *_wrap_new_ByteVector__SWIG_0_FCLlib_1ee54ad49562e6e8() {
   std::vector< char > *result = 0 ;
   std::vector< char > *_swig_go_result;
   
@@ -493,7 +493,7 @@ std::vector< char > *_wrap_new_ByteVector__SWIG_0_FCLlib_9e6015bc2690b363() {
 }
 
 
-std::vector< char > *_wrap_new_ByteVector__SWIG_1_FCLlib_9e6015bc2690b363(long long _swig_go_0) {
+std::vector< char > *_wrap_new_ByteVector__SWIG_1_FCLlib_1ee54ad49562e6e8(long long _swig_go_0) {
   std::vector< char >::size_type arg1 ;
   std::vector< char > *result = 0 ;
   std::vector< char > *_swig_go_result;
@@ -506,7 +506,7 @@ std::vector< char > *_wrap_new_ByteVector__SWIG_1_FCLlib_9e6015bc2690b363(long l
 }
 
 
-std::vector< char > *_wrap_new_ByteVector__SWIG_2_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0) {
+std::vector< char > *_wrap_new_ByteVector__SWIG_2_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0) {
   std::vector< char > *arg1 = 0 ;
   std::vector< char > *result = 0 ;
   std::vector< char > *_swig_go_result;
@@ -519,7 +519,7 @@ std::vector< char > *_wrap_new_ByteVector__SWIG_2_FCLlib_9e6015bc2690b363(std::v
 }
 
 
-long long _wrap_ByteVector_size_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0) {
+long long _wrap_ByteVector_size_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0) {
   std::vector< char > *arg1 = (std::vector< char > *) 0 ;
   std::vector< char >::size_type result;
   long long _swig_go_result;
@@ -532,7 +532,7 @@ long long _wrap_ByteVector_size_FCLlib_9e6015bc2690b363(std::vector< char > *_sw
 }
 
 
-long long _wrap_ByteVector_capacity_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0) {
+long long _wrap_ByteVector_capacity_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0) {
   std::vector< char > *arg1 = (std::vector< char > *) 0 ;
   std::vector< char >::size_type result;
   long long _swig_go_result;
@@ -545,7 +545,7 @@ long long _wrap_ByteVector_capacity_FCLlib_9e6015bc2690b363(std::vector< char > 
 }
 
 
-void _wrap_ByteVector_reserve_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0, long long _swig_go_1) {
+void _wrap_ByteVector_reserve_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0, long long _swig_go_1) {
   std::vector< char > *arg1 = (std::vector< char > *) 0 ;
   std::vector< char >::size_type arg2 ;
   
@@ -557,7 +557,7 @@ void _wrap_ByteVector_reserve_FCLlib_9e6015bc2690b363(std::vector< char > *_swig
 }
 
 
-bool _wrap_ByteVector_isEmpty_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0) {
+bool _wrap_ByteVector_isEmpty_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0) {
   std::vector< char > *arg1 = (std::vector< char > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -570,7 +570,7 @@ bool _wrap_ByteVector_isEmpty_FCLlib_9e6015bc2690b363(std::vector< char > *_swig
 }
 
 
-void _wrap_ByteVector_clear_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0) {
+void _wrap_ByteVector_clear_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0) {
   std::vector< char > *arg1 = (std::vector< char > *) 0 ;
   
   arg1 = *(std::vector< char > **)&_swig_go_0; 
@@ -580,7 +580,7 @@ void _wrap_ByteVector_clear_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_g
 }
 
 
-void _wrap_ByteVector_add_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0, char _swig_go_1) {
+void _wrap_ByteVector_add_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0, char _swig_go_1) {
   std::vector< char > *arg1 = (std::vector< char > *) 0 ;
   std::vector< char >::value_type *arg2 = 0 ;
   
@@ -592,7 +592,7 @@ void _wrap_ByteVector_add_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_
 }
 
 
-char _wrap_ByteVector_get_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0, intgo _swig_go_1) {
+char _wrap_ByteVector_get_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0, intgo _swig_go_1) {
   std::vector< char > *arg1 = (std::vector< char > *) 0 ;
   int arg2 ;
   std::vector< char >::value_type *result = 0 ;
@@ -613,7 +613,7 @@ char _wrap_ByteVector_get_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_
 }
 
 
-void _wrap_ByteVector_set_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0, intgo _swig_go_1, char _swig_go_2) {
+void _wrap_ByteVector_set_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0, intgo _swig_go_1, char _swig_go_2) {
   std::vector< char > *arg1 = (std::vector< char > *) 0 ;
   int arg2 ;
   std::vector< char >::value_type *arg3 = 0 ;
@@ -633,7 +633,7 @@ void _wrap_ByteVector_set_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_
 }
 
 
-void _wrap_delete_ByteVector_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_go_0) {
+void _wrap_delete_ByteVector_FCLlib_1ee54ad49562e6e8(std::vector< char > *_swig_go_0) {
   std::vector< char > *arg1 = (std::vector< char > *) 0 ;
   
   arg1 = *(std::vector< char > **)&_swig_go_0; 
@@ -643,7 +643,7 @@ void _wrap_delete_ByteVector_FCLlib_9e6015bc2690b363(std::vector< char > *_swig_
 }
 
 
-void _wrap_FCLWrapper_RunELInterpretter_FCLlib_9e6015bc2690b363(FCLWrapper *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap_FCLWrapper_RunELInterpretter_FCLlib_1ee54ad49562e6e8(FCLWrapper *_swig_go_0, _gostring_ _swig_go_1) {
   FCLWrapper *arg1 = (FCLWrapper *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -660,7 +660,7 @@ void _wrap_FCLWrapper_RunELInterpretter_FCLlib_9e6015bc2690b363(FCLWrapper *_swi
 }
 
 
-_gostring_ _wrap_FCLWrapper_GetLDALResult_FCLlib_9e6015bc2690b363(FCLWrapper *_swig_go_0, _gostring_ _swig_go_1) {
+_gostring_ _wrap_FCLWrapper_GetLDALResult_FCLlib_1ee54ad49562e6e8(FCLWrapper *_swig_go_0, _gostring_ _swig_go_1) {
   FCLWrapper *arg1 = (FCLWrapper *) 0 ;
   char *arg2 = (char *) 0 ;
   std::string result;
@@ -680,7 +680,47 @@ _gostring_ _wrap_FCLWrapper_GetLDALResult_FCLlib_9e6015bc2690b363(FCLWrapper *_s
 }
 
 
-FCLWrapper *_wrap_new_FCLWrapper_FCLlib_9e6015bc2690b363() {
+_gostring_ _wrap_FCLWrapper_GetTDPResult_FCLlib_1ee54ad49562e6e8(FCLWrapper *_swig_go_0, _gostring_ _swig_go_1) {
+  FCLWrapper *arg1 = (FCLWrapper *) 0 ;
+  char *arg2 = (char *) 0 ;
+  std::string result;
+  _gostring_ _swig_go_result;
+  
+  arg1 = *(FCLWrapper **)&_swig_go_0; 
+  
+  arg2 = (char *)malloc(_swig_go_1.n + 1);
+  memcpy(arg2, _swig_go_1.p, _swig_go_1.n);
+  arg2[_swig_go_1.n] = '\0';
+  
+  
+  result = (arg1)->GetTDPResult((char const *)arg2);
+  _swig_go_result = Swig_AllocateString((&result)->data(), (&result)->length()); 
+  free(arg2); 
+  return _swig_go_result;
+}
+
+
+_gostring_ _wrap_FCLWrapper_GetLogLDALResult_FCLlib_1ee54ad49562e6e8(FCLWrapper *_swig_go_0, _gostring_ _swig_go_1) {
+  FCLWrapper *arg1 = (FCLWrapper *) 0 ;
+  char *arg2 = (char *) 0 ;
+  std::string result;
+  _gostring_ _swig_go_result;
+  
+  arg1 = *(FCLWrapper **)&_swig_go_0; 
+  
+  arg2 = (char *)malloc(_swig_go_1.n + 1);
+  memcpy(arg2, _swig_go_1.p, _swig_go_1.n);
+  arg2[_swig_go_1.n] = '\0';
+  
+  
+  result = (arg1)->GetLogLDALResult((char const *)arg2);
+  _swig_go_result = Swig_AllocateString((&result)->data(), (&result)->length()); 
+  free(arg2); 
+  return _swig_go_result;
+}
+
+
+FCLWrapper *_wrap_new_FCLWrapper_FCLlib_1ee54ad49562e6e8() {
   FCLWrapper *result = 0 ;
   FCLWrapper *_swig_go_result;
   
@@ -691,7 +731,7 @@ FCLWrapper *_wrap_new_FCLWrapper_FCLlib_9e6015bc2690b363() {
 }
 
 
-void _wrap_delete_FCLWrapper_FCLlib_9e6015bc2690b363(FCLWrapper *_swig_go_0) {
+void _wrap_delete_FCLWrapper_FCLlib_1ee54ad49562e6e8(FCLWrapper *_swig_go_0) {
   FCLWrapper *arg1 = (FCLWrapper *) 0 ;
   
   arg1 = *(FCLWrapper **)&_swig_go_0; 

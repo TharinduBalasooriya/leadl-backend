@@ -11,6 +11,8 @@ class FCLWrapper{
 public:
     void RunELInterpretter(const char* defFilepath);
     std::string GetLDALResult(const char* defFilePath);
+    std::string GetTDPResult(const char* defFilePath);
+    std::string  GetLogLDALResult(const char* defFilePath);
 
 };
 

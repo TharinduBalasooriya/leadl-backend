@@ -16,3 +16,5 @@ func Script_Save_Details(script datamodels.LDALscript) (interface{}, error) {
 	return resultID, err
 
 }
+
+

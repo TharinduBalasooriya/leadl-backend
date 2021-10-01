@@ -105,7 +105,7 @@ func HandleLogFileUpload(w http.ResponseWriter, r *http.Request) {
 
 	controller.LogSaveDetails(userName, projectName, fileName, fileId)
 	controller.LogUploadFiles(fullFilePath, file)
-	
+
 	//controller.Config_LDEL_DEF(fileName, fileId)
 
 }
@@ -190,17 +190,23 @@ func HandleLogFileUpdate(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func HandleExecuteLDAL(w http.ResponseWriter, r *http.Request){
+func HandleExecuteLDAL(w http.ResponseWriter, r *http.Request) {
 	//var ldalRequest datamodels.LDALRequest
 	params := mux.Vars(r)
 
-	
-	result := controller.ExecuteLDAL(params["scriptId"])
+	result, err := controller.ExecuteLDAL(params["scriptId"])
 
-	var LDALResult datamodels.LDALscriptResult
-	LDALResult.SciptId = params["scriptId"]
-	LDALResult.Result = result
-	json.NewEncoder(w).Encode(LDALResult)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		
+		json.NewEncoder(w).Encode(err.Error())
 
+	} else {
+		var LDALResult datamodels.LDALscriptResult
+		LDALResult.SciptId = params["scriptId"]
+		LDALResult.Result = result
+		json.NewEncoder(w).Encode(LDALResult)
+
+	}
 
 }

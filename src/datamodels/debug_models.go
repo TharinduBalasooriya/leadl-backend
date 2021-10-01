@@ -15,6 +15,7 @@ type LDALRequest struct {
 	Script string `json:"script"`
 }
 type LDALDebugRequest struct{
-	Tree string `json:"tree"`
+	Tree string  `json:"tree"`
 	Query string `json:"query"`
+	Type string  `json:"type"`
 }

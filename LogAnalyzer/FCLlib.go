@@ -42,36 +42,42 @@ typedef long long swig_type_11;
 typedef _gostring_ swig_type_12;
 typedef _gostring_ swig_type_13;
 typedef _gostring_ swig_type_14;
-extern void _wrap_Swig_free_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern uintptr_t _wrap_Swig_malloc_FCLlib_9e6015bc2690b363(swig_intgo arg1);
-extern uintptr_t _wrap_new_StringVector__SWIG_0_FCLlib_9e6015bc2690b363(void);
-extern uintptr_t _wrap_new_StringVector__SWIG_1_FCLlib_9e6015bc2690b363(swig_type_1 arg1);
-extern uintptr_t _wrap_new_StringVector__SWIG_2_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern swig_type_2 _wrap_StringVector_size_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern swig_type_3 _wrap_StringVector_capacity_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern void _wrap_StringVector_reserve_FCLlib_9e6015bc2690b363(uintptr_t arg1, swig_type_4 arg2);
-extern _Bool _wrap_StringVector_isEmpty_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern void _wrap_StringVector_clear_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern void _wrap_StringVector_add_FCLlib_9e6015bc2690b363(uintptr_t arg1, swig_type_5 arg2);
-extern swig_type_6 _wrap_StringVector_get_FCLlib_9e6015bc2690b363(uintptr_t arg1, swig_intgo arg2);
-extern void _wrap_StringVector_set_FCLlib_9e6015bc2690b363(uintptr_t arg1, swig_intgo arg2, swig_type_7 arg3);
-extern void _wrap_delete_StringVector_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern uintptr_t _wrap_new_ByteVector__SWIG_0_FCLlib_9e6015bc2690b363(void);
-extern uintptr_t _wrap_new_ByteVector__SWIG_1_FCLlib_9e6015bc2690b363(swig_type_8 arg1);
-extern uintptr_t _wrap_new_ByteVector__SWIG_2_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern swig_type_9 _wrap_ByteVector_size_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern swig_type_10 _wrap_ByteVector_capacity_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern void _wrap_ByteVector_reserve_FCLlib_9e6015bc2690b363(uintptr_t arg1, swig_type_11 arg2);
-extern _Bool _wrap_ByteVector_isEmpty_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern void _wrap_ByteVector_clear_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern void _wrap_ByteVector_add_FCLlib_9e6015bc2690b363(uintptr_t arg1, char arg2);
-extern char _wrap_ByteVector_get_FCLlib_9e6015bc2690b363(uintptr_t arg1, swig_intgo arg2);
-extern void _wrap_ByteVector_set_FCLlib_9e6015bc2690b363(uintptr_t arg1, swig_intgo arg2, char arg3);
-extern void _wrap_delete_ByteVector_FCLlib_9e6015bc2690b363(uintptr_t arg1);
-extern void _wrap_FCLWrapper_RunELInterpretter_FCLlib_9e6015bc2690b363(uintptr_t arg1, swig_type_12 arg2);
-extern swig_type_13 _wrap_FCLWrapper_GetLDALResult_FCLlib_9e6015bc2690b363(uintptr_t arg1, swig_type_14 arg2);
-extern uintptr_t _wrap_new_FCLWrapper_FCLlib_9e6015bc2690b363(void);
-extern void _wrap_delete_FCLWrapper_FCLlib_9e6015bc2690b363(uintptr_t arg1);
+typedef _gostring_ swig_type_15;
+typedef _gostring_ swig_type_16;
+typedef _gostring_ swig_type_17;
+typedef _gostring_ swig_type_18;
+extern void _wrap_Swig_free_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern uintptr_t _wrap_Swig_malloc_FCLlib_1ee54ad49562e6e8(swig_intgo arg1);
+extern uintptr_t _wrap_new_StringVector__SWIG_0_FCLlib_1ee54ad49562e6e8(void);
+extern uintptr_t _wrap_new_StringVector__SWIG_1_FCLlib_1ee54ad49562e6e8(swig_type_1 arg1);
+extern uintptr_t _wrap_new_StringVector__SWIG_2_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern swig_type_2 _wrap_StringVector_size_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern swig_type_3 _wrap_StringVector_capacity_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern void _wrap_StringVector_reserve_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_4 arg2);
+extern _Bool _wrap_StringVector_isEmpty_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern void _wrap_StringVector_clear_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern void _wrap_StringVector_add_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_5 arg2);
+extern swig_type_6 _wrap_StringVector_get_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_intgo arg2);
+extern void _wrap_StringVector_set_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_intgo arg2, swig_type_7 arg3);
+extern void _wrap_delete_StringVector_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern uintptr_t _wrap_new_ByteVector__SWIG_0_FCLlib_1ee54ad49562e6e8(void);
+extern uintptr_t _wrap_new_ByteVector__SWIG_1_FCLlib_1ee54ad49562e6e8(swig_type_8 arg1);
+extern uintptr_t _wrap_new_ByteVector__SWIG_2_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern swig_type_9 _wrap_ByteVector_size_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern swig_type_10 _wrap_ByteVector_capacity_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern void _wrap_ByteVector_reserve_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_11 arg2);
+extern _Bool _wrap_ByteVector_isEmpty_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern void _wrap_ByteVector_clear_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern void _wrap_ByteVector_add_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, char arg2);
+extern char _wrap_ByteVector_get_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_intgo arg2);
+extern void _wrap_ByteVector_set_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_intgo arg2, char arg3);
+extern void _wrap_delete_ByteVector_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
+extern void _wrap_FCLWrapper_RunELInterpretter_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_12 arg2);
+extern swig_type_13 _wrap_FCLWrapper_GetLDALResult_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_14 arg2);
+extern swig_type_15 _wrap_FCLWrapper_GetTDPResult_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_16 arg2);
+extern swig_type_17 _wrap_FCLWrapper_GetLogLDALResult_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_18 arg2);
+extern uintptr_t _wrap_new_FCLWrapper_FCLlib_1ee54ad49562e6e8(void);
+extern void _wrap_delete_FCLWrapper_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
 #undef intgo
 */
 import "C"
@@ -106,13 +112,13 @@ func swigCopyString(s string) string {
 
 func Swig_free(arg1 uintptr) {
 	_swig_i_0 := arg1
-	C._wrap_Swig_free_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0))
+	C._wrap_Swig_free_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0))
 }
 
 func Swig_malloc(arg1 int) (_swig_ret uintptr) {
 	var swig_r uintptr
 	_swig_i_0 := arg1
-	swig_r = (uintptr)(C._wrap_Swig_malloc_FCLlib_9e6015bc2690b363(C.swig_intgo(_swig_i_0)))
+	swig_r = (uintptr)(C._wrap_Swig_malloc_FCLlib_1ee54ad49562e6e8(C.swig_intgo(_swig_i_0)))
 	return swig_r
 }
 
@@ -127,21 +133,21 @@ func (p SwigcptrStringVector) SwigIsStringVector() {
 
 func NewStringVector__SWIG_0() (_swig_ret StringVector) {
 	var swig_r StringVector
-	swig_r = (StringVector)(SwigcptrStringVector(C._wrap_new_StringVector__SWIG_0_FCLlib_9e6015bc2690b363()))
+	swig_r = (StringVector)(SwigcptrStringVector(C._wrap_new_StringVector__SWIG_0_FCLlib_1ee54ad49562e6e8()))
 	return swig_r
 }
 
 func NewStringVector__SWIG_1(arg1 int64) (_swig_ret StringVector) {
 	var swig_r StringVector
 	_swig_i_0 := arg1
-	swig_r = (StringVector)(SwigcptrStringVector(C._wrap_new_StringVector__SWIG_1_FCLlib_9e6015bc2690b363(C.swig_type_1(_swig_i_0))))
+	swig_r = (StringVector)(SwigcptrStringVector(C._wrap_new_StringVector__SWIG_1_FCLlib_1ee54ad49562e6e8(C.swig_type_1(_swig_i_0))))
 	return swig_r
 }
 
 func NewStringVector__SWIG_2(arg1 StringVector) (_swig_ret StringVector) {
 	var swig_r StringVector
 	_swig_i_0 := arg1.Swigcptr()
-	swig_r = (StringVector)(SwigcptrStringVector(C._wrap_new_StringVector__SWIG_2_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0))))
+	swig_r = (StringVector)(SwigcptrStringVector(C._wrap_new_StringVector__SWIG_2_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0))))
 	return swig_r
 }
 
@@ -166,39 +172,39 @@ check_2:
 func (arg1 SwigcptrStringVector) Size() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_StringVector_size_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_StringVector_size_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrStringVector) Capacity() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_StringVector_capacity_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_StringVector_capacity_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrStringVector) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_StringVector_reserve_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), C.swig_type_4(_swig_i_1))
+	C._wrap_StringVector_reserve_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), C.swig_type_4(_swig_i_1))
 }
 
 func (arg1 SwigcptrStringVector) IsEmpty() (_swig_ret bool) {
 	var swig_r bool
 	_swig_i_0 := arg1
-	swig_r = (bool)(C._wrap_StringVector_isEmpty_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0)))
+	swig_r = (bool)(C._wrap_StringVector_isEmpty_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrStringVector) Clear() {
 	_swig_i_0 := arg1
-	C._wrap_StringVector_clear_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0))
+	C._wrap_StringVector_clear_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0))
 }
 
 func (arg1 SwigcptrStringVector) Add(arg2 string) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_StringVector_add_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), *(*C.swig_type_5)(unsafe.Pointer(&_swig_i_1)))
+	C._wrap_StringVector_add_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), *(*C.swig_type_5)(unsafe.Pointer(&_swig_i_1)))
 	if Swig_escape_always_false {
 		Swig_escape_val = arg2
 	}
@@ -208,7 +214,7 @@ func (arg1 SwigcptrStringVector) Get(arg2 int) (_swig_ret string) {
 	var swig_r string
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	swig_r_p := C._wrap_StringVector_get_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
+	swig_r_p := C._wrap_StringVector_get_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
  swig_r_1 = swigCopyString(swig_r) 
@@ -219,7 +225,7 @@ func (arg1 SwigcptrStringVector) Set(arg2 int, arg3 string) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_StringVector_set_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), *(*C.swig_type_7)(unsafe.Pointer(&_swig_i_2)))
+	C._wrap_StringVector_set_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), *(*C.swig_type_7)(unsafe.Pointer(&_swig_i_2)))
 	if Swig_escape_always_false {
 		Swig_escape_val = arg3
 	}
@@ -227,7 +233,7 @@ func (arg1 SwigcptrStringVector) Set(arg2 int, arg3 string) {
 
 func DeleteStringVector(arg1 StringVector) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_delete_StringVector_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0))
+	C._wrap_delete_StringVector_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0))
 }
 
 type StringVector interface {
@@ -254,21 +260,21 @@ func (p SwigcptrByteVector) SwigIsByteVector() {
 
 func NewByteVector__SWIG_0() (_swig_ret ByteVector) {
 	var swig_r ByteVector
-	swig_r = (ByteVector)(SwigcptrByteVector(C._wrap_new_ByteVector__SWIG_0_FCLlib_9e6015bc2690b363()))
+	swig_r = (ByteVector)(SwigcptrByteVector(C._wrap_new_ByteVector__SWIG_0_FCLlib_1ee54ad49562e6e8()))
 	return swig_r
 }
 
 func NewByteVector__SWIG_1(arg1 int64) (_swig_ret ByteVector) {
 	var swig_r ByteVector
 	_swig_i_0 := arg1
-	swig_r = (ByteVector)(SwigcptrByteVector(C._wrap_new_ByteVector__SWIG_1_FCLlib_9e6015bc2690b363(C.swig_type_8(_swig_i_0))))
+	swig_r = (ByteVector)(SwigcptrByteVector(C._wrap_new_ByteVector__SWIG_1_FCLlib_1ee54ad49562e6e8(C.swig_type_8(_swig_i_0))))
 	return swig_r
 }
 
 func NewByteVector__SWIG_2(arg1 ByteVector) (_swig_ret ByteVector) {
 	var swig_r ByteVector
 	_swig_i_0 := arg1.Swigcptr()
-	swig_r = (ByteVector)(SwigcptrByteVector(C._wrap_new_ByteVector__SWIG_2_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0))))
+	swig_r = (ByteVector)(SwigcptrByteVector(C._wrap_new_ByteVector__SWIG_2_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0))))
 	return swig_r
 }
 
@@ -293,46 +299,46 @@ check_2:
 func (arg1 SwigcptrByteVector) Size() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_ByteVector_size_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_ByteVector_size_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrByteVector) Capacity() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_ByteVector_capacity_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_ByteVector_capacity_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrByteVector) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_ByteVector_reserve_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), C.swig_type_11(_swig_i_1))
+	C._wrap_ByteVector_reserve_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), C.swig_type_11(_swig_i_1))
 }
 
 func (arg1 SwigcptrByteVector) IsEmpty() (_swig_ret bool) {
 	var swig_r bool
 	_swig_i_0 := arg1
-	swig_r = (bool)(C._wrap_ByteVector_isEmpty_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0)))
+	swig_r = (bool)(C._wrap_ByteVector_isEmpty_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrByteVector) Clear() {
 	_swig_i_0 := arg1
-	C._wrap_ByteVector_clear_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0))
+	C._wrap_ByteVector_clear_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0))
 }
 
 func (arg1 SwigcptrByteVector) Add(arg2 byte) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_ByteVector_add_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), C.char(_swig_i_1))
+	C._wrap_ByteVector_add_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), C.char(_swig_i_1))
 }
 
 func (arg1 SwigcptrByteVector) Get(arg2 int) (_swig_ret byte) {
 	var swig_r byte
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	swig_r = (byte)(C._wrap_ByteVector_get_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
+	swig_r = (byte)(C._wrap_ByteVector_get_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
 	return swig_r
 }
 
@@ -340,12 +346,12 @@ func (arg1 SwigcptrByteVector) Set(arg2 int, arg3 byte) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_ByteVector_set_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.char(_swig_i_2))
+	C._wrap_ByteVector_set_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.char(_swig_i_2))
 }
 
 func DeleteByteVector(arg1 ByteVector) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_delete_ByteVector_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0))
+	C._wrap_delete_ByteVector_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0))
 }
 
 type ByteVector interface {
@@ -373,7 +379,7 @@ func (p SwigcptrFCLWrapper) SwigIsFCLWrapper() {
 func (arg1 SwigcptrFCLWrapper) RunELInterpretter(arg2 string) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_FCLWrapper_RunELInterpretter_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), *(*C.swig_type_12)(unsafe.Pointer(&_swig_i_1)))
+	C._wrap_FCLWrapper_RunELInterpretter_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), *(*C.swig_type_12)(unsafe.Pointer(&_swig_i_1)))
 	if Swig_escape_always_false {
 		Swig_escape_val = arg2
 	}
@@ -383,7 +389,35 @@ func (arg1 SwigcptrFCLWrapper) GetLDALResult(arg2 string) (_swig_ret string) {
 	var swig_r string
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	swig_r_p := C._wrap_FCLWrapper_GetLDALResult_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0), *(*C.swig_type_14)(unsafe.Pointer(&_swig_i_1)))
+	swig_r_p := C._wrap_FCLWrapper_GetLDALResult_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), *(*C.swig_type_14)(unsafe.Pointer(&_swig_i_1)))
+	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+	var swig_r_1 string
+ swig_r_1 = swigCopyString(swig_r) 
+	return swig_r_1
+}
+
+func (arg1 SwigcptrFCLWrapper) GetTDPResult(arg2 string) (_swig_ret string) {
+	var swig_r string
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	swig_r_p := C._wrap_FCLWrapper_GetTDPResult_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), *(*C.swig_type_16)(unsafe.Pointer(&_swig_i_1)))
+	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+	var swig_r_1 string
+ swig_r_1 = swigCopyString(swig_r) 
+	return swig_r_1
+}
+
+func (arg1 SwigcptrFCLWrapper) GetLogLDALResult(arg2 string) (_swig_ret string) {
+	var swig_r string
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	swig_r_p := C._wrap_FCLWrapper_GetLogLDALResult_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), *(*C.swig_type_18)(unsafe.Pointer(&_swig_i_1)))
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	if Swig_escape_always_false {
 		Swig_escape_val = arg2
@@ -395,13 +429,13 @@ func (arg1 SwigcptrFCLWrapper) GetLDALResult(arg2 string) (_swig_ret string) {
 
 func NewFCLWrapper() (_swig_ret FCLWrapper) {
 	var swig_r FCLWrapper
-	swig_r = (FCLWrapper)(SwigcptrFCLWrapper(C._wrap_new_FCLWrapper_FCLlib_9e6015bc2690b363()))
+	swig_r = (FCLWrapper)(SwigcptrFCLWrapper(C._wrap_new_FCLWrapper_FCLlib_1ee54ad49562e6e8()))
 	return swig_r
 }
 
 func DeleteFCLWrapper(arg1 FCLWrapper) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_delete_FCLWrapper_FCLlib_9e6015bc2690b363(C.uintptr_t(_swig_i_0))
+	C._wrap_delete_FCLWrapper_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0))
 }
 
 type FCLWrapper interface {
@@ -409,6 +443,8 @@ type FCLWrapper interface {
 	SwigIsFCLWrapper()
 	RunELInterpretter(arg2 string)
 	GetLDALResult(arg2 string) (_swig_ret string)
+	GetTDPResult(arg2 string) (_swig_ret string)
+	GetLogLDALResult(arg2 string) (_swig_ret string)
 }
 
 
