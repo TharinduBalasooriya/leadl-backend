@@ -1,0 +1,97 @@
+{
+    "variables": [
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": [
+                    {
+                        "customString": "name",
+                        "l_Value": "NULL",
+                        "r_Value": "NULL",
+                        "z_Value": "name"
+                    }
+                ],
+                "child_count": 1,
+                "customString": "name",
+                "l_Value": "NULL",
+                "r_Value": "NULL",
+                "z_Value": "name"
+            },
+            "name": "NAME"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": null,
+                "child_count": 0,
+                "customString": "normal",
+                "l_Value": "NULL",
+                "r_Value": "4",
+                "z_Value": "Tharindu"
+            },
+            "name": "RESULT"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": [
+                    {
+                        "customString": "ROOT",
+                        "l_Value": "NULL",
+                        "r_Value": "NULL",
+                        "z_Value": "ROOT"
+                    },
+                    {
+                        "customString": "ROOT",
+                        "l_Value": "NULL",
+                        "r_Value": "NULL",
+                        "z_Value": "ROOT"
+                    },
+                    {
+                        "customString": "ROOT",
+                        "l_Value": "NULL",
+                        "r_Value": "NULL",
+                        "z_Value": "ROOT"
+                    }
+                ],
+                "child_count": 3,
+                "customString": "ROOT",
+                "l_Value": "NULL",
+                "r_Value": "NULL",
+                "z_Value": "ROOT"
+            },
+            "name": "ROOT"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": [
+                    {
+                        "customString": "root",
+                        "l_Value": "NULL",
+                        "r_Value": "NULL",
+                        "z_Value": "52"
+                    }
+                ],
+                "child_count": 1,
+                "customString": "root",
+                "l_Value": "NULL",
+                "r_Value": "NULL",
+                "z_Value": "52"
+            },
+            "name": "X"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": null,
+                "child_count": 0,
+                "customString": "NULL",
+                "l_Value": "NULL",
+                "r_Value": "NULL",
+                "z_Value": "NULL"
+            },
+            "name": "Y"
+        }
+    ]
+}

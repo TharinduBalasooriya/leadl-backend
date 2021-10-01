@@ -47,7 +47,7 @@ func GetScriptByProject(projectId string) []datamodels.LDALscript {
 	return scriptList
 }
 
-var result string
+//var result string
 
 func ExecuteLDAL(scriptId string) (string, error) {
 
@@ -110,7 +110,7 @@ func ExecuteLDAL(scriptId string) (string, error) {
 
 	}
 
-	os.RemoveAll("localstorage/" + requestId)
+	//os.RemoveAll("localstorage/" + requestId)
 
 	return result, nil
 
