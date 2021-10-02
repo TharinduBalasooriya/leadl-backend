@@ -10,10 +10,10 @@ import (
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/service"
 
-	//"encoding/base64"
+	"encoding/base64"
 	"encoding/json"
 
-	//"errors"
+	"errors"
 	"github.com/google/uuid"
 )
 
@@ -53,31 +53,31 @@ func ExecuteLDAL(scriptId string) (string, error) {
 
 	 var ldalDetails datamodels.LDALscript
 	 var result string
-	// requestId := uuid.New().String()
+	requestId := uuid.New().String()
 
 	ldalDetails = ldalRepo.GetLDALScripts(scriptId)
 
-	// if ldalDetails.LogQuery {
-	// 	logFileDetails := logrepo.GetLogFileDetails(ldalDetails.BoundedId)
-	// 	if len(logFileDetails.FileId) > 0 {
-	// 		service.Log_Download_LogFile(ldalDetails.BoundedId, requestId)
-	// 		//Download LDAL Script
-	// 		service.Log_download_Script(ldalDetails.BoundedId, requestId)
-	// 		Config_LDEL_DEF(logFileDetails.LogFileName, requestId)
-	// 		service.Log_Execute_LDEL(requestId)
-	// 		decodedContent, err := base64.StdEncoding.DecodeString(ldalDetails.Content)
-	// 		if err != nil {
-	// 			log.Println("decode error:", err)
-	// 			return "", err
+	if ldalDetails.LogQuery {
+		logFileDetails := logrepo.GetLogFileDetails(ldalDetails.BoundedId)
+		if len(logFileDetails.FileId) > 0 {
+			service.Log_Download_LogFile(ldalDetails.BoundedId, requestId)
+			//Download LDAL Script
+			service.Log_download_Script(ldalDetails.BoundedId, requestId)
+			Config_LDEL_DEF(logFileDetails.LogFileName, requestId)
+			service.Log_Execute_LDEL(requestId)
+			decodedContent, err := base64.StdEncoding.DecodeString(ldalDetails.Content)
+			if err != nil {
+				log.Println("decode error:", err)
+				return "", err
 
-	// 		}
-	// 		service.WriteToFile("localstorage/"+requestId, "LDAL_Script.txt", string(decodedContent))
+			}
+			service.WriteToFile("localstorage/"+requestId, "LDAL_Script.txt", string(decodedContent))
 
-	// 	} else {
+		} else {
 
-	// 		return "", errors.New("Query Failed , log Bind Error")
+			return "", errors.New("Query Failed , log Bind Error")
 
-	// 	}
+		}
 	// 	result = fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
 
 	// } else {
@@ -108,7 +108,7 @@ func ExecuteLDAL(scriptId string) (string, error) {
 		
 		
 
-	// }
+	}
 
 	// //os.RemoveAll("localstorage/" + requestId)
 
