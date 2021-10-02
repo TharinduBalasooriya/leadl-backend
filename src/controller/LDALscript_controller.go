@@ -101,8 +101,8 @@ func ExecuteLDAL(scriptId string) (string, error) {
 				//result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
 				result="TDP"
 			} else if customJSONRequest.JsonType == "Normal" {
-				result = "Normal"
-				//result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
+				//result = "Normal"
+				result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
 			} else {
 				result = "Invalid custom json  Type"
 			}
