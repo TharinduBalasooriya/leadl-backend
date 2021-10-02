@@ -51,8 +51,8 @@ func GetScriptByProject(projectId string) []datamodels.LDALscript {
 
 func ExecuteLDAL(scriptId string) (string, error) {
 
-	 var ldalDetails datamodels.LDALscript
-	 var result string
+	var ldalDetails datamodels.LDALscript
+	var result string
 	requestId := uuid.New().String()
 
 	ldalDetails = ldalRepo.GetLDALScripts(scriptId)
@@ -75,38 +75,39 @@ func ExecuteLDAL(scriptId string) (string, error) {
 
 		} else {
 
-			return "", errors.New("Query Failed , log Bind Error")
+			return "", errors.New("query Failed , log bind error")
 
 		}
-	// 	result = fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
+		result = fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
 
-	// } else {
-	// 	log.Println("Custom query execution started ...")
-	// 	if( !ldalDetails.BoundStatus){
-	// 		return "Query is not bounded",nil
-	// 	}
-	// 	decodedContent, err := base64.StdEncoding.DecodeString(ldalDetails.Content)
-	// 	if err != nil {
-	// 		log.Println("decode error:", err)
-	// 		return "", err
+	} else {
+		log.Println("Custom query execution started ...")
+		if !ldalDetails.BoundStatus {
+			return "Query is not bounded", nil
+		} else {
+			decodedContent, err := base64.StdEncoding.DecodeString(ldalDetails.Content)
+			if err != nil {
+				log.Println("decode error:", err)
+				return "", err
 
-	// 	}
-	// 	service.WriteToFile("localstorage/"+requestId, "LDAL_Script.txt", string(decodedContent))
+			}
+			service.WriteToFile("localstorage/"+requestId, "LDAL_Script.txt", string(decodedContent))
 
-	// 	service.DownloadCustomJSON(ldalDetails.BoundedId, requestId)
-	// 	//Check custom data types
-	// 	customJSONRequest := cusjsonrepo.GetCustomJson(ldalDetails.BoundedId)
-	// 	Config_LDEL_DEF("", requestId)
-	// 	if customJSONRequest.JsonType == "TDP" {
-	// 		result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
-	// 	}else if customJSONRequest.JsonType == "Normal" {
-	// 		result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
-	// 	}else{
-	// 		result = "Invalid custom json  Type"
-	// 	}
-		
-		
-		
+			service.DownloadCustomJSON(ldalDetails.BoundedId, requestId)
+			//Check custom data types
+			customJSONRequest := cusjsonrepo.GetCustomJson(ldalDetails.BoundedId)
+			Config_LDEL_DEF("", requestId)
+			if customJSONRequest.JsonType == "TDP" {
+				//result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
+				result="TDP"
+			} else if customJSONRequest.JsonType == "Normal" {
+				result = "Normal"
+				//result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
+			} else {
+				result = "Invalid custom json  Type"
+			}
+
+		}
 
 	}
 
@@ -118,7 +119,7 @@ func ExecuteLDAL(scriptId string) (string, error) {
 }
 
 func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
-	
+
 	requestID := uuid.New().String()
 	var jsonMap map[string]interface{}
 	var jsonString string
@@ -211,7 +212,6 @@ func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
 
 	// an arbitrary json string
 	// jsonString := string(dat)
-
 
 	json.Unmarshal([]byte(jsonString), &jsonMap)
 	os.RemoveAll("localstorage/" + requestID)
