@@ -1,3 +1,6 @@
+DEF	RULE_FILE_NAME					D:/MurtazaCode/FlexibleComputerLanguage/FlexibleComputerLanguage/Masking/maskscript.txt
+DEF	LOAD_FROM_CODE_LIBRARY			TRUE
+DEF	CODE_LIBRARY_FILE				D:/MurtazaCode/FlexibleComputerLanguage/FlexibleComputerLanguage/Masking/maskfunction.txt
 DEF	LINE_CONTINUATION_STRING			__
 DEF	FUNCTION_SEPERATOR				.
 DEF	EQUAL_SIGN					:=
@@ -90,6 +93,9 @@ DEF	IS_NULL						IsNull
 DEF	IS_NOT_NULL					IsNotNull
 DEF	BOOL_AND					And
 DEF	BOOL_OR						Or
+DEF MASK_VALUE					MaskValue
+DEF MASK_LOGDATA				MaskLogdata
+DEF SET_ATTRIBUTES				SetAttributes
 
 DEF	LDEL_SCRIPT_FILE				script.ldel
 DEF	LDEL_LOG_FILE					log.txt
@@ -160,19 +166,5 @@ DEF	GET_YEAR					GetYear
 DEF	GET_OLDEST_DATE					GetOldestDate
 DEF	GET_LATEST_DATE					GetLatestDate
 DEF	ADD_PERIOD					AddPeriod
-DEF	GET_UNIQUE_NODE_LIST_WITH_NODE_REF		GetUniqueNodeListWithNodeRef
-DEF 	SET_INTEGER                 			SetInteger
-DEF	QUERY_PROFILE_AND_TDPS                 	QueryProfileAndTDPs
-DEF	GET_NODE_OBJ                 			GetNodeObj
-DEF	MULTIPLY                 			Multiply
-DEF	ABSOLUTE_VALUE                 			AbsoluteValue
-DEF	DIVIDE                 			Divide
-DEF	QUERY_REVIEWS_BY_PROFILE_IDS                 	QueryReviewsByProfileIds
-DEF	STRING_TO_UNIX_TIME_2				StringToUnixTime2
-DEF	QUERY_REVIEWS_BY_IDENTIFIERS                 	QueryReviewsByIdentifiers
-DEF	QUERY_CERTIFICATES_BY_IDENTIFIERS                 	QueryCertificatesByIdentifiers
-DEF	QUERY_VALID_CERTIFICATES_BY_LOCATION                 	QueryValidCertificatesByLocation
-DEF	QUERY_ARTIFACTDATA_BY_TEMPLATE                 	QueryArtifactDataByTemplate
-DEF	PERCENTAGE                 	Percentage
-DEF	AVERAGE                 	Average
-
+DEF	GET_UNIQUE_NODE_LIST_WITH_NODE_REF			GetUniqueNodeListWithNodeRef
+DEF SET_INTEGER                 SetInteger

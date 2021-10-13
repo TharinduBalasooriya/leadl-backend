@@ -102,18 +102,19 @@ add_executable(LogAnalyzer
         ExecutionTemplateList.h
         FCLWrapper.cpp
         FCLWrapper.h
+        FCLWrapper.i
         filereadstream.h
         filewritestream.h
         fwd.h
         ieee754.h
         Int.h
-        inttypes.h
         ISpecialCommand.h
         istreamwrapper.h
         itoa.h
         json.hpp
         LDAL_Wrapper.cpp
         LDAL_Wrapper.h
+        LDAL_Wrapper.i
         Logger.h
         LogJsonParser.cpp
         LogJsonParser.h
@@ -124,8 +125,6 @@ add_executable(LogAnalyzer
         memorystream.h
         meta.h
         MetaData.h
-        NamedPipeOperations.cpp
-        NamedPipeOperations.h
         Node.cpp
         Node.h
         NodeCustomValueShorthand.cpp
@@ -153,7 +152,6 @@ add_executable(LogAnalyzer
         SpecialCommandExecuter.cpp
         SpecialCommandExecuter.h
         stack.h
-        stdint.h
         stream.h
         strfunc.h
         stringbuffer.h

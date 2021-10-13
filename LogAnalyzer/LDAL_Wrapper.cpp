@@ -17,6 +17,7 @@
 #include "OTPParser.h"
 #include "LogJsonParser.h"
 #include "ELNodeWrapper.h"
+#include "ResultGenerator.h"
 
 std::string LDAL_Wrapper::GetLDALResult(std::string defFilePath)
 {
@@ -44,12 +45,13 @@ std::string LDAL_Wrapper::GetLDALResult(std::string defFilePath)
     ec.map_Var["OUTPUT"] = pOut;
     ec.map_Var["Y"] = pY;
 
-    MSTRING Location = pMD->s_TREELocation;
+    std::string Location = pMD->s_TREELocation;
     pLog->ReadValueFromFile(Location.c_str());
 
+    std::cout<<"CAme Here\n";
     op.p_ETL->Execute(&ec);
 
-    MSTRING result = pOut->GetAggregatedValue();
+    std::string result = pOut->GetAggregatedValue();
     Debugger b;
     b.DebugResult(&ec.map_Var, pMD);
 
@@ -113,7 +115,7 @@ std::string LDAL_Wrapper::GetTDPResult(std::string defFilePath)
     Debugger db;
     db.DebugResult(&ec.map_Var,pMD);
     //std::cout << pRESULT->GetAggregatedValue();
-    return pRESULT->GetAggregatedValue();
+    return ResultGenerator::CreateResult(pRESULT);
 }
 
 
@@ -133,7 +135,7 @@ std::string LDAL_Wrapper::GetLOGLDALResult(std::string defFilePath) {
         query += qline;
         query += "\n";
     }
-    //std::cout<<query;
+    //std::cout<<query<<"\n";
     ScriptReader sr;
     ScriptReaderOutput op;
     bool bSucc = sr.ProcessScript(pMD, op, query);
@@ -153,6 +155,7 @@ std::string LDAL_Wrapper::GetLOGLDALResult(std::string defFilePath) {
         jsonfile.close();
     }
 
+    //std::cout<<jsonline<<"\n";
     Node *root= LogJsonParser::LogJSONToNodeTree(jsonline);
     ExecutionContext ec;
     ec.p_mapFunctions = &op.map_Functions;
@@ -168,7 +171,11 @@ std::string LDAL_Wrapper::GetLOGLDALResult(std::string defFilePath) {
     Debugger db;
     db.DebugResult(&ec.map_Var,pMD);
     //std::cout << pRESULT->GetAggregatedValue();
-    return pRESULT->GetAggregatedValue();
+    std::string result="";
+
+      result = ResultGenerator::CreateResult(pRESULT);
+
+    return result;
 
 }
 

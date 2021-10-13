@@ -153,40 +153,47 @@ std::string ResultGenerator::CreateResult(Node *result)
     std::string resultJSON = "";
     std::string value;
     //    resultJSON = "{\"type\": 0, \"val\": " + valueFormatting(result) + "}";
-    switch (atoi(result->GetRVal()))
-    {
-    case 0:
-        resultJSON = "{\"type\": 0, \"val\": " + ValueFormatting(result) + "}";
-        break;
-    case 1:
-        resultJSON = "{\"type\": 1, \"val\": " + ValueFormatting(result) + "}";
-        break;
-    case 2:
-        resultJSON = "{\"type\": 2, \"val\": " + ValueFormatting(result) + "}";
-        break;
-    case 3:
-        resultJSON = "{\"type\": 3, \"val\": " + ValueFormatting(result) + "}";
-        break;
-    case 4:
-        resultJSON = "{\"type\": 4, \"val\": " + ValueFormatting(result) + "}";
-        break;
-        //     case 5:
-        //         value = result->GetValue();
-        //         resultJSON = "{\"type\": 5, \"val\": \"" + valueFormatting(result) + "\"}";
-        //         break;
-        //     case 6:
-        //         // TODO -> HAVE TO KEEP OBJECT WITHIN TREE AND CREATE TREE
-        //         value = result->GetValue();
-        //         resultJSON = "{\"type\": 6, \"val\": \"" + valueFormatting(result) + "\"}";
-        //         break;
-        //     case 7:
-        //         // TODO -> HAVE TO KEEP LIST WITHIN TREE AND CREATE TREE
-        //         value = result->GetValue();
-        //         resultJSON = "{\"type\": 7, \"val\":[" + valueFormatting(result) + "]}";
-        //         break;
-        //     default:
-        //         value = result->GetValue();
-        //         resultJSON = "{\"type\": 1, \"val\": " + valueFormatting(result) + "}";
-    }
+
+   if(result->GetRVal()){
+       switch (atoi(result->GetRVal()))
+       {
+           case 0:
+               resultJSON = "{\"type\": 0, \"val\": " + ValueFormatting(result) + "}";
+               break;
+           case 1:
+               resultJSON = "{\"type\": 1, \"val\": " + ValueFormatting(result) + "}";
+               break;
+           case 2:
+               resultJSON = "{\"type\": 2, \"val\": " + ValueFormatting(result) + "}";
+               break;
+           case 3:
+               resultJSON = "{\"type\": 3, \"val\": " + ValueFormatting(result) + "}";
+               break;
+           case 4:
+               resultJSON = "{\"type\": 4, \"val\": " + ValueFormatting(result) + "}";
+               break;
+               //     case 5:
+               //         value = result->GetValue();
+               //         resultJSON = "{\"type\": 5, \"val\": \"" + valueFormatting(result) + "\"}";
+               //         break;
+               //     case 6:
+               //         // TODO -> HAVE TO KEEP OBJECT WITHIN TREE AND CREATE TREE
+               //         value = result->GetValue();
+               //         resultJSON = "{\"type\": 6, \"val\": \"" + valueFormatting(result) + "\"}";
+               //         break;
+               //     case 7:
+               //         // TODO -> HAVE TO KEEP LIST WITHIN TREE AND CREATE TREE
+               //         value = result->GetValue();
+               //         resultJSON = "{\"type\": 7, \"val\":[" + valueFormatting(result) + "]}";
+               //         break;
+               //     default:
+               //         value = result->GetValue();
+               //         resultJSON = "{\"type\": 1, \"val\": " + valueFormatting(result) + "}";
+       }
+
+   }else{
+       resultJSON = "{\"type\": 1, \"val\": \"Incomplete query\"}";
+   }
+
     return resultJSON;
 }

@@ -129,7 +129,7 @@ void Debugger::DebugResult(MAP_STR_ENTITYPTR *ecVarMap,MetaData *pMD) {
                          while(child != NULL){
 
                              if(child->GetValue()){
-                                 const char *s = ep->GetValue();
+                                 const char *s = child->GetValue();
                                  std::string zValue(s);
                                  childObj["z_Value"]=zValue;
 
@@ -137,8 +137,8 @@ void Debugger::DebugResult(MAP_STR_ENTITYPTR *ecVarMap,MetaData *pMD) {
 
                                  childObj["z_Value"]="NULL";
                              }
-                             if(ep->GetLVal()){
-                                 const char *s = ep->GetLVal();
+                             if(child->GetLVal()){
+                                 const char *s = child->GetLVal();
                                  std::string lValue(s);
                                  childObj["l_Value"]=lValue;
                              }else{
@@ -146,16 +146,16 @@ void Debugger::DebugResult(MAP_STR_ENTITYPTR *ecVarMap,MetaData *pMD) {
                              }
 
 
-                             if(ep->GetRVal()){
-                                 const char *s = ep->GetRVal();
+                             if(child->GetRVal()){
+                                 const char *s = child->GetRVal();
                                  std::string rValue(s);
                                  childObj["r_Value"]=rValue;
                              }else{
                                  childObj["r_Value"]="NULL";
                              }
 
-                             if(ep->GetCustomString()){
-                                 const char *s = ep->GetCustomString();
+                             if(child->GetCustomString()){
+                                 const char *s = child->GetCustomString();
                                  std::string cValue(s);
                                  childObj["customString"]=cValue;
                              }else{

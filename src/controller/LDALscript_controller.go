@@ -98,8 +98,8 @@ func ExecuteLDAL(scriptId string) (string, error) {
 			customJSONRequest := cusjsonrepo.GetCustomJson(ldalDetails.BoundedId)
 			Config_LDEL_DEF("", requestId)
 			if customJSONRequest.JsonType == "TDP" {
-				//result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
-				result="TDP"
+				result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
+				//result="TDP"
 			} else if customJSONRequest.JsonType == "Normal" {
 				//result = "Normal"
 				result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
@@ -111,7 +111,7 @@ func ExecuteLDAL(scriptId string) (string, error) {
 
 	}
 
-	// //os.RemoveAll("localstorage/" + requestId)
+	os.RemoveAll("localstorage/" + requestId)
 
 	log.Println(ldalDetails.BoundStatus)
 	return result, nil

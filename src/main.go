@@ -4,11 +4,12 @@ import (
 	"log"
 	"net/http"
 	"os"
+	//"fmt"
 
-	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/routes"
-	"github.com/gorilla/handlers"
-	"github.com/joho/godotenv"
+	  "github.com/TharinduBalasooriya/LogAnalyzerBackend/src/routes"
+	  "github.com/gorilla/handlers"
 	//fcllib "github.com/TharinduBalasooriya/LogAnalyzerBackend/LogAnalyzer"
+	 "github.com/joho/godotenv"
 )
 
 // LoadEnv /*
@@ -27,22 +28,26 @@ func LoadEnv() {
 */
 func main() {
 
-	//Starting the API server
+	// //Starting the API server
 	router := routes.LogRoutes()
 
 	os.MkdirAll("temp", 0755)
 	os.MkdirAll("localstorage", 0755)
 	os.MkdirAll("debug_env", 0755)
 
-	//Load the env file
+	// //Load the env file
 	LoadEnv()
 
 	router.Path("/")
 	http.Handle("/", router)
-	//log.Println("Server Started localhost :3000")
+	log.Println("Server Started localhost :3000")
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization", "Token"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*", "https://leadl-web.herokuapp.com"}))(router)))
 
-	//  result := fcllib.NewFCLWrapper().GetLDALResult("C:\\Users\\thari\\Desktop\\Code2\\tests\\tdpTest\\Defs.txt");
-	// log.Println(result)
+	//result := fcllib.NewFCLWrapper().GetLogLDALResult("C:\\Users\\thari\\Desktop\\Code2\\tests\\logTypeTDP\\Defs.txt")
+	//fmt.Println(result)
 
+	// log.Println("==============")
+
+	// resut2 := fcllib.NewFCLWrapper().GetTDPResult("C:\\Users\\thari\\Desktop\\Code2\\tests\\newTdpTest\\Defs.txt")
+	// log.Println(resut2)
 }

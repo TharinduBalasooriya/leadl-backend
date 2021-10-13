@@ -1,4 +1,5 @@
 package DB
+
 import (
 	"context"
 	"fmt"
@@ -9,7 +10,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var Client  *mongo.Client
+var Client *mongo.Client
+
 func init() {
 
 	fmt.Println("Database Connection Established")
@@ -24,8 +26,7 @@ func init() {
 
 }
 
-func GetDBClient ()*mongo.Client{
-	return Client;
-	
+func GetDBClient() *mongo.Client {
+	return Client
 
 }

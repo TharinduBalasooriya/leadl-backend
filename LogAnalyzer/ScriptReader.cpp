@@ -114,15 +114,15 @@ bool ScriptReader::ProcessScript(MetaData* pMD, ScriptReaderOutput& op, MSTRING 
 	LST_STR::const_iterator ite1 = lstLines.begin();
 	LST_STR::const_iterator iteEnd1 = lstLines.end();
 	LST_INT::const_iterator ite2 = lstLineNumbers.begin();
-	int val =0;
+	//int val =0;
 	for( ; ite1 != iteEnd1; ++ite1, ++ite2)
 	{
-		val++;
+		//val++;
 		ScriptReader::ProcessLineRetVal ret = ProcessLine(*ite1, pMD);
-		if(0 == ret.p_ET){
-			std::cout<<"Error At line"<<val;
-			return false;
-		}
+		// if(0 == ret.p_ET){
+		// 	std::cout<<"Error At line"<<val;
+		// 	return false;
+		// }
 		if(0 != ret.p_ET)
 		{
 			MSTRINGSTREAM sCodeLine;
@@ -341,6 +341,9 @@ ScriptReader::ProcessLineRetVal ScriptReader::ProcessLine(MSTRING sLine, MetaDat
 	{
 		ExecutionTemplate* pET = GetEntity(vecCE, 0, vecCE.size() - 1);
 		ret.p_ET = pET;
+		if(pET=0){
+			std::cout<<"MightBEaAERRo\n";
+		}
 	}
     
 	return ret;
