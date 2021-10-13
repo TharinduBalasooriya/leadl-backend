@@ -32,7 +32,7 @@ func (l *CustomJsontRepository) CreateCutomJson(customJson datamodels.CustomJson
 
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 	result, err := customJson_collection.InsertOne(ctx, customJson)
-	fmt.Println("\nInserted a JSON: ", result.InsertedID)
+	
 	return result.InsertedID, err
 }
 

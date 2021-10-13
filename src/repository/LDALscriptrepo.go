@@ -46,7 +46,7 @@ func (l *ScriptRepository) SaveLDALScript(LDALscript datamodels.LDALscript) (int
 
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 	result, err := script_collection.InsertOne(ctx, LDALscript)
-	fmt.Println("\nInserted a single LDALscript: ", result)
+
 	return result, err
 }
 
@@ -124,7 +124,7 @@ func (l *ScriptRepository) UpadteLDALScript(script datamodels.LDALscript) interf
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Updated %v Documents!\n", result.ModifiedCount)
+	
 
 	return result
 
