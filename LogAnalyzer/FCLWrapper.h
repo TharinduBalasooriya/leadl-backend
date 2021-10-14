@@ -13,6 +13,7 @@ public:
     std::string GetLDALResult(const char* defFilePath);
     std::string GetTDPResult(const char* defFilePath);
     std::string  GetLogLDALResult(const char* defFilePath);
+    std::string  GetOTPResult(const char* defFilePath);
 
 };
 

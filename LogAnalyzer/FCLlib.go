@@ -46,6 +46,8 @@ typedef _gostring_ swig_type_15;
 typedef _gostring_ swig_type_16;
 typedef _gostring_ swig_type_17;
 typedef _gostring_ swig_type_18;
+typedef _gostring_ swig_type_19;
+typedef _gostring_ swig_type_20;
 extern void _wrap_Swig_free_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
 extern uintptr_t _wrap_Swig_malloc_FCLlib_1ee54ad49562e6e8(swig_intgo arg1);
 extern uintptr_t _wrap_new_StringVector__SWIG_0_FCLlib_1ee54ad49562e6e8(void);
@@ -76,6 +78,7 @@ extern void _wrap_FCLWrapper_RunELInterpretter_FCLlib_1ee54ad49562e6e8(uintptr_t
 extern swig_type_13 _wrap_FCLWrapper_GetLDALResult_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_14 arg2);
 extern swig_type_15 _wrap_FCLWrapper_GetTDPResult_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_16 arg2);
 extern swig_type_17 _wrap_FCLWrapper_GetLogLDALResult_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_18 arg2);
+extern swig_type_19 _wrap_FCLWrapper_GetOTPResult_FCLlib_1ee54ad49562e6e8(uintptr_t arg1, swig_type_20 arg2);
 extern uintptr_t _wrap_new_FCLWrapper_FCLlib_1ee54ad49562e6e8(void);
 extern void _wrap_delete_FCLWrapper_FCLlib_1ee54ad49562e6e8(uintptr_t arg1);
 #undef intgo
@@ -427,6 +430,20 @@ func (arg1 SwigcptrFCLWrapper) GetLogLDALResult(arg2 string) (_swig_ret string) 
 	return swig_r_1
 }
 
+func (arg1 SwigcptrFCLWrapper) GetOTPResult(arg2 string) (_swig_ret string) {
+	var swig_r string
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	swig_r_p := C._wrap_FCLWrapper_GetOTPResult_FCLlib_1ee54ad49562e6e8(C.uintptr_t(_swig_i_0), *(*C.swig_type_20)(unsafe.Pointer(&_swig_i_1)))
+	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+	var swig_r_1 string
+ swig_r_1 = swigCopyString(swig_r) 
+	return swig_r_1
+}
+
 func NewFCLWrapper() (_swig_ret FCLWrapper) {
 	var swig_r FCLWrapper
 	swig_r = (FCLWrapper)(SwigcptrFCLWrapper(C._wrap_new_FCLWrapper_FCLlib_1ee54ad49562e6e8()))
@@ -445,6 +462,7 @@ type FCLWrapper interface {
 	GetLDALResult(arg2 string) (_swig_ret string)
 	GetTDPResult(arg2 string) (_swig_ret string)
 	GetLogLDALResult(arg2 string) (_swig_ret string)
+	GetOTPResult(arg2 string) (_swig_ret string)
 }
 
 

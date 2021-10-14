@@ -118,6 +118,61 @@ std::string LDAL_Wrapper::GetTDPResult(std::string defFilePath)
     return ResultGenerator::CreateResult(pRESULT);
 }
 
+std::string LDAL_Wrapper::GetOTPResult(std::string defFilePath){
+        int id = 0;
+    DefFileReader dfr;
+    // CAUTION: This file path is hardcoded and can cause crashes. You have been warned!
+    MetaData *pMD = dfr.Read(defFilePath);
+
+    //Read Query to string
+    std::ifstream queryFile(pMD->s_RuleFileName);
+    std::string query = "";
+    std::string qline = "";
+    while (getline(queryFile, qline))
+    {
+        query += qline;
+        query += "\n";
+    }
+    //std::cout<<query;
+    ScriptReader sr;
+    ScriptReaderOutput op;
+    bool bSucc = sr.ProcessScript(pMD, op, query);
+    if (!bSucc)
+    {
+        std::wcout << "\nFailed to read script\n";
+    }
+
+    //Parse text to TDPNodeTree
+    std::string line;
+    std::string jsonline;
+    std::ifstream jsonfile(pMD->s_TREELocation);
+    if (jsonfile.is_open())
+    {
+        getline(jsonfile, line);
+        jsonline = line;
+        jsonfile.close();
+    }
+    OTPParser otp;
+    Node *root = otp.OTPJSONToNodeTree(jsonline);
+    //Node *root= LogJsonParser::LogJSONToNodeTree(jsonline);
+    ExecutionContext ec;
+    ec.p_mapFunctions = &op.map_Functions;
+    ec.p_MD = pMD;
+    Node *pY = MemoryManager::Inst.CreateNode(++id);
+    Node *pRESULT = MemoryManager::Inst.CreateNode(++id);
+    std::string s = "52";
+    root->SetValue((char *)s.c_str());
+    ec.map_Var["X"] = root;
+    ec.map_Var["Y"] = pY;
+    ec.map_Var["RESULT"] = pRESULT;
+    op.p_ETL->Execute(&ec);
+    Debugger db;
+    db.DebugResult(&ec.map_Var,pMD);
+    //std::cout << pRESULT->GetAggregatedValue();
+    return ResultGenerator::CreateResult(pRESULT);
+
+}
+
 
 std::string LDAL_Wrapper::GetLOGLDALResult(std::string defFilePath) {
 

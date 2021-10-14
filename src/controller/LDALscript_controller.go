@@ -100,6 +100,9 @@ func ExecuteLDAL(scriptId string) (string, error) {
 			if customJSONRequest.JsonType == "TDP" {
 				result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
 				//result="TDP"
+			}else if customJSONRequest.JsonType == "OTP"{
+				result =  fcllib.NewFCLWrapper().GetOTPResult("localstorage/" + requestId + "/" + "Defs.txt");
+
 			} else if customJSONRequest.JsonType == "Normal" {
 				//result = "Normal"
 				result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
@@ -181,7 +184,27 @@ func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
 				jsonString = string(data)
 			}
 
-		} else {
+		} else if request.Type == "OTP"{
+
+			_ = fcllib.NewFCLWrapper().GetOTPResult("localstorage/" + requestID + "/" + "Defs.txt")
+			data, err := os.ReadFile("localstorage/" + requestID + "/Debug_Result.json")
+
+			if err != nil {
+				jsonString = `{
+				"variables": [
+				{
+					"dataType": "ERROR",
+					"details": "Debug Failed",
+					"name": "Debug Error"
+					}
+				]
+			}`
+
+			} else {
+				jsonString = string(data)
+			}
+
+		}else {
 
 			jsonString = `{
 			"variables": [

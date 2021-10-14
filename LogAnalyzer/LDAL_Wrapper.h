@@ -14,6 +14,7 @@ public:
   MSTRING GetLDALResult(MSTRING defFilePath);
   MSTRING GetTDPResult(MSTRING defFilePath);
   MSTRING GetLOGLDALResult(MSTRING defFilePath);
+  MSTRING GetOTPResult(MSTRING defFilePath);
 };
 
 
