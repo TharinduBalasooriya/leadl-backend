@@ -720,26 +720,6 @@ _gostring_ _wrap_FCLWrapper_GetLogLDALResult_FCLlib_1ee54ad49562e6e8(FCLWrapper 
 }
 
 
-_gostring_ _wrap_FCLWrapper_GetOTPResult_FCLlib_1ee54ad49562e6e8(FCLWrapper *_swig_go_0, _gostring_ _swig_go_1) {
-  FCLWrapper *arg1 = (FCLWrapper *) 0 ;
-  char *arg2 = (char *) 0 ;
-  std::string result;
-  _gostring_ _swig_go_result;
-  
-  arg1 = *(FCLWrapper **)&_swig_go_0; 
-  
-  arg2 = (char *)malloc(_swig_go_1.n + 1);
-  memcpy(arg2, _swig_go_1.p, _swig_go_1.n);
-  arg2[_swig_go_1.n] = '\0';
-  
-  
-  result = (arg1)->GetOTPResult((char const *)arg2);
-  _swig_go_result = Swig_AllocateString((&result)->data(), (&result)->length()); 
-  free(arg2); 
-  return _swig_go_result;
-}
-
-
 FCLWrapper *_wrap_new_FCLWrapper_FCLlib_1ee54ad49562e6e8() {
   FCLWrapper *result = 0 ;
   FCLWrapper *_swig_go_result;

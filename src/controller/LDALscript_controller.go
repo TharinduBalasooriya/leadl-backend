@@ -100,9 +100,6 @@ func ExecuteLDAL(scriptId string) (string, error) {
 			if customJSONRequest.JsonType == "TDP" {
 				result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
 				//result="TDP"
-			}else if customJSONRequest.JsonType == "OTP"{
-				result =  fcllib.NewFCLWrapper().GetOTPResult("localstorage/" + requestId + "/" + "Defs.txt");
-
 			} else if customJSONRequest.JsonType == "Normal" {
 				//result = "Normal"
 				result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
@@ -127,17 +124,6 @@ func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
 	var jsonMap map[string]interface{}
 	var jsonString string
 	if len(request.Query) > 0 && len(request.Tree) > 0 && len(request.Type) > 0 {
-		// decodedTree, err := base64.StdEncoding.DecodeString(request.Tree)
-		// if err != nil {
-		// 	log.Println("decode error:", err)
-
-		// }
-
-		// decodedQuery, err := base64.StdEncoding.DecodeString(request.Query)
-		// if err != nil {
-		// 	log.Println("decode error:", err)
-
-		// }
 
 		service.WriteToFile("localstorage/"+requestID, "result.txt", string(request.Tree))
 		service.WriteToFile("localstorage/"+requestID, "LDAL_Script.txt", string(request.Query))
@@ -184,27 +170,7 @@ func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
 				jsonString = string(data)
 			}
 
-		} else if request.Type == "OTP"{
-
-			_ = fcllib.NewFCLWrapper().GetOTPResult("localstorage/" + requestID + "/" + "Defs.txt")
-			data, err := os.ReadFile("localstorage/" + requestID + "/Debug_Result.json")
-
-			if err != nil {
-				jsonString = `{
-				"variables": [
-				{
-					"dataType": "ERROR",
-					"details": "Debug Failed",
-					"name": "Debug Error"
-					}
-				]
-			}`
-
-			} else {
-				jsonString = string(data)
-			}
-
-		}else {
+		} else {
 
 			jsonString = `{
 			"variables": [
@@ -230,11 +196,6 @@ func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
 		}`
 	}
 
-	// _ = fcllib.NewFCLWrapper().GetLDALResult("localstorage/" + requestID + "/" + "Defs.txt")
-	// dat, err := os.ReadFile("localstorage/" + requestID + "/Debug_Result.json")
-
-	// an arbitrary json string
-	// jsonString := string(dat)
 
 	json.Unmarshal([]byte(jsonString), &jsonMap)
 	os.RemoveAll("localstorage/" + requestID)

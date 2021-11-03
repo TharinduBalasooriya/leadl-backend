@@ -21,10 +21,6 @@ var project_collection = new(mongo.Collection)
 const ProjectCollection = "Project"
 const Database = "leadldb"
 
-
-
-
-
 func init(){
 
 	project_collection = db.Client.Database(Database).Collection(ProjectCollection)

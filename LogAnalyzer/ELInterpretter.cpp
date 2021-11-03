@@ -66,30 +66,26 @@ void ELInterpretter::PrintInterpretterResult(ELInterpretterResult *ir)
 
 void ELInterpretter::PrintInterpretterResultInJSON(ELInterpretterResult *ir)
 {
-    MOFSTREAM file;
-
-    file.open(mdglob->s_ResultJSONFile, std::ios::out | std::ios::trunc);
-    file << "{ \n";
-    file << QUOTE << _MSTR(Time spent parsing) << QUOTE << ":" << SPACE << QUOTE << ir->millisecondsForParsing << SPACE << _MSTR(ms) << QUOTE << "," << _MSTR(\n);
-    file << QUOTE << _MSTR(Time spent interpreting) << QUOTE << ":" << SPACE << QUOTE << ir->millisecondsForInterpreting << SPACE << _MSTR(ms) << QUOTE << "," << _MSTR(\n);
-    file << QUOTE << "Results" << QUOTE << ":"
-         << "[\n";
-
+    MOFSTREAM jsonfile;
+    jsonfile.open(mdglob->s_ResultJSONFile, std::ios::out | std::ios::trunc);
     PNODE curr = ir->startNode;
-    while (curr)
-    {
-        ELNodeWrapper *wrapper = ELNodeWrapper::mapNodeToWrapper[curr];
-        wrapper->PrintNodeToJSONFile(file);
-
-        curr = curr->GetRightSibling();
-        if (curr)
-        {
-            file << ",";
-        }
-    }
-    file << "]";
-    file << "}";
-    file.close();
+    int count =1;
+    jsonfile<<_MSTR([);
+    jsonfile<<_MSTR({);
+                        while (curr) {
+                            ELNodeWrapper* wrapper = ELNodeWrapper::mapNodeToWrapper[curr];
+                            //wrapper->PrintNodeToFile(file);
+                            wrapper->PrintNodeToJSONFile(jsonfile,count);
+                            count++;
+                            if(curr->GetRightSibling())
+                            {
+                                jsonfile <<",";
+                            }
+                            curr = curr->GetRightSibling();
+                        }
+                        //jsonfile<<_MSTR(\n);
+                        jsonfile <<_MSTR(}]);
+    jsonfile.close();
 }
 
 WIDESTRING ELInterpretter::ProcessLinesInFile(MSTRING sLogFile, VEC_ELLINETEMPLATE &vecLineTemplates, ELInterpretterResult *res)

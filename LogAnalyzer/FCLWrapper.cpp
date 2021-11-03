@@ -36,9 +36,3 @@ std::string  FCLWrapper::GetLogLDALResult(const char *defFilePath) {
     return  ldalWrapper.GetLOGLDALResult(defFilePath);
 
 }
-
-std::string FCLWrapper::GetOTPResult(const char *defFilePath){
-    LDAL_Wrapper LDAL_Wrapper;
-    return LDAL_Wrapper.GetOTPResult(defFilePath);
-
-}

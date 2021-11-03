@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.19)
 project(LogAnalyzer)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -118,14 +118,13 @@ add_executable(LogAnalyzer
         Logger.h
         LogJsonParser.cpp
         LogJsonParser.h
+        main.cpp
         MemMan.cpp
         MemMan.h
         memorybuffer.h
         memorystream.h
         meta.h
         MetaData.h
-        NamedPipeOperations.cpp
-        NamedPipeOperations.h
         Node.cpp
         Node.h
         NodeCustomValueShorthand.cpp

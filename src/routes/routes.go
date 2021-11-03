@@ -79,19 +79,28 @@ func LogRoutes() *mux.Router {
 	apiRoutes.HandleFunc("/debug_save", api.HandleDebugProject).Methods("POST")
 	apiRoutes.HandleFunc("/logs/update", api.HandleLogFileUpdate).Methods("PUT")
 
-//craete a script
-	apiRoutes.HandleFunc("/script", api.HandleScripts).Methods("POST")
-//get scripts by projectID
-apiRoutes.HandleFunc("/script/{projectId}", api.HandleGetScriptsByProjectId).Methods("GET")
-apiRoutes.HandleFunc("/getscript/{id}", api.HandleGetScriptDetails).Methods("GET")
-//update scripts
-apiRoutes.HandleFunc("/script/update", api.HandleUpdateScripts).Methods("PUT")
+	//craete a script
+		apiRoutes.HandleFunc("/script", api.HandleScripts).Methods("POST")
+	//get scripts by projectID
+	apiRoutes.HandleFunc("/script/{projectId}", api.HandleGetScriptsByProjectId).Methods("GET")
+	apiRoutes.HandleFunc("/getscript/{id}", api.HandleGetScriptDetails).Methods("GET")
+	//update scripts
+	apiRoutes.HandleFunc("/script/update", api.HandleUpdateScripts).Methods("PUT")
 
 
-//craete a json
-apiRoutes.HandleFunc("/customJson", api.HandleCustomJson).Methods("POST")
-//get jsonby projectID
-apiRoutes.HandleFunc("/customJson/{projectId}", api.HandleGetCustomjsonByProjectId).Methods("GET")
-apiRoutes.HandleFunc("/getcustomJson/{id}", api.HandleGetCustomjsonDetails).Methods("GET")
+	//craete a json
+	apiRoutes.HandleFunc("/customJson", api.HandleCustomJson).Methods("POST")
+	//get jsonby projectID
+	apiRoutes.HandleFunc("/customJson/{projectId}", api.HandleGetCustomjsonByProjectId).Methods("GET")
+	apiRoutes.HandleFunc("/getcustomJson/{id}", api.HandleGetCustomjsonDetails).Methods("GET")
+	/*
+	*
+	 report Routes
+	*/
+	apiRoutes.HandleFunc("/reports",api.HandleCreateReport).Methods("POST")
+	apiRoutes.HandleFunc("/reports",api.HandleUpdateReport).Methods("PUT")
+	apiRoutes.HandleFunc("/reports/{projectId}",api.HandleGetReportsByProjectId).Methods("GET")
+	apiRoutes.HandleFunc("/getReportDetails/{id}",api.HandleGetReportById).Methods("GET")
+	apiRoutes.HandleFunc("/reports/{id}",api.HandleDeleteReportById).Methods("DELETE")
 	return router
 }
