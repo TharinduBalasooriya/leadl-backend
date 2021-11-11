@@ -9,8 +9,10 @@ type Report struct {
 	Widgets []Widget `json:"widgets"`
 }
 type Widget struct {
+	ID 		 string `json:"id"`
 	Type     string `json:"type"`
 	ScriptId string `json:"scriptId"`
 	X        string `json:"x"`
 	Y        string `json:"y"`
+	Value    string `json:"value,omitempty"`
 }

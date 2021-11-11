@@ -6,13 +6,13 @@ import (
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/datamodels"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/repository"
-	
 )
 
 var reportRepository repository.ReportRepository
 
 func ReportSaveDetails(report datamodels.Report) (interface{},error){
 
+	
 	
 	results, err := reportRepository.CreateReport(report)
 	if err != nil {

@@ -23,10 +23,16 @@ func HandleScripts(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 
 	}
-	controller.ScriptSaveDetails(script)
+	result,err :=controller.ScriptSaveDetails(script)
 
-	fmt.Print(r.Body)
-	fmt.Println("script create Endpoint Hit\n")
+	if err != nil{
+		log.Println("Script create failed")
+		json.NewEncoder(w).Encode("{\"Message\":\"Query Creation Failed\"}")
+	}else{
+		json.NewEncoder(w).Encode(result)
+	}
+
+
 
 }
 

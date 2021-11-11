@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.20)
 project(LogAnalyzer)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -102,7 +102,6 @@ add_executable(LogAnalyzer
         ExecutionTemplateList.h
         FCLWrapper.cpp
         FCLWrapper.h
-        FCLWrapper.i
         filereadstream.h
         filewritestream.h
         fwd.h
@@ -114,7 +113,6 @@ add_executable(LogAnalyzer
         json.hpp
         LDAL_Wrapper.cpp
         LDAL_Wrapper.h
-        LDAL_Wrapper.i
         Logger.h
         LogJsonParser.cpp
         LogJsonParser.h
@@ -125,6 +123,8 @@ add_executable(LogAnalyzer
         memorystream.h
         meta.h
         MetaData.h
+        NamedPipeOperations.cpp
+        NamedPipeOperations.h
         Node.cpp
         Node.h
         NodeCustomValueShorthand.cpp

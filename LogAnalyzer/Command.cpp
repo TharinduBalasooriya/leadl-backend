@@ -17,7 +17,7 @@
 #include <set>
 #include <algorithm>
 #include <functional>
-
+#include <math.h>
 
 Command::Command()
 :ul_CommandType(COMMAND_TYPE_INVALID), p_Arg(0), p_EntityArg(0), s_AdditionalFuncName(EMPTY_STRING)
@@ -346,6 +346,20 @@ PENTITY Command::ExecuteIntCommand(MULONG ulCommand, PENTITY pEntity, PENTITY pA
 			pStrRes->SetValue(ss.str());
 			break;
 		}
+        case COMMAND_TYPE_PERCENTAGE:
+        {
+            if(ENTITY_TYPE_INT == pArg->ul_Type)
+            {
+                MemoryManager::Inst.CreateObject(&pStrRes);
+                PInt pIntArg = (PInt)pArg;
+                float ulVal = pInt->GetValue();
+                ulVal = ulVal / pIntArg->GetValue();
+                std::string floatString = std::to_string(roundf(ulVal * 10000 ) / 100);
+                pStrRes->SetValue(floatString.substr(0, floatString.find(".") + 3) + "%");
+            }
+            break;
+        }
+
 	}
     
 	if(0 != pBoolRes)
