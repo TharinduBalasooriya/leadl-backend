@@ -1,11 +1,12 @@
 package controller
 
 import (
-
+	
 	"log"
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/datamodels"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/repository"
+	reportService "github.com/TharinduBalasooriya/LogAnalyzerBackend/src/service"
 )
 
 var reportRepository repository.ReportRepository
@@ -49,4 +50,20 @@ func UpdateReport(updatedReport datamodels.Report) (interface{},error){
 func DeleteReport(id string) (interface{},error){
 	result,err := reportRepository.DeleteReportByID(id)
 	return result,err
+}
+
+func GetReportTemplate(reportId string) datamodels.ReportTemplate  {
+
+	reportResult := reportRepository.GetReportById(reportId)
+	var reportTemplate datamodels.ReportTemplate
+	reportTemplate.ID = reportResult.ID
+	reportTemplate.ProjectId = reportResult.ProjectId
+	reportTemplate.ReportName = reportResult.ReportName
+	reportTemplate.ReportTemplate = ""
+	
+	reportTemplate.ReportTemplate = reportService.GetReportTemplate(reportResult)
+
+		
+
+	return reportTemplate
 }

@@ -102,5 +102,6 @@ func LogRoutes() *mux.Router {
 	apiRoutes.HandleFunc("/reports/{projectId}",api.HandleGetReportsByProjectId).Methods("GET")
 	apiRoutes.HandleFunc("/getReportDetails/{id}",api.HandleGetReportById).Methods("GET")
 	apiRoutes.HandleFunc("/reports/{id}",api.HandleDeleteReportById).Methods("DELETE")
+	apiRoutes.HandleFunc("/reporttemplate/{id}",api.HandleReportTemplates).Methods("GET")
 	return router
 }

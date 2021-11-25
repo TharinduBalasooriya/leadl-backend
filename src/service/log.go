@@ -326,7 +326,7 @@ func DownloadCustomJSON(boundedID string,requestId string){
 	fmt.Println(boundedID)
 	customJSONRequest := cusjsonrepo.GetCustomJson(boundedID)
 	
-	fmt.Println(customJSONRequest.Content)
+	
 
 	os.MkdirAll("localstorage/"+requestId, 0755)
 	file, err := os.OpenFile(

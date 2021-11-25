@@ -48,7 +48,6 @@ std::string LDAL_Wrapper::GetLDALResult(std::string defFilePath)
     std::string Location = pMD->s_TREELocation;
     pLog->ReadValueFromFile(Location.c_str());
 
-    std::cout<<"CAme Here\n";
     op.p_ETL->Execute(&ec);
 
     std::string result = pOut->GetAggregatedValue();

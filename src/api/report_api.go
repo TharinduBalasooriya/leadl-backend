@@ -86,4 +86,11 @@ func HandleDeleteReportById(w http.ResponseWriter, r *http.Request) {
 	
 }
 
+func HandleReportTemplates(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	result := controller.GetReportTemplate(params["id"])
+	json.NewEncoder(w).Encode(result)
+}
+
 

@@ -6,11 +6,11 @@ type LDALscript struct {
 	SciptId     primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	ScriptName  string             `json:"scriptName"`
 	ProjectID   string             `json:"projectId"`
-	LogQuery    bool                `json:"logQuery"`
+	LogQuery    bool               `json:"logQuery"`
+	WidgetQuery bool               `json:"widgetQuery"`
 	BoundStatus bool               `json:"boundStatus"`
 	BoundedId   string             `json:"boundedId"`
 	Content     string             `json:"content"`
-	
 }
 
 type LDALscriptResult struct {

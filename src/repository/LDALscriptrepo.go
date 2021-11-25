@@ -116,6 +116,7 @@ func (l *ScriptRepository) UpadteLDALScript(script datamodels.LDALscript) interf
 		{"$set", bson.D{{"boundedid", script.BoundedId}}},
 		{"$set", bson.D{{"content", script.Content}}},
 		{"$set",bson.D{{"logquery",script.LogQuery}}},
+		{"$set",bson.D{{"logquery",script.WidgetQuery}}},
 	}
 
 	result, err := script_collection.UpdateOne(ctx, filter, update, opts)
