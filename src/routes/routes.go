@@ -5,6 +5,7 @@ import (
 
 	"net/http"
 
+	//"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/middleware"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/websocket"
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/api"
