@@ -77,18 +77,21 @@ class ScriptReader
     
 	MetaData* p_MetaData;
 	
+
 public:
 	bool ProcessScript(MSTRING sFile, MetaData* pMD, ScriptReaderOutput& op);
-	bool ProcessScript(MetaData* pMD, ScriptReaderOutput& op, MSTRING code);
+	std::string ProcessScript(MetaData* pMD, ScriptReaderOutput& op, MSTRING code);
 private:
 	void ReadFileToLines(MSTRING sFile, MSTRING sLineContinuation, MSTRING sCommentStart, LST_STR& lstLines, LST_INT& lstLineNumbers);
 	void ReadStringToLines(MSTRING sFile, MSTRING sLineContinuation, MSTRING sCommentStart, LST_STR& lstLines, LST_INT& lstLineNumbers);
-	ProcessLineRetVal ProcessLine(MSTRING sLine, MetaData* pMD);
+	ProcessLineRetVal ProcessLine(MSTRING sLine, MetaData* pMD,int i);
 	void GetCommandElements(MSTRING sCommand, VEC_CE& vecCE, MetaData* pMD);
 	ExecutionTemplate* GetEntity(VEC_CE& vecCE, VEC_CE::size_type stStart, VEC_CE::size_type stEnd);
     EntityList* GetList(VEC_CE& vecCE, VEC_CE::size_type stStart, VEC_CE::size_type stEnd);
 	Command* GetFunction(VEC_CE& vecCE, VEC_CE::size_type stStart, VEC_CE::size_type stEnd);
 	void GetNextFirstLevelCommandElementPos(VEC_CE& vecCE, VEC_CE::size_type stStart, VEC_CE::size_type stEnd, CommandElementType cet, std::map<CommandElementType, CommandElementType>& mapContextChangeElements, VEC_CE::size_type& stElemPos);
+    bool CheckForErrors(MSTRING sCommand, VEC_CE &vecCE,int i);
+    bool CheckBrackets(std::string expr);
 };
 
 #endif

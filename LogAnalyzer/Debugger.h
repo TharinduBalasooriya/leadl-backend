@@ -13,7 +13,7 @@ class Debugger {
 public:
     void DebugResult(MAP_STR_ENTITYPTR *ecVarMap,MetaData *pMD);
     void appendNode(nlohmann::json &j ,nlohmann::json &varibleObj,const std::pair<const std::basic_string<char>, PENTITY> &x);
-
+    nlohmann::json nodeToJSON(PNODE pnode);
 
 };
 

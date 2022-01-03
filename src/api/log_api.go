@@ -18,44 +18,17 @@ import (
 /*
 	Read the content of log file
 */
-// func GetLogFileContent(w http.ResponseWriter, r *http.Request) {
 
-// 	w.Header().Set("Content-Type", "application/json")
-// 	params := mux.Vars(r)
-// 	logs := controller.LogGetFileContent(params["user"], params["project"], params["logfileName"])
-// 	json.NewEncoder(w).Encode(logs)
-
-// }
 
 func GetLogFileContentv2(w http.ResponseWriter, r *http.Request) {
-
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	//logs := controller.LogGetFileContent(params["user"], params["project"], params["logfileName"])
 	log := controller.LogGetFileContentv2(params["fileId"])
 	json.NewEncoder(w).Encode(log)
-
 }
 
-func GetAllLog(w http.ResponseWriter, r *http.Request) {
 
-	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r)
-	logs := controller.GetFileList(params["user"])
-	json.NewEncoder(w).Encode(logs)
-
-}
-
-func GetAllProjects(w http.ResponseWriter, r *http.Request) {
-
-	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r)
-	logs := controller.GetProjects(params["user"])
-	json.NewEncoder(w).Encode(logs)
-
-}
-
-//
 
 func GetLogListByProjectID(w http.ResponseWriter, r *http.Request) {
 
@@ -117,13 +90,10 @@ type Update struct {
 }
 
 func HandleFileUpdates(w http.ResponseWriter, r *http.Request) {
-
 	var newupdate Update
 	_ = json.NewDecoder(r.Body).Decode(&newupdate)
 	controller.HandleUpdateData(controller.Update(newupdate))
-
 	json.NewEncoder(w).Encode(newupdate)
-
 }
 
 func HandleSrciptUpload(w http.ResponseWriter, r *http.Request) {
@@ -148,7 +118,6 @@ func HandleSrciptUpload(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
 	err = ioutil.WriteFile("localstorage/"+fileId+"/script.txt", fileBytes, 0777)
 	if err != nil {
 		fmt.Println(err)
@@ -158,12 +127,9 @@ func HandleSrciptUpload(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleInvokeELInterpreter(w http.ResponseWriter, r *http.Request) {
-
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
-
 	result, _ := controller.ExecuteLDEL(params["fileId"])
-
 	json.NewEncoder(w).Encode(result)
 }
 
@@ -171,9 +137,7 @@ func HandleInvokeELInterpreterGetJSON(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
-
 	_, result := controller.ExecuteLDEL(params["fileId"])
-
 	json.NewEncoder(w).Encode(result)
 }
 
@@ -185,9 +149,7 @@ func HandleLogFileUpdate(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 	result := controller.LogUpdateFile(logfileDetails)
-
 	fmt.Fprintln(w, result)
-
 }
 
 func HandleExecuteLDAL(w http.ResponseWriter, r *http.Request) {
@@ -195,19 +157,14 @@ func HandleExecuteLDAL(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	result,err := controller.ExecuteLDAL(params["scriptId"])
-
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		
 		json.NewEncoder(w).Encode(err.Error())
-
 	} else {
 		var LDALResult datamodels.LDALscriptResult
 		LDALResult.SciptId = params["scriptId"]
 		LDALResult.Result = result
 		json.NewEncoder(w).Encode(LDALResult)
-
 	}
 	log.Println(result)
-
 }

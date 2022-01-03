@@ -1,11 +1,9 @@
 package routes
 
 import (
-	
 	"fmt"
-	
+
 	"net/http"
-	
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/websocket"
 
@@ -22,14 +20,13 @@ func LogRoutes() *mux.Router {
 	router.HandleFunc("/ws", websocket.WSPage).Methods("GET")
 	router.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(rw, "HomeRoute")
-		
+
 	})
 
 	//apiRoutes.Use(middleware.LoggingMiddleware)
-	apiRoutes.HandleFunc("/logs/{user}/", api.GetAllLog).Methods("GET")
 
-	//getAllProjetcs
-	apiRoutes.HandleFunc("/projects/{user}/", api.GetAllProjects).Methods("GET")
+	//fetch a project by userId
+	apiRoutes.HandleFunc("/projects/{user}", api.HandleGetAllProjectsByUser).Methods("Get")
 
 	//upload file
 	apiRoutes.HandleFunc("/uploads/", api.HandleLogFileUpload).Methods("POST")
@@ -55,13 +52,11 @@ func LogRoutes() *mux.Router {
 	//Execute LDAL Script
 	apiRoutes.HandleFunc("/executeLDAL/{scriptId}", api.HandleExecuteLDAL).Methods("GET")
 	//Debug LDAL Queries
-	apiRoutes.HandleFunc("/debugLDAL/",api.HandelDebugLDAL).Methods("POST")
+	apiRoutes.HandleFunc("/debugLDAL/", api.HandelDebugLDAL).Methods("POST")
 
 	//Craete a project
 	apiRoutes.HandleFunc("/project", api.HandleProject).Methods("POST")
 	apiRoutes.HandleFunc("/project/{id}", api.GetProjectDetails).Methods("GET")
-	//fetch a project by userId
-	apiRoutes.HandleFunc("/projectV2/{user}", api.GetAllProjectsV2).Methods("Get")
 
 	//update project
 	apiRoutes.HandleFunc("/project/update", api.HandleUpdateProjects).Methods("PUT")
@@ -80,13 +75,12 @@ func LogRoutes() *mux.Router {
 	apiRoutes.HandleFunc("/logs/update", api.HandleLogFileUpdate).Methods("PUT")
 
 	//craete a script
-		apiRoutes.HandleFunc("/script", api.HandleScripts).Methods("POST")
+	apiRoutes.HandleFunc("/script", api.HandleScripts).Methods("POST")
 	//get scripts by projectID
 	apiRoutes.HandleFunc("/script/{projectId}", api.HandleGetScriptsByProjectId).Methods("GET")
 	apiRoutes.HandleFunc("/getscript/{id}", api.HandleGetScriptDetails).Methods("GET")
 	//update scripts
 	apiRoutes.HandleFunc("/script/update", api.HandleUpdateScripts).Methods("PUT")
-
 
 	//craete a json
 	apiRoutes.HandleFunc("/customJson", api.HandleCustomJson).Methods("POST")
@@ -94,14 +88,17 @@ func LogRoutes() *mux.Router {
 	apiRoutes.HandleFunc("/customJson/{projectId}", api.HandleGetCustomjsonByProjectId).Methods("GET")
 	apiRoutes.HandleFunc("/getcustomJson/{id}", api.HandleGetCustomjsonDetails).Methods("GET")
 	/*
-	*
-	 report Routes
+		*
+		 report Routes
 	*/
-	apiRoutes.HandleFunc("/reports",api.HandleCreateReport).Methods("POST")
-	apiRoutes.HandleFunc("/reports",api.HandleUpdateReport).Methods("PUT")
-	apiRoutes.HandleFunc("/reports/{projectId}",api.HandleGetReportsByProjectId).Methods("GET")
-	apiRoutes.HandleFunc("/getReportDetails/{id}",api.HandleGetReportById).Methods("GET")
-	apiRoutes.HandleFunc("/reports/{id}",api.HandleDeleteReportById).Methods("DELETE")
-	apiRoutes.HandleFunc("/reporttemplate/{id}",api.HandleReportTemplates).Methods("GET")
+	apiRoutes.HandleFunc("/reports", api.HandleCreateReport).Methods("POST")
+	apiRoutes.HandleFunc("/reportQuery", api.HandelReportLDALRequest).Methods("POST")
+	apiRoutes.HandleFunc("/reports", api.HandleUpdateReport).Methods("PUT")
+	apiRoutes.HandleFunc("/reports/{projectId}", api.HandleGetReportsByProjectId).Methods("GET")
+	apiRoutes.HandleFunc("/getReportDetails/{id}", api.HandleGetReportById).Methods("GET")
+	apiRoutes.HandleFunc("/reports/{id}", api.HandleDeleteReportById).Methods("DELETE")
+	apiRoutes.HandleFunc("/reporttemplate/{id}", api.HandleReportTemplates).Methods("GET")
+	apiRoutes.HandleFunc("/reportImage", api.HandleImageupload).Methods("POST")
+
 	return router
 }

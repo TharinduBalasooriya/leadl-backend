@@ -116,8 +116,8 @@ add_executable(LogAnalyzer
         Logger.h
         LogJsonParser.cpp
         LogJsonParser.h
-        main.cpp
         MemMan.cpp
+        main.cpp
         MemMan.h
         memorybuffer.h
         memorystream.h

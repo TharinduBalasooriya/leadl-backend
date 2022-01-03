@@ -1,0 +1,246 @@
+{
+    "variables": [
+        {
+            "dataType": "INTEGER",
+            "details": "VALUE: 450",
+            "name": "ACEPTED_QTY"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": null,
+                "child_count": 0,
+                "customString": "NULL",
+                "l_Value": "450",
+                "r_Value": "1",
+                "z_Value": "acceptedquantity"
+            },
+            "name": "AQTYNODE"
+        },
+        {
+            "dataType": "NULL ENTITY",
+            "details": "Is Null : TRUE",
+            "name": "CURR_ELEM"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": null,
+                "child_count": 0,
+                "customString": "NULL",
+                "l_Value": "farmington hills",
+                "r_Value": "NULL",
+                "z_Value": "processingCenter"
+            },
+            "name": "DATANODE"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": null,
+                "child_count": 0,
+                "customString": "NULL",
+                "l_Value": "500",
+                "r_Value": "1",
+                "z_Value": "receivedquantity"
+            },
+            "name": "Item"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": [
+                    {
+                        "customString": "NULL",
+                        "l_Value": "450",
+                        "r_Value": "1",
+                        "z_Value": "acceptedquantity"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "Placeholder",
+                        "r_Value": "6",
+                        "z_Value": "processingCenter"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "Placeholder",
+                        "r_Value": "4",
+                        "z_Value": "processingPhotos"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "Placeholder",
+                        "r_Value": "6",
+                        "z_Value": "productHandler"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "2020-04-27T14:13:56.880Z",
+                        "r_Value": "3",
+                        "z_Value": "receiveddate&time"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "500",
+                        "r_Value": "1",
+                        "z_Value": "receivedquantity"
+                    }
+                ],
+                "child_count": 6,
+                "customString": "NULL",
+                "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                "r_Value": "6128a6294bbc351f44b4dfeb",
+                "z_Value": "104"
+            },
+            "name": "Location"
+        },
+        {
+            "dataType": "LIST",
+            "details": "LIST SIZE : 2",
+            "name": "PRODUCTHANDLERLIST"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": null,
+                "child_count": 0,
+                "customString": "NULL",
+                "l_Value": "500",
+                "r_Value": "1",
+                "z_Value": "receivedquantity"
+            },
+            "name": "RCQTYNODE"
+        },
+        {
+            "dataType": "INTEGER",
+            "details": "VALUE: 500",
+            "name": "RECIVED_QTY"
+        },
+        {
+            "dataType": "STRING",
+            "details": "90.00%",
+            "name": "RESPONSE"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": null,
+                "child_count": 0,
+                "customString": "NULL",
+                "l_Value": "NULL",
+                "r_Value": "4",
+                "z_Value": "<tr><th>Product</th><th>Product</th><th>Accepted QTY</th><th>Received QTY</th><th>Accepted Rate</th></tr><tr><td>farmington hills</td><td>Texas</td><td>450</td><td>500</td><td>90.00%</td></tr><tr><td>farmington hills</td><td>Texas</td><td>450</td><td>500</td><td>90.00%</td></tr>"
+            },
+            "name": "RESULT"
+        },
+        {
+            "dataType": "STRING",
+            "details": "<tr><th>Product</th><th>Product</th><th>Accepted QTY</th><th>Received QTY</th><th>Accepted Rate</th></tr><tr><td>farmington hills</td><td>Texas</td><td>450</td><td>500</td><td>90.00%</td></tr><tr><td>farmington hills</td><td>Texas</td><td>450</td><td>500</td><td>90.00%</td></tr>",
+            "name": "RESULTSTRING"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": [
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "60f6701cb7a6d6f5fe761da9",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "60f6701cb7a6d6f5fe761da9",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "60f67b96b7a6d6107f761e13",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "60f67b96b7a6d6107f761e13",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "60f6803ab7a6d62c2f761eb0",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "60f6803ab7a6d62c2f761eb0",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "60f6803ab7a6d62c2f761eb0",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "60f6803ab7a6d62c2f761eb0",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "611ccec8b20e651881226a80",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "611ccec8b20e651881226a80",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "611ccec8b20e651881226a80",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "6128a6294bbc351f44b4dfeb",
+                        "z_Value": "104"
+                    },
+                    {
+                        "customString": "NULL",
+                        "l_Value": "7a0d4f90-e881-11eb-8701-a9ca5e0f7dc9",
+                        "r_Value": "6128a6294bbc351f44b4dfeb",
+                        "z_Value": "104"
+                    }
+                ],
+                "child_count": 13,
+                "customString": "NULL",
+                "l_Value": "tdp",
+                "r_Value": "tdp",
+                "z_Value": "52"
+            },
+            "name": "X"
+        },
+        {
+            "dataType": "NODE",
+            "details": {
+                "child": null,
+                "child_count": 0,
+                "customString": "NULL",
+                "l_Value": "NULL",
+                "r_Value": "NULL",
+                "z_Value": "NULL"
+            },
+            "name": "Y"
+        }
+    ]
+}

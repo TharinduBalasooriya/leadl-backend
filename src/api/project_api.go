@@ -29,7 +29,7 @@ func HandleProject(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetAllProjectsV2(w http.ResponseWriter, r *http.Request) {
+func HandleGetAllProjectsByUser(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)

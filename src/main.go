@@ -41,7 +41,9 @@ func main() {
 	router.Path("/")
 	http.Handle("/", router)
 	log.Println("Server Started localhost :3000")
-	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization", "Token"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*", "https://leadl-web.herokuapp.com"}))(router)))
+
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization", "Token"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT","DELETE", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*", "https://leadl-web.herokuapp.com"}))(router)))
+
 
 
 }

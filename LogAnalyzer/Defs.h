@@ -691,7 +691,7 @@
 #define     COMMAND_TYPE_GET_CUSTOM_OBJ                                 65
 #define     COMMAND_TYPE_SET_ATTRIBUTES                                 66
 #define     COMMAND_TYPE_GET_NODE_OBJ                                   67
-
+#define     COMMAND_TYPE_ADD_INNER_OBJ                                  68
 
 // String commands
 #define		COMMAND_TYPE_IS_STRING_EQUAL_TO								1000

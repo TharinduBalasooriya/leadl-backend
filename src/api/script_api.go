@@ -8,6 +8,7 @@ import (
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/controller"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/datamodels"
+	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/types"
 	"github.com/gorilla/mux"
 )
 
@@ -82,6 +83,19 @@ func HandelDebugLDAL(w http.ResponseWriter, r *http.Request){
 
 	json.NewEncoder(w).Encode(result)
 
-	
+}
+
+
+func HandelReportLDALRequest(w http.ResponseWriter, r *http.Request){
+
+	decoder := json.NewDecoder(r.Body)
+	var ldalRequest types.LDALReportQueryRequest
+	err := decoder.Decode(&ldalRequest)
+	if(err != nil){
+		log.Println(err)
+	}
+	result := controller.ReportLDALRequest(ldalRequest)
+
+	json.NewEncoder(w).Encode(result)
 
 }

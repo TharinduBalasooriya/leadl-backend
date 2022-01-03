@@ -1,3 +1,6 @@
 **/localstorage/**/*.txt
 **/temp/
 **/debug_env/
+/.idea/
+/.idea/backend.iml
+

@@ -7,6 +7,7 @@ import (
 	fcllib "github.com/TharinduBalasooriya/LogAnalyzerBackend/LogAnalyzer"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/datamodels"
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/repository"
+	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/types"
 
 	"github.com/TharinduBalasooriya/LogAnalyzerBackend/src/service"
 
@@ -14,6 +15,7 @@ import (
 	"encoding/json"
 
 	"errors"
+
 	"github.com/google/uuid"
 )
 
@@ -21,17 +23,13 @@ var LDALscriptrepo repository.ScriptRepository
 var cusjsonrepo repository.CustomJsontRepository
 
 func ScriptSaveDetails(script datamodels.LDALscript) (interface{}, error) {
-
 	results, err := service.Script_Save_Details(script)
-
 	return results, err
 
 }
 
 func UpdateScript(script datamodels.LDALscript) interface{} {
-
 	results := LDALscriptrepo.UpadteLDALScript(script)
-
 	return results
 }
 
@@ -41,9 +39,7 @@ func GetScriptDetails(scriptId string) datamodels.LDALscript {
 }
 
 func GetScriptByProject(projectId string) []datamodels.LDALscript {
-
 	scriptList := LDALscriptrepo.GetScriptsByProjectID(projectId)
-
 	return scriptList
 }
 
@@ -100,6 +96,9 @@ func ExecuteLDAL(scriptId string) (string, error) {
 			if customJSONRequest.JsonType == "TDP" {
 				result = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestId + "/" + "Defs.txt")
 				//result="TDP"
+			}else if customJSONRequest.JsonType == "OTP"{
+				result =  fcllib.NewFCLWrapper().GetOTPResult("localstorage/" + requestId + "/" + "Defs.txt");
+
 			} else if customJSONRequest.JsonType == "Normal" {
 				//result = "Normal"
 				result = fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestId + "/" + "Defs.txt")
@@ -110,13 +109,16 @@ func ExecuteLDAL(scriptId string) (string, error) {
 		}
 
 	}
-
 	os.RemoveAll("localstorage/" + requestId)
-
 	log.Println(ldalDetails.BoundStatus)
 	return result, nil
-
 }
+
+/**
+* TODO : Implement OTP Processing capabilities
+  to following methods
+*
+**/
 
 func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
 
@@ -150,8 +152,7 @@ func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
 			}
 
 		} else if request.Type == "TDP" {
-			//Execute TDP Parser
-			//"localstorage/" + requestID + "/" + "Defs.txt"
+
 			_ = fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestID + "/" + "Defs.txt")
 			data, err := os.ReadFile("localstorage/" + requestID + "/Debug_Result.json")
 
@@ -169,6 +170,79 @@ func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
 			} else {
 				jsonString = string(data)
 			}
+
+		} else if request.Type == "OTP"{
+
+			_ = fcllib.NewFCLWrapper().GetOTPResult("localstorage/" + requestID + "/" + "Defs.txt")
+			data, err := os.ReadFile("localstorage/" + requestID + "/Debug_Result.json")
+
+			if err != nil {
+				jsonString = `{
+				"variables": [
+				{
+					"dataType": "ERROR",
+					"details": "Debug Failed",
+					"name": "Debug Error"
+					}
+				]
+			}`
+
+			} else {
+				jsonString = string(data)
+			}
+
+		}else {
+
+			jsonString = `{
+			"variables": [
+			{
+				"dataType": "ERROR",
+				"details": "Invalid json type",
+				"name": "SERVER ERROR"
+				}
+			]
+		}`
+
+		}
+
+	} else {
+		jsonString = `{
+			"variables": [
+			{
+				"dataType": "ERROR",
+				"details": "Request failed",
+				"name": "REQUEST ERROR"
+				}
+			]
+		}`
+	}
+
+	json.Unmarshal([]byte(jsonString), &jsonMap)
+	os.RemoveAll("localstorage/" + requestID)
+	return jsonMap
+
+}
+
+func ReportLDALRequest(request types.LDALReportQueryRequest) interface{} {
+
+	requestID := uuid.New().String()
+	var jsonMap map[string]interface{}
+	var jsonString string
+	if len(request.Query) > 0 && len(request.Tree) > 0 && len(request.Type) > 0 {
+
+		service.WriteToFile("localstorage/"+requestID, "result.txt", string(request.Tree))
+		service.WriteToFile("localstorage/"+requestID, "LDAL_Script.txt", string(request.Query))
+
+		Config_LDEL_DEF("____", requestID)
+
+		if request.Type == "Normal" || request.Type == "normal" {
+			data := fcllib.NewFCLWrapper().GetLogLDALResult("localstorage/" + requestID + "/" + "Defs.txt")
+			jsonString = data
+
+		} else if request.Type == "TDP" || request.Type == "otp" {
+
+			data := fcllib.NewFCLWrapper().GetTDPResult("localstorage/" + requestID + "/" + "Defs.txt")
+			jsonString = data
 
 		} else {
 
@@ -195,7 +269,6 @@ func DebugLDAL(request datamodels.LDALDebugRequest) interface{} {
 			]
 		}`
 	}
-
 
 	json.Unmarshal([]byte(jsonString), &jsonMap)
 	os.RemoveAll("localstorage/" + requestID)

@@ -19,3 +19,4 @@ type LDALDebugRequest struct{
 	Query string `json:"query"`
 	Type string  `json:"type"`
 }
+

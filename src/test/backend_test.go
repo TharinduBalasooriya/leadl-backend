@@ -32,6 +32,7 @@ func TestCreateReport(t *testing.T){
     newWidget.Type="pie"
     newWidget.X="123"
     newWidget.Y="23"
+    newReport.Headers= []models.Header{{Name: "accessToke",JsFunction: "function () {retun true} "}, {Name: "cookie",JsFunction: "function () {retun true} "}}
 
     newReport.Widgets = append(newReport.Widgets,newWidget)
     result,err := reportRepo.CreateReport(newReport)

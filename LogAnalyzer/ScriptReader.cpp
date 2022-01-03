@@ -11,13 +11,21 @@
 #include "EntityList.h"
 #include "Strings.h"
 #include "DateTime.h"
+#ifdef _WIN32
+#include "windows.h"
+#else
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#endif
+#include "DateTime.h"
+
 
 bool ScriptReader::ProcessScript(MSTRING sFile, MetaData* pMD, ScriptReaderOutput& op)
 {
-	p_MetaData = pMD;
-	LST_STR lstLines;
-	LST_INT lstLineNumbers;
-    
+    p_MetaData = pMD;
+    LST_STR lstLines;
+    LST_INT lstLineNumbers;
+
     // if there's a code library, load all lines from code library first
     // these lines should be prepended to the lines read from the script file
     MSTRING sLoadFromCodeLibrary = pMD->s_LoadFromCodeLibrary;
@@ -26,72 +34,77 @@ bool ScriptReader::ProcessScript(MSTRING sFile, MetaData* pMD, ScriptReaderOutpu
         LST_INT lstLineNumbersDummy;    // line numbers in code library are disregarded
         ReadFileToLines(pMD->s_CodeLibraryFile, pMD->s_LineContinuation, pMD->s_CommentStart, lstLines, lstLineNumbersDummy);
     }
-    
-	ReadFileToLines(sFile, pMD->s_LineContinuation, pMD->s_CommentStart, lstLines, lstLineNumbers);
-	if(lstLines.empty())
-	{
-		return false;
-	}
 
-	MemoryManager::Inst.CreateObject(&op.p_ETL);
-	ExecutionTemplateList* pCurrFunction = 0;
-	bool bInsideFunction = false;
-	LST_STR::const_iterator ite1 = lstLines.begin();
-	LST_STR::const_iterator iteEnd1 = lstLines.end();
-	LST_INT::const_iterator ite2 = lstLineNumbers.begin();
-	int val = 0;
-	for( ; ite1 != iteEnd1; ++ite1, ++ite2)
-	{
-		val++;
+    ReadFileToLines(sFile, pMD->s_LineContinuation, pMD->s_CommentStart, lstLines, lstLineNumbers);
+    if(lstLines.empty())
+    {
+        return false;
+    }
+
+    MemoryManager::Inst.CreateObject(&op.p_ETL);
+    ExecutionTemplateList* pCurrFunction = 0;
+    bool bInsideFunction = false;
+    LST_STR::const_iterator ite1 = lstLines.begin();
+    LST_STR::const_iterator iteEnd1 = lstLines.end();
+    LST_INT::const_iterator ite2 = lstLineNumbers.begin();
+    int val = 0;
+    for( ; ite1 != iteEnd1; ++ite1, ++ite2)
+    {
+        val++;
         MSTRING line = *ite1;
         Utils::TrimLeft(line, _MSTR( \t\n));
         Utils::TrimRight(line, _MSTR( \t\n));
         if (line.empty()) {
             continue;
         }
-		ScriptReader::ProcessLineRetVal ret = ProcessLine(line, pMD);
-//				if(0 == ret.p_ET){
-//					std::cout<<"Error at line"<<val;
-//			return false;
-//		}
-		if(0 != ret.p_ET)
-		{
-			MSTRINGSTREAM sCodeLine;
-			sCodeLine<<*ite2<<_MSTR(:)<<SPACE<<*ite1;
-			ret.p_ET->SetCodeLine(sCodeLine.str());
-		}
-		if(SLT_FuncStart == ret.slt)
-		{
-			MemoryManager::Inst.CreateObject(&pCurrFunction);
-			bInsideFunction = true;
-			op.map_Functions[ret.s_Str] = pCurrFunction;
-		}
-		else if(SLT_FuncEnd == ret.slt)
-		{
-			pCurrFunction = 0;
-			bInsideFunction = false;
-		}
-		else
-		{
-			if(bInsideFunction)
-			{
-				pCurrFunction->push_back(ret.p_ET);
-			}
-			else
-			{
-				op.p_ETL->push_back(ret.p_ET);
-			}
-		}
-	}
+        //######################################  ################################################
+        //You can add a line here to check whether there is an error
+        //Print the line number and the content of the line aswel
 
-	return true;
+
+        ScriptReader::ProcessLineRetVal ret = ProcessLine(line, pMD,*ite2);
+//        if(0 == ret.p_ET){
+//            return false;
+//		  }
+        if(0 != ret.p_ET)
+        {
+            MSTRINGSTREAM sCodeLine;
+            sCodeLine<<*ite2<<_MSTR(:)<<SPACE<<*ite1;
+            ret.p_ET->SetCodeLine(sCodeLine.str());
+        }
+        if(SLT_FuncStart == ret.slt)
+        {
+            MemoryManager::Inst.CreateObject(&pCurrFunction);
+            bInsideFunction = true;
+            op.map_Functions[ret.s_Str] = pCurrFunction;
+        }
+        else if(SLT_FuncEnd == ret.slt)
+        {
+            pCurrFunction = 0;
+            bInsideFunction = false;
+        }
+        else
+        {
+            if(bInsideFunction)
+            {
+                pCurrFunction->push_back(ret.p_ET);
+            }
+            else
+            {
+                op.p_ETL->push_back(ret.p_ET);
+            }
+        }
+    }
+
+    return true;
 }
 
-bool ScriptReader::ProcessScript(MetaData* pMD, ScriptReaderOutput& op, MSTRING code)
+//######################################  ################################################
+std::string ScriptReader::ProcessScript(MetaData* pMD, ScriptReaderOutput& op, MSTRING code)
 {
-	p_MetaData = pMD;
-	LST_STR lstLines;
-	LST_INT lstLineNumbers;
+    p_MetaData = pMD;
+    LST_STR lstLines;
+    LST_INT lstLineNumbers;
 
     MSTRING sLoadFromCodeLibrary = pMD->s_LoadFromCodeLibrary;
     Utils::MakeUpper(sLoadFromCodeLibrary);
@@ -102,59 +115,82 @@ bool ScriptReader::ProcessScript(MetaData* pMD, ScriptReaderOutput& op, MSTRING 
         std::cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
     }
 
-	ReadStringToLines(code, pMD->s_LineContinuation, pMD->s_CommentStart, lstLines, lstLineNumbers);
-	if(lstLines.empty())
-	{
-		return false;
-	}
+    ReadStringToLines(code, pMD->s_LineContinuation, pMD->s_CommentStart, lstLines, lstLineNumbers);
+    if(lstLines.empty())
+    {
+        return "empty query";
+    }
 
-	MemoryManager::Inst.CreateObject(&op.p_ETL);
-	ExecutionTemplateList* pCurrFunction = 0;
-	bool bInsideFunction = false;
-	LST_STR::const_iterator ite1 = lstLines.begin();
-	LST_STR::const_iterator iteEnd1 = lstLines.end();
-	LST_INT::const_iterator ite2 = lstLineNumbers.begin();
-	//int val =0;
-	for( ; ite1 != iteEnd1; ++ite1, ++ite2)
-	{
-		//val++;
-		ScriptReader::ProcessLineRetVal ret = ProcessLine(*ite1, pMD);
-		// if(0 == ret.p_ET){
-		// 	std::cout<<"Error At line"<<val;
-		// 	return false;
-		// }
-		if(0 != ret.p_ET)
-		{
-			MSTRINGSTREAM sCodeLine;
-			sCodeLine<<*ite2<<_MSTR(:)<<SPACE<<*ite1;
-			ret.p_ET->SetCodeLine(sCodeLine.str());
-		}
-		if(SLT_FuncStart == ret.slt)
-		{
-			MemoryManager::Inst.CreateObject(&pCurrFunction);
-			bInsideFunction = true;
-			op.map_Functions[ret.s_Str] = pCurrFunction;
-		}
-		else if(SLT_FuncEnd == ret.slt)
-		{
-			pCurrFunction = 0;
-			bInsideFunction = false;
-		}
-		else
-		{
-			if(bInsideFunction)
-			{
-				pCurrFunction->push_back(ret.p_ET);
-			}
-			else
-			{
-				op.p_ETL->push_back(ret.p_ET);
-			}
-		}
-	}
-    
-	return true;
+    MemoryManager::Inst.CreateObject(&op.p_ETL);
+    ExecutionTemplateList* pCurrFunction = 0;
+    bool bInsideFunction = false;
+    HANDLE hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    LST_STR::const_iterator ite1 = lstLines.begin();
+    LST_STR::const_iterator iteEnd1 = lstLines.end();
+    LST_INT::const_iterator ite2 = lstLineNumbers.begin();
+    int lineNo =0;
+    for( ; ite1 != iteEnd1; ++ite1, ++ite2)
+    {
+        lineNo++;
+        ScriptReader::ProcessLineRetVal ret = ProcessLine(*ite1, pMD,*ite2);
+//		 if(0 == ret.p_ET){
+//		 	std::cout<<"\nError At line "<<val;
+//		 	return false;
+//		 }
+
+
+        if(0 != ret.p_ET)
+        {
+            MSTRINGSTREAM sCodeLine;
+            sCodeLine<<*ite2<<_MSTR(:)<<SPACE<<*ite1;
+//            std::cout<<sCodeLine.str()<<"\n";
+            ret.p_ET->SetCodeLine(sCodeLine.str());
+        }else{
+
+#ifdef _WIN32
+            std::cout<<"\nError At line "<<*ite2<<"\t";
+            SetConsoleTextAttribute(hConsole, 192);
+            std::cout<<*ite1<< std::endl;
+            SetConsoleTextAttribute(hConsole, 15);
+#else
+            std::cout<<"\nError At line "<<*ite2<<"\t"<<RED<<*ite1<< RESET << std::endl;
+#endif
+
+
+            return "\nError At line "+ std::to_string(*ite2) +"\t" +*ite1;
+        }
+
+        //try to return false when it captures a syntax error
+
+        if(SLT_FuncStart == ret.slt)
+        {
+            MemoryManager::Inst.CreateObject(&pCurrFunction);
+            bInsideFunction = true;
+            op.map_Functions[ret.s_Str] = pCurrFunction;
+        }
+        else if(SLT_FuncEnd == ret.slt)
+        {
+            pCurrFunction = 0;
+            bInsideFunction = false;
+        }
+        else
+        {
+            if(bInsideFunction)
+            {
+                pCurrFunction->push_back(ret.p_ET);
+            }
+            else
+            {
+
+                op.p_ETL->push_back(ret.p_ET);
+            }
+        }
+    }
+
+    return "";
 }
+
 
 void ScriptReader::ReadStringToLines(MSTRING code, MSTRING sLineContinuation, MSTRING sCommentStart, LST_STR& lstLines, LST_INT& lstLineNumbers)
 {
@@ -184,170 +220,369 @@ void ScriptReader::ReadStringToLines(MSTRING code, MSTRING sLineContinuation, MS
 
 void ScriptReader::ReadFileToLines(MSTRING sFile, MSTRING sLineContinuation, MSTRING sCommentStart, LST_STR& lstLines, LST_INT& lstLineNumbers)
 {
-	MIFSTREAM file(sFile.c_str());
-	MSTRING sLine;
-	MSTRING sCurr = EMPTY_STRING;
-	if(file.is_open())
-	{
-		MINT iLineNo = 0;
-		while(!file.eof())
-		{
-			++iLineNo;
-			getline(file, sLine);
-			Utils::TrimLeft(sLine, _MSTR( \t));
-			Utils::TrimRight(sLine, _MSTR( \t));
-			if((sLine.empty()) || (sCommentStart == sLine.substr(0, sCommentStart.length())))
-			{
-				continue;
-			}
-			sCurr += sLine;
-			if((sCurr.length() >= sLineContinuation.length()) && (sLineContinuation == sCurr.substr(sCurr.length() - sLineContinuation.length(), sLineContinuation.length())))
-			{
-				sCurr = sCurr.substr(0, sCurr.length() - sLineContinuation.length());
-			}
-			else
-			{
-				lstLines.push_back(sCurr);
-				lstLineNumbers.push_back(iLineNo);
-				sCurr = EMPTY_STRING;
-			}
-		}
-		file.close();
-	}
+    MIFSTREAM file(sFile.c_str());
+    MSTRING sLine;
+    MSTRING sCurr = EMPTY_STRING;
+    if(file.is_open())
+    {
+        MINT iLineNo = 0;
+        while(!file.eof())
+        {
+            ++iLineNo;
+            getline(file, sLine);
+            Utils::TrimLeft(sLine, _MSTR( \t));
+            Utils::TrimRight(sLine, _MSTR( \t));
+            if((sLine.empty()) || (sCommentStart == sLine.substr(0, sCommentStart.length())))
+            {
+                continue;
+            }
+            sCurr += sLine;
+            if((sCurr.length() >= sLineContinuation.length()) && (sLineContinuation == sCurr.substr(sCurr.length() - sLineContinuation.length(), sLineContinuation.length())))
+            {
+                sCurr = sCurr.substr(0, sCurr.length() - sLineContinuation.length());
+            }
+            else
+            {
+                lstLines.push_back(sCurr);
+                lstLineNumbers.push_back(iLineNo);
+                sCurr = EMPTY_STRING;
+            }
+        }
+        file.close();
+    }
 }
 
-ScriptReader::ProcessLineRetVal ScriptReader::ProcessLine(MSTRING sLine, MetaData* pMD)
+ScriptReader::ProcessLineRetVal ScriptReader::ProcessLine(MSTRING sLine, MetaData* pMD,int i)
 {
     // First, parse the string with the following as tokens
-	// {, }, (, ), ,, =, .
-	VEC_CE vecCE;
-	GetCommandElements(sLine, vecCE, pMD);
-    
-	// Now this command element list needs to be unified with one of the following
-	// 1. Entity
-	// 2. Entity=String
-	// 3. If(Entity)
-	// 4. IfNot(Entity)
-	// 5. EndIf
-	// 6. While
-	// 7. While(Entity)
-	// 8. Do
-	// 9. Break
-	// 10. Continue
-	// 11. Function=FuncName
-	// 12. EndFunction
-    
-	ScriptReader::ProcessLineRetVal ret;
-    
-	// case 12
-	if((vecCE.size() == 1) && (vecCE.at(0).e_Type == CET_FunctionEnd))
-	{
-		ret.slt = SLT_FuncEnd;
-	}
-	// cases 5, 6, 8, 9 & 10
-	else if(1 == vecCE.size())
-	{
-		CommandElementType cet = vecCE.front().e_Type;
-		switch(cet)
-		{
+    // {, }, (, ), ,, =, .
+    VEC_CE vecCE;
+
+    if(!CheckBrackets(sLine))
+    {
+        ScriptReader::ProcessLineRetVal ret;
+        return  ret;
+    }
+
+
+
+    GetCommandElements(sLine, vecCE, pMD);
+    // Now this command element list needs to be unified with one of the following
+    // 1. Entity
+    // 2. Entity=String
+    // 3. If(Entity)
+    // 4. IfNot(Entity)
+    // 5. EndIf
+    // 6. While
+    // 7. While(Entity)
+    // 8. Do
+    // 9. Break
+    // 10. Continue
+    // 11. Function=FuncName
+    // 12. EndFunction
+
+
+
+    if(CheckForErrors(sLine, vecCE,i)==0)
+    {
+
+
+        ScriptReader::ProcessLineRetVal ret;
+        return  ret;
+    }
+
+
+
+
+    ScriptReader::ProcessLineRetVal ret;
+
+
+
+    // case 12
+    if((vecCE.size() == 1) && (vecCE.at(0).e_Type == CET_FunctionEnd))
+    {
+        ret.slt = SLT_FuncEnd;
+    }
+        // cases 5, 6, 8, 9 & 10
+    else if(1 == vecCE.size())
+    {
+        CommandElementType cet = vecCE.front().e_Type;
+
+        switch(cet)
+        {
             case CET_EndIf:
             case CET_While:
             case CET_Do:
             case CET_Break:
             case CET_Continue:
-			{
-				ExecutionTemplate* pET = 0;
-				MemoryManager::Inst.CreateObject(&pET);
-				if(CET_EndIf == cet)
-				{
-					pET->SetSpecialCommand(COMMAND_TYPE_ENDIF);
-				}
-				else if(CET_While == cet)
-				{
-					pET->SetSpecialCommand(COMMAND_TYPE_WHILE);
-				}
-				else if(CET_Do == cet)
-				{
-					pET->SetSpecialCommand(COMMAND_TYPE_DO);
-				}
-				else if(CET_Break == cet)
-				{
-					pET->SetSpecialCommand(COMMAND_TYPE_BREAK);
-				}
-				else if(CET_Continue == cet)
-				{
-					pET->SetSpecialCommand(COMMAND_TYPE_CONTINUE);
-				}
-				ret.p_ET = pET;
-			}
+            {
+                ExecutionTemplate* pET = 0;
+                MemoryManager::Inst.CreateObject(&pET);
+                if(CET_EndIf == cet)
+                {
+                    pET->SetSpecialCommand(COMMAND_TYPE_ENDIF);
+                }
+                else if(CET_While == cet)
+                {
+                    pET->SetSpecialCommand(COMMAND_TYPE_WHILE);
+                }
+                else if(CET_Do == cet)
+                {
+                    pET->SetSpecialCommand(COMMAND_TYPE_DO);
+                }
+                else if(CET_Break == cet)
+                {
+                    pET->SetSpecialCommand(COMMAND_TYPE_BREAK);
+                }
+                else if(CET_Continue == cet)
+                {
+                    pET->SetSpecialCommand(COMMAND_TYPE_CONTINUE);
+                }
+                ret.p_ET = pET;
+            }
                 break;
-		}
-	}
-	// case 11
-	else if((vecCE.size() == 3) && (vecCE.at(0).e_Type == CET_FunctionStart) && (vecCE.at(1).e_Type == CET_EqualSign) && (vecCE.at(2).e_Type ==  CET_String))
-	{
-		ret.slt = SLT_FuncStart;
-		ret.s_Str = vecCE.at(2).s_Str;
-	}
-	// case 3
-	else if((vecCE.size() >= 4) && (vecCE.at(0).e_Type == CET_If) && (vecCE.at(1).e_Type == CET_ArgStart) && (vecCE.at(vecCE.size() - 1).e_Type == CET_ArgEnd))
-	{
-		ExecutionTemplate* pET = GetEntity(vecCE, 2, vecCE.size() - 2);
-		if(0 != pET)
-		{
-			pET->SetSpecialCommand(COMMAND_TYPE_IF);
-		}
-		ret.p_ET = pET;
-	}
-	// case 4
-	else if((vecCE.size() >= 4) && (vecCE.at(0).e_Type == CET_IfNot) && (vecCE.at(1).e_Type == CET_ArgStart) && (vecCE.at(vecCE.size() - 1).e_Type == CET_ArgEnd))
-	{
-		ExecutionTemplate* pET = GetEntity(vecCE, 2, vecCE.size() - 2);
-		if(0 != pET)
-		{
-			pET->SetSpecialCommand(COMMAND_TYPE_IFNOT);
-		}
-		ret.p_ET = pET;
-	}
-	// case 7
-	else if((vecCE.size() > 3) && (vecCE.at(0).e_Type == CET_While) && (vecCE.at(1).e_Type == CET_ArgStart) && (vecCE.at(vecCE.size() - 1).e_Type == CET_ArgEnd))
-	{
-		ExecutionTemplate* pET = GetEntity(vecCE, 2, vecCE.size() - 2);
-		if(0 != pET)
-		{
-			pET->SetSpecialCommand(COMMAND_TYPE_WHILE);
-		}
-		ret.p_ET = pET;
-	}
-	// case 2
-	else if((vecCE.size() >= 3) && (vecCE.at(vecCE.size() - 2).e_Type == CET_EqualSign) && (vecCE.at(vecCE.size() - 1).e_Type == CET_String))
-	{
-		ExecutionTemplate* pET = GetEntity(vecCE, 0, vecCE.size() - 3);
-		if(0 != pET)
-		{
-			Command* pCmd = 0;
-			MemoryManager::Inst.CreateObject(&pCmd);
-			pCmd->SetType(COMMAND_TYPE_STORE_AS_VARIABLE);
-			PString pString = 0;
-			MemoryManager::Inst.CreateObject(&pString);
-			pString->SetValue(vecCE.at(vecCE.size() - 1).s_Str);
-			pCmd->SetEntityArg(pString);
-			pET->AddCommand(pCmd);
-		}
-		ret.p_ET = pET;
-	}
-	// case 1
-	else
-	{
-		ExecutionTemplate* pET = GetEntity(vecCE, 0, vecCE.size() - 1);
-		ret.p_ET = pET;
-		if(pET=0){
-			std::cout<<"MightBEaAERRo\n";
-		}
-	}
-    
-	return ret;
+
+        }
+
+
+
+
+    }
+        // case 11
+    else if((vecCE.size() == 3) && (vecCE.at(0).e_Type == CET_FunctionStart) && (vecCE.at(1).e_Type == CET_EqualSign) && (vecCE.at(2).e_Type ==  CET_String))
+    {
+        ret.slt = SLT_FuncStart;
+        ret.s_Str = vecCE.at(2).s_Str;
+    }
+        // case 3
+    else if((vecCE.size() >= 4) && (vecCE.at(0).e_Type == CET_If) && (vecCE.at(1).e_Type == CET_ArgStart) && (vecCE.at(vecCE.size() - 1).e_Type == CET_ArgEnd))
+    {
+        ExecutionTemplate* pET = GetEntity(vecCE, 2, vecCE.size() - 2);
+        if(0 != pET)
+        {
+            pET->SetSpecialCommand(COMMAND_TYPE_IF);
+        }
+        ret.p_ET = pET;
+    }
+        // case 4
+    else if((vecCE.size() >= 4) && (vecCE.at(0).e_Type == CET_IfNot) && (vecCE.at(1).e_Type == CET_ArgStart) && (vecCE.at(vecCE.size() - 1).e_Type == CET_ArgEnd))
+    {
+        ExecutionTemplate* pET = GetEntity(vecCE, 2, vecCE.size() - 2);
+        if(0 != pET)
+        {
+            pET->SetSpecialCommand(COMMAND_TYPE_IFNOT);
+        }
+        ret.p_ET = pET;
+    }
+        // case 7
+    else if((vecCE.size() > 3) && (vecCE.at(0).e_Type == CET_While) && (vecCE.at(1).e_Type == CET_ArgStart) && (vecCE.at(vecCE.size() - 1).e_Type == CET_ArgEnd))
+    {
+        ExecutionTemplate* pET = GetEntity(vecCE, 2, vecCE.size() - 2);
+        if(0 != pET)
+        {
+            pET->SetSpecialCommand(COMMAND_TYPE_WHILE);
+        }
+        ret.p_ET = pET;
+    }
+        // case 2
+    else if((vecCE.size() >= 3) && (vecCE.at(vecCE.size() - 2).e_Type == CET_EqualSign) && (vecCE.at(vecCE.size() - 1).e_Type == CET_String))
+    {
+        ExecutionTemplate* pET = GetEntity(vecCE, 0, vecCE.size() - 3);
+        if(0 != pET)
+        {
+            Command* pCmd = 0;
+            MemoryManager::Inst.CreateObject(&pCmd);
+            pCmd->SetType(COMMAND_TYPE_STORE_AS_VARIABLE);
+            PString pString = 0;
+            MemoryManager::Inst.CreateObject(&pString);
+            pString->SetValue(vecCE.at(vecCE.size() - 1).s_Str);
+            pCmd->SetEntityArg(pString);
+            pET->AddCommand(pCmd);
+        }
+        ret.p_ET = pET;
+    }
+        // case 1
+    else
+    {
+
+
+        ExecutionTemplate* pET = GetEntity(vecCE, 0, vecCE.size() - 1);
+        ret.p_ET = pET;
+//        ExecutionTemplate* pET = 0;
+//        ret.p_ET = pET;
+        if(pET == 0){
+//            return ret;
+
+        }
+        //return ret;
+    }
+
+    return ret;
 }
+
+
+
+bool ScriptReader::CheckForErrors(MSTRING sLine, VEC_CE& vecCE,int line)
+{
+    HANDLE hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    int brac=0;
+    int brac1 =0 ;
+    int brac2 =0 ;
+
+    for(int i=0;i<vecCE.size()-1;i++)
+    {
+        if(vecCE[i].e_Type==5 && vecCE[i+1].e_Type==0 )
+        {
+
+
+
+            Command* pCmd = 0;
+            MemoryManager::Inst.CreateObject(&pCmd);
+            MAP_STR_MULONG::iterator iteFind = p_MetaData->map_FuncNamesReverse.find(vecCE[i+1].s_Str);
+
+            if((*iteFind).first.size()>1000)
+            {
+
+
+
+#ifdef _WIN32
+                std::cout<<"\nError At line "<<line<<"\t"<<sLine<<"\t";
+                SetConsoleTextAttribute(hConsole, 192);
+                std::cout<<vecCE[i+1].s_Str<< std::endl;
+                SetConsoleTextAttribute(hConsole, 15);
+#else
+                std::cout<<"\nError At line "<<*ite2<<"\t"<<RED<<*ite1<< RESET << std::endl;
+#endif
+
+
+
+
+
+
+                return false;
+            }
+
+
+
+        }
+
+
+
+        if(vecCE[i].e_Type==CET_ArgEnd && vecCE[i+1].e_Type==CET_String )
+        {
+
+#ifdef _WIN32
+            std::cout<<"\nError At line "<<line<<"\t"<<sLine<<"\t";
+            SetConsoleTextAttribute(hConsole, 192);
+            std::cout<<vecCE[i+1].s_Str<< std::endl;
+            SetConsoleTextAttribute(hConsole, 15);
+#else
+            std::cout<<"\nError At line "<<*ite2<<"\t"<<RED<<*ite1<< RESET << std::endl;
+#endif
+            return false;
+
+
+
+
+        }
+
+
+
+
+        if(vecCE[i].e_Type==CET_EqualSign && !(vecCE[i+1].e_Type==CET_String))
+        {
+
+#ifdef _WIN32
+            std::cout<<"\nError At line "<<line<<"\t"<<sLine<<"\t";
+            SetConsoleTextAttribute(hConsole, 192);
+            std::cout<<vecCE[i+1].s_Str<< std::endl;
+            SetConsoleTextAttribute(hConsole, 15);
+#else
+            std::cout<<"\nError At line "<<*ite2<<"\t"<<RED<<*ite1<< RESET << std::endl;
+#endif
+            return false;
+
+
+
+
+        }
+
+
+        if((vecCE[i].e_Type==CET_FuncStart ) && !(vecCE[i+1].e_Type==CET_String) )
+        {
+
+#ifdef _WIN32
+            std::cout<<"\nError At line "<<line<<"\t"<<sLine<<"\t";
+            SetConsoleTextAttribute(hConsole, 192);
+            std::cout<<vecCE[i+1].s_Str<< std::endl;
+            SetConsoleTextAttribute(hConsole, 15);
+#else
+            std::cout<<"\nError At line "<<*ite2<<"\t"<<RED<<*ite1<< RESET << std::endl;
+#endif
+            return false;
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+    return true;
+
+
+
+
+
+}
+
+
+
+bool  ScriptReader::CheckBrackets(std::string expr)
+{
+
+    std::vector <char> leftArr;
+
+    for(int i=0; i<expr.length(); i++) {
+        if(expr[i] == '(' || expr[i] == '[' || expr[i]=='{') {
+            leftArr.push_back(expr[i]);
+        }
+
+        int leftArrLength = leftArr.size();
+
+        if(expr[i] == ')' && leftArr[leftArrLength - 1] == '('){
+            leftArr.pop_back();
+        }else if(expr[i] == '}' && leftArr[leftArrLength - 1] == '{') {
+            leftArr.pop_back();
+        } else if(expr[i] == ']' && leftArr[leftArrLength - 1] == '[') {
+            leftArr.pop_back();
+        }
+        else if(expr[i] == ')' || expr[i] == '}' || expr[i] == ']'){
+            return false;
+        }
+    }
+
+    return leftArr.size() == 0;
+
+
+}
+
+
+
+
+
 
 void ScriptReader::GetCommandElements(MSTRING sCommand, VEC_CE& vecCE, MetaData* pMD)
 {
@@ -364,7 +599,7 @@ void ScriptReader::GetCommandElements(MSTRING sCommand, VEC_CE& vecCE, MetaData*
         lstStringEnclosureSymbol.push_back(pMD->s_StringEnclosureSymbol);
         Utils::TokenizeStringBasic(sCommand, lstStringEnclosureSymbol, lstHighLevel, lstTp);
     }
-    
+
     LST_STR::const_iterator ite = lstHighLevel.begin();
     LST_STR::const_iterator iteEnd = lstHighLevel.end();
     LST_INT::const_iterator iteTypes = lstTp.begin();
@@ -508,236 +743,236 @@ void ScriptReader::GetCommandElements(MSTRING sCommand, VEC_CE& vecCE, MetaData*
 
 ExecutionTemplate* ScriptReader::GetEntity(VEC_CE& vecCE, VEC_CE::size_type stStart, VEC_CE::size_type stEnd)
 {
-	// An entity is in one of the following forms
-	// 1. Integer
-	// 2. String
-	// 3. List
-	// 4. Variable.<Any number of functions>
-	// 5. Variable
-	// 6. FuncName(Entity)
-	if(stEnd < stStart)
-	{
-		return 0;
-	}
-	ExecutionTemplate* pET = 0;
-	// case 1, 2 & 5
-	if(stEnd == stStart)
-	{
-		if(vecCE.at(stStart).e_Type == CET_Int)
-		{
-			Int* pInt = 0;
-			MemoryManager::Inst.CreateObject(&pInt);
-			long lVal = _MATOI(vecCE.at(stStart).s_Str.c_str());
-			pInt->SetValue((lVal < 0) ? -1 * lVal : lVal);
-			pInt->b_IsNegative = (lVal < 0);
-			MemoryManager::Inst.CreateObject(&pET);
-			pET->SetEntity(pInt);
-			return pET;
-		}
-		if(vecCE.at(stStart).e_Type == CET_String)
-		{
-			String* pString = 0;
-			MemoryManager::Inst.CreateObject(&pString);
-			pString->SetValue(vecCE.at(stStart).s_Str);
-			MemoryManager::Inst.CreateObject(&pET);
-			pET->SetEntity(pString);
-			return pET;
-		}
-		if(vecCE.at(stStart).e_Type == CET_VarName)
-		{
-			MemoryManager::Inst.CreateObject(&pET);
-			pET->SetStartVarName(vecCE.at(stStart).s_Str);
-			return pET;
-		}
-	}
-	// case 3
-	else if((vecCE.at(stStart).e_Type == CET_ListStart) && (vecCE.at(stEnd).e_Type == CET_ListEnd))
-	{
-		if(stEnd == (stStart + 1))
-		{
-			// empty list
-			EntityList* pEL = 0;
-			MemoryManager::Inst.CreateObject(&pEL);
-			MemoryManager::Inst.CreateObject(&pET);
-			pET->SetEntity(pEL);
-			return pET;
-		}
-		EntityList* pEL = GetList(vecCE, stStart + 1, stEnd - 1);
-		MemoryManager::Inst.CreateObject(&pET);
-		pET->SetEntity(pEL);
-		return pET;
-	}
-	// case 4
-	else if((vecCE.at(stStart).e_Type == CET_VarName) && (vecCE.at(stStart + 1).e_Type == CET_FuncStart))
-	{
-		MemoryManager::Inst.CreateObject(&pET);
-		pET->SetStartVarName(vecCE.at(stStart).s_Str);
-		// Now go through the function list and fill Command objects
-		VEC_CE::size_type stPos = stStart + 2;
-		std::map<CommandElementType, CommandElementType> mapContextChangeElements;
-		mapContextChangeElements[CET_ArgStart] = CET_ArgEnd;
-		mapContextChangeElements[CET_ListStart] = CET_ListEnd;
-		while(true)
-		{
-			VEC_CE::size_type stNext;
-			GetNextFirstLevelCommandElementPos(vecCE, stPos, stEnd, CET_FuncStart, mapContextChangeElements, stNext);
-			if(stNext > stEnd)
-			{
-				// No more symbols
-				Command* pCmd = GetFunction(vecCE, stPos, stEnd);
-				pET->AddCommand(pCmd);
-				break;
-			}
-			else
-			{
-				Command* pCmd = GetFunction(vecCE, stPos, stNext - 1);
-				pET->AddCommand(pCmd);
-				if(stNext < stEnd)
-				{
-					stPos = stNext + 1;
-				}
-				else
-				{
-					// stNext = stEnd
-					break;
-				}
-			}
-		}
-		return pET;
-	}
-	// case 6
-	else if((stEnd  - stStart >= 3) && (vecCE.at(stStart).e_Type == CET_String) && (vecCE.at(stStart + 1).e_Type == CET_ArgStart) && (vecCE.at(stEnd).e_Type == CET_ArgEnd))
-	{
-		pET = GetEntity(vecCE, stStart + 2, stEnd - 1);
-		Command* pCmd = GetFunction(vecCE, stStart, stStart);
-		pET->AddCommand(pCmd);
-		return pET;
-	}
-	return 0;
+    // An entity is in one of the following forms
+    // 1. Integer
+    // 2. String
+    // 3. List
+    // 4. Variable.<Any number of functions>
+    // 5. Variable
+    // 6. FuncName(Entity)
+    if(stEnd < stStart)
+    {
+        return 0;
+    }
+    ExecutionTemplate* pET = 0;
+    // case 1, 2 & 5
+    if(stEnd == stStart)
+    {
+        if(vecCE.at(stStart).e_Type == CET_Int)
+        {
+            Int* pInt = 0;
+            MemoryManager::Inst.CreateObject(&pInt);
+            long lVal = _MATOI(vecCE.at(stStart).s_Str.c_str());
+            pInt->SetValue((lVal < 0) ? -1 * lVal : lVal);
+            pInt->b_IsNegative = (lVal < 0);
+            MemoryManager::Inst.CreateObject(&pET);
+            pET->SetEntity(pInt);
+            return pET;
+        }
+        if(vecCE.at(stStart).e_Type == CET_String)
+        {
+            String* pString = 0;
+            MemoryManager::Inst.CreateObject(&pString);
+            pString->SetValue(vecCE.at(stStart).s_Str);
+            MemoryManager::Inst.CreateObject(&pET);
+            pET->SetEntity(pString);
+            return pET;
+        }
+        if(vecCE.at(stStart).e_Type == CET_VarName)
+        {
+            MemoryManager::Inst.CreateObject(&pET);
+            pET->SetStartVarName(vecCE.at(stStart).s_Str);
+            return pET;
+        }
+    }
+        // case 3
+    else if((vecCE.at(stStart).e_Type == CET_ListStart) && (vecCE.at(stEnd).e_Type == CET_ListEnd))
+    {
+        if(stEnd == (stStart + 1))
+        {
+            // empty list
+            EntityList* pEL = 0;
+            MemoryManager::Inst.CreateObject(&pEL);
+            MemoryManager::Inst.CreateObject(&pET);
+            pET->SetEntity(pEL);
+            return pET;
+        }
+        EntityList* pEL = GetList(vecCE, stStart + 1, stEnd - 1);
+        MemoryManager::Inst.CreateObject(&pET);
+        pET->SetEntity(pEL);
+        return pET;
+    }
+        // case 4
+    else if((vecCE.at(stStart).e_Type == CET_VarName) && (vecCE.at(stStart + 1).e_Type == CET_FuncStart))
+    {
+        MemoryManager::Inst.CreateObject(&pET);
+        pET->SetStartVarName(vecCE.at(stStart).s_Str);
+        // Now go through the function list and fill Command objects
+        VEC_CE::size_type stPos = stStart + 2;
+        std::map<CommandElementType, CommandElementType> mapContextChangeElements;
+        mapContextChangeElements[CET_ArgStart] = CET_ArgEnd;
+        mapContextChangeElements[CET_ListStart] = CET_ListEnd;
+        while(true)
+        {
+            VEC_CE::size_type stNext;
+            GetNextFirstLevelCommandElementPos(vecCE, stPos, stEnd, CET_FuncStart, mapContextChangeElements, stNext);
+            if(stNext > stEnd)
+            {
+                // No more symbols
+                Command* pCmd = GetFunction(vecCE, stPos, stEnd);
+                pET->AddCommand(pCmd);
+                break;
+            }
+            else
+            {
+                Command* pCmd = GetFunction(vecCE, stPos, stNext - 1);
+                pET->AddCommand(pCmd);
+                if(stNext < stEnd)
+                {
+                    stPos = stNext + 1;
+                }
+                else
+                {
+                    // stNext = stEnd
+                    break;
+                }
+            }
+        }
+        return pET;
+    }
+        // case 6
+    else if((stEnd  - stStart >= 3) && (vecCE.at(stStart).e_Type == CET_String) && (vecCE.at(stStart + 1).e_Type == CET_ArgStart) && (vecCE.at(stEnd).e_Type == CET_ArgEnd))
+    {
+        pET = GetEntity(vecCE, stStart + 2, stEnd - 1);
+        Command* pCmd = GetFunction(vecCE, stStart, stStart);
+        pET->AddCommand(pCmd);
+        return pET;
+    }
+    return 0;
 }
 
 EntityList* ScriptReader::GetList(VEC_CE& vecCE, VEC_CE::size_type stStart, VEC_CE::size_type stEnd)
 {
-	EntityList* pEL = 0;
-	MemoryManager::Inst.CreateObject(&pEL);
-	std::map<CommandElementType, CommandElementType> mapContextChangeElements;
-	mapContextChangeElements[CET_ArgStart] = CET_ArgEnd;
-	mapContextChangeElements[CET_ListStart] = CET_ListEnd;
-	VEC_CE::size_type stPos = stStart;
-	while(true)
-	{
-		VEC_CE::size_type stNext;
-		GetNextFirstLevelCommandElementPos(vecCE, stPos, stEnd, CET_ListElemSep, mapContextChangeElements, stNext);
-		if(stNext > stEnd)
-		{
-			// No symbols found
-			ExecutionTemplate* pEntity = GetEntity(vecCE, stPos, stEnd);
-			pEL->push_back(pEntity);
-			break;
-		}
-		else
-		{
-			ExecutionTemplate* pEntity = GetEntity(vecCE, stPos, stNext - 1);
-			pEL->push_back(pEntity);
-			if(stNext < stEnd)
-			{
-				stPos = stNext + 1;
-			}
-			else
-			{
-				//stNext = stEnd
-				break;
-			}
-		}
-	}
-	return pEL;
+    EntityList* pEL = 0;
+    MemoryManager::Inst.CreateObject(&pEL);
+    std::map<CommandElementType, CommandElementType> mapContextChangeElements;
+    mapContextChangeElements[CET_ArgStart] = CET_ArgEnd;
+    mapContextChangeElements[CET_ListStart] = CET_ListEnd;
+    VEC_CE::size_type stPos = stStart;
+    while(true)
+    {
+        VEC_CE::size_type stNext;
+        GetNextFirstLevelCommandElementPos(vecCE, stPos, stEnd, CET_ListElemSep, mapContextChangeElements, stNext);
+        if(stNext > stEnd)
+        {
+            // No symbols found
+            ExecutionTemplate* pEntity = GetEntity(vecCE, stPos, stEnd);
+            pEL->push_back(pEntity);
+            break;
+        }
+        else
+        {
+            ExecutionTemplate* pEntity = GetEntity(vecCE, stPos, stNext - 1);
+            pEL->push_back(pEntity);
+            if(stNext < stEnd)
+            {
+                stPos = stNext + 1;
+            }
+            else
+            {
+                //stNext = stEnd
+                break;
+            }
+        }
+    }
+    return pEL;
 }
 
 Command* ScriptReader::GetFunction(VEC_CE& vecCE, VEC_CE::size_type stStart, VEC_CE::size_type stEnd)
 {
-	// First check whether this is a function taking an argument
-	if((vecCE.at(stEnd).e_Type == CET_ArgEnd) && (vecCE.at(stStart + 1).e_Type == CET_ArgStart))
-	{
-		// Function taking an argument
-		ExecutionTemplate* pET = GetEntity(vecCE, stStart + 2, stEnd - 1);
-		Command* pCmd = 0;
-		MemoryManager::Inst.CreateObject(&pCmd);
-		pCmd->SetArg(pET);
-		MAP_STR_MULONG::iterator iteFind = p_MetaData->map_FuncNamesReverse.find(vecCE.at(stStart).s_Str);
-		if(p_MetaData->map_FuncNamesReverse.end() == iteFind)
-		{
-			// This is an additional function (user added function)
-			pCmd->SetAdditionalFuncName(vecCE.at(stStart).s_Str);
-			pCmd->SetType(COMMAND_TYPE_ADDITIONAL_FUNCTION);
-		}
-		else
-		{
-			pCmd->SetType((*iteFind).second);
-		}
-		return pCmd;
-	}
-	else
-	{
-		// Function that does not take any argument
-		// There should be only one element i.e. stStart should be equal to stEnd
-		if(vecCE.at(stStart).e_Type == CET_String)
-		{
-			Command* pCmd = 0;
-			MemoryManager::Inst.CreateObject(&pCmd);
-			MAP_STR_MULONG::iterator iteFind = p_MetaData->map_FuncNamesReverse.find(vecCE.at(stStart).s_Str);
-			if(p_MetaData->map_FuncNamesReverse.end() == iteFind)
-			{
-				// This is an additional function (user added function)
-				pCmd->SetAdditionalFuncName(vecCE.at(stStart).s_Str);
-				pCmd->SetType(COMMAND_TYPE_ADDITIONAL_FUNCTION);
-			}
-			else
-			{
-				pCmd->SetType((*iteFind).second);
-			}
-			return pCmd;
-		}
-	}
-	return 0;
+    // First check whether this is a function taking an argument
+    if((vecCE.at(stEnd).e_Type == CET_ArgEnd) && (vecCE.at(stStart + 1).e_Type == CET_ArgStart))
+    {
+        // Function taking an argument
+        ExecutionTemplate* pET = GetEntity(vecCE, stStart + 2, stEnd - 1);
+        Command* pCmd = 0;
+        MemoryManager::Inst.CreateObject(&pCmd);
+        pCmd->SetArg(pET);
+        MAP_STR_MULONG::iterator iteFind = p_MetaData->map_FuncNamesReverse.find(vecCE.at(stStart).s_Str);
+        if(p_MetaData->map_FuncNamesReverse.end() == iteFind)
+        {
+            // This is an additional function (user added function)
+            pCmd->SetAdditionalFuncName(vecCE.at(stStart).s_Str);
+            pCmd->SetType(COMMAND_TYPE_ADDITIONAL_FUNCTION);
+        }
+        else
+        {
+            pCmd->SetType((*iteFind).second);
+        }
+        return pCmd;
+    }
+    else
+    {
+        // Function that does not take any argument
+        // There should be only one element i.e. stStart should be equal to stEnd
+        if(vecCE.at(stStart).e_Type == CET_String)
+        {
+            Command* pCmd = 0;
+            MemoryManager::Inst.CreateObject(&pCmd);
+            MAP_STR_MULONG::iterator iteFind = p_MetaData->map_FuncNamesReverse.find(vecCE.at(stStart).s_Str);
+            if(p_MetaData->map_FuncNamesReverse.end() == iteFind)
+            {
+                // This is an additional function (user added function)
+                pCmd->SetAdditionalFuncName(vecCE.at(stStart).s_Str);
+                pCmd->SetType(COMMAND_TYPE_ADDITIONAL_FUNCTION);
+            }
+            else
+            {
+                pCmd->SetType((*iteFind).second);
+            }
+            return pCmd;
+        }
+    }
+    return 0;
 }
 
 void ScriptReader::GetNextFirstLevelCommandElementPos(VEC_CE& vecCE, VEC_CE::size_type stStart, VEC_CE::size_type stEnd, CommandElementType cet, std::map<CommandElementType, CommandElementType>& mapContextChangeElements, VEC_CE::size_type& stElemPos)
 {
-	// mapContextChangeElements contains first = <context change start element> e.g. (		second = <context change end element> e.g. )
-	std::map<CommandElementType, CommandElementType> mapContextChangeElementsRev;
-	std::map<CommandElementType, int> mapContextChanges;
-	std::map<CommandElementType, CommandElementType>::iterator ite1 = mapContextChangeElements.begin();
-	std::map<CommandElementType, CommandElementType>::iterator iteEnd1 = mapContextChangeElements.end();
-	for( ; ite1 != iteEnd1; ++ite1)
-	{
-		mapContextChangeElementsRev[(*ite1).second] = (*ite1).first;
-		mapContextChanges[(*ite1).first] = 0;
-	}
-    
-	int iContextChangeCount = 0;
-	VEC_CE::size_type stPos = stStart;
-	while(stPos <= stEnd)
-	{
-		CommandElementType ce = vecCE.at(stPos).e_Type;
-		if((0 == iContextChangeCount) && (ce == cet))
-		{
-			stElemPos = stPos;
-			return;
-		}
-		std::map<CommandElementType, CommandElementType>::iterator iteFind = mapContextChangeElements.find(ce);
-		if(iteFind != mapContextChangeElements.end())
-		{
-			iContextChangeCount++;
-			mapContextChanges[ce]++;
-		}
-		iteFind = mapContextChangeElementsRev.find(ce);
-		if(iteFind != mapContextChangeElementsRev.end())
-		{
-			iContextChangeCount--;
-			mapContextChanges[(*iteFind).second]--;
-		}
-		stPos++;
-	}
-    
-	stElemPos = stEnd + 1;
+    // mapContextChangeElements contains first = <context change start element> e.g. (		second = <context change end element> e.g. )
+    std::map<CommandElementType, CommandElementType> mapContextChangeElementsRev;
+    std::map<CommandElementType, int> mapContextChanges;
+    std::map<CommandElementType, CommandElementType>::iterator ite1 = mapContextChangeElements.begin();
+    std::map<CommandElementType, CommandElementType>::iterator iteEnd1 = mapContextChangeElements.end();
+    for( ; ite1 != iteEnd1; ++ite1)
+    {
+        mapContextChangeElementsRev[(*ite1).second] = (*ite1).first;
+        mapContextChanges[(*ite1).first] = 0;
+    }
+
+    int iContextChangeCount = 0;
+    VEC_CE::size_type stPos = stStart;
+    while(stPos <= stEnd)
+    {
+        CommandElementType ce = vecCE.at(stPos).e_Type;
+        if((0 == iContextChangeCount) && (ce == cet))
+        {
+            stElemPos = stPos;
+            return;
+        }
+        std::map<CommandElementType, CommandElementType>::iterator iteFind = mapContextChangeElements.find(ce);
+        if(iteFind != mapContextChangeElements.end())
+        {
+            iContextChangeCount++;
+            mapContextChanges[ce]++;
+        }
+        iteFind = mapContextChangeElementsRev.find(ce);
+        if(iteFind != mapContextChangeElementsRev.end())
+        {
+            iContextChangeCount--;
+            mapContextChanges[(*iteFind).second]--;
+        }
+        stPos++;
+    }
+
+    stElemPos = stEnd + 1;
 }

@@ -47,28 +47,21 @@ func UpdateProject(project datamodels.Project) interface{} {
 }
 
 func GetProjectsV2(user string) []datamodels.Project {
-
 	projectList := projectrepo.GetProjectsByUserV2(user)
-
 	return projectList
 }
 
 func DeleteProject(projectId string) interface{} {
-
 	results := projectrepo.DeleteProject(projectId)
-
 	return results
 }
 
-func CheckProject(projectId string , userId string) interface{} {
-
-	results := projectrepo.CheckprojectExistByUser(userId,projectId)
-
+func CheckProject(projectId string, userId string) interface{} {
+	results := projectrepo.CheckprojectExistByUser(userId, projectId)
 	return results
-
 }
 
-func GetProjectDetails(projectId string) datamodels.Project{
+func GetProjectDetails(projectId string) datamodels.Project {
 	result := projectrepo.GetProjectDetails(projectId)
 	return result
 }

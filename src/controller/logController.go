@@ -60,6 +60,9 @@ func GetLogListByProjectID(projectId string) interface{} {
 
 }
 
+/*
+	TODO: change to read rom .env
+*/
 const (
 	S3_REGION = "ap-south-1"
 	S3_BUCKET = "leadl"
